@@ -1,6 +1,5 @@
 // Auth/Signup.js
 import logo from "./../../main_logo_notext.png"
-import logoText from "./../../main_logo.png"
 import React, { useState, useContext } from "react"
 
 import UserContext from "./../../context/UserContext"
@@ -12,7 +11,8 @@ export default function Signup() {
   const { registerUser } = userCtx
 
   const [data, setData] = useState({
-    username: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -29,6 +29,7 @@ export default function Signup() {
 
   const sendData = (event) => {
     event.preventDefault()
+    console.log("sending data")
     registerUser(data)
   }
 
@@ -40,7 +41,7 @@ export default function Signup() {
             src={logo}
             alt=""
             width="50"
-            class="d-inline-block align-text-top"
+            className="d-inline-block align-text-top"
           />
           <span className="font-body text-3xl m-2">Buggr</span>
         </div>
@@ -52,7 +53,7 @@ export default function Signup() {
               src={logo}
               alt=""
               width="50"
-              class="d-inline-block align-text-top"
+              className="d-inline-block align-text-top"
             />
             <span className="font-body text-2xl m-2 text-russianViolet">
               Buggr

@@ -7,8 +7,9 @@ import axiosClient from "./../config/axios"
 const UserState = (props) => {
   const initialState = {
     user: {
-      username: "",
       email: "",
+      firstName: "",
+      lastName: "",
     },
     authStatus: null,
     token: null,
@@ -17,16 +18,18 @@ const UserState = (props) => {
   const [globalState, dispatch] = useReducer(UserReducer, initialState)
 
   const registerUser = async (dataForm) => {
-    console.log(dataForm)
+    console.log("Dataform: ", dataForm)
 
     try {
       const res = await axiosClient.post("/api/users/register", dataForm)
+      console.log(res)
 
       dispatch({
         type: "REGISTER_SUCCESS",
         payload: res.data,
       })
     } catch (error) {
+      console.log(error.msg)
       dispatch({
         type: "REGISTER_ERROR",
         payload: error,
