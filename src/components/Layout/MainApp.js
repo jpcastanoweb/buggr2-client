@@ -69,7 +69,6 @@ export default function MainApp(props) {
               className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
             >
               <span className="sr-only">Close sidebar</span>
-              {/* <!-- Heroicon name: outline/x --> */}
               <svg
                 className="h-6 w-6 text-white"
                 xmlns="http://www.w3.org/2000/svg"
@@ -98,97 +97,67 @@ export default function MainApp(props) {
             <span className="font-body text-3xl m-2 text-white">Buggr</span>
           </div>
           <div className="mt-5 flex-1 h-0 overflow-y-auto">
-            <nav className="px-2 space-y-1">
+            <nav className="px-2 pr-0 space-y-1">
               {/* <!-- Current: "bg-indigo-800 text-white", Default: "text-indigo-100 hover:bg-indigo-600" --> */}
               <Link
                 to="/app"
-                className="bg-indigo-800 text-white group flex items-center px-2 py-2 text-base font-medium rounded-md"
+                className={
+                  (activeTab === "dashboard"
+                    ? "border-r-4 border-etonBlue  "
+                    : "") +
+                  "px-10 text-indigo-100 hover:bg-russianViolet-light group flex items-center px-2 py-2 text-sm font-medium "
+                }
+                onClick={() => {
+                  setActiveTab("dashboard")
+                }}
               >
                 {/* <!-- Heroicon name: outline/home --> */}
-                <svg
-                  className="mr-4 flex-shrink-0 h-6 w-6 text-indigo-300"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    stroke-width="2"
-                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                  />
-                </svg>
                 Dashboard
               </Link>
 
               <Link
                 to="/app/customers"
-                className="text-indigo-100 hover:bg-indigo-600 group flex items-center px-2 py-2 text-base font-medium rounded-md"
+                className={
+                  (activeTab === "customers"
+                    ? "border-r-4 border-etonBlue  "
+                    : "") +
+                  "px-10 text-indigo-100 hover:bg-russianViolet-light group flex items-center px-2 py-2 text-sm font-medium "
+                }
+                onClick={() => {
+                  setActiveTab("customers")
+                }}
               >
-                {/* <!-- Heroicon name: outline/users --> */}
-                <svg
-                  className="mr-4 flex-shrink-0 h-6 w-6 text-indigo-300"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    stroke-width="2"
-                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-                  />
-                </svg>
                 Customers
               </Link>
 
               <Link
-                href="/app/opportunities"
-                className="text-indigo-100 hover:bg-indigo-600 group flex items-center px-2 py-2 text-base font-medium rounded-md"
+                to="/app/opportunities"
+                className={
+                  (activeTab === "opportunities"
+                    ? "border-r-4 border-etonBlue  "
+                    : "") +
+                  "px-10 text-indigo-100 hover:bg-russianViolet-light group flex items-center px-2 py-2 text-sm font-medium "
+                }
+                onClick={() => {
+                  setActiveTab("opportunities")
+                }}
               >
                 {/* <!-- Heroicon name: outline/folder --> */}
-                <svg
-                  className="mr-4 flex-shrink-0 h-6 w-6 text-indigo-300"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    stroke-width="2"
-                    d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
-                  />
-                </svg>
                 Opportunities
               </Link>
 
               <Link
-                href="/app/projects"
-                className="text-indigo-100 hover:bg-indigo-600 group flex items-center px-2 py-2 text-base font-medium rounded-md"
+                to="/app/projects"
+                className={
+                  (activeTab === "projects"
+                    ? "border-r-4 border-etonBlue  "
+                    : "") +
+                  "px-10 text-indigo-100 hover:bg-russianViolet-light group flex items-center px-2 py-2 text-sm font-medium "
+                }
+                onClick={() => {
+                  setActiveTab("projects")
+                }}
               >
-                {/* <!-- Heroicon name: outline/calendar --> */}
-                <svg
-                  className="mr-4 flex-shrink-0 h-6 w-6 text-indigo-300"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    stroke-width="2"
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
                 Projects
               </Link>
             </nav>
