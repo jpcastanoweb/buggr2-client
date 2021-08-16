@@ -2,7 +2,7 @@ import React, { useReducer } from "react"
 import UserContext from "./UserContext"
 import UserReducer from "./UserReducer"
 
-import axiosClient from "./../config/axios"
+import axiosClient from "./../../config/axios"
 
 const UserState = (props) => {
   const initialState = {

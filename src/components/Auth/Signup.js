@@ -2,7 +2,7 @@
 import logo from "./../../main_logo_notext.png"
 import React, { useState, useContext } from "react"
 
-import UserContext from "./../../context/UserContext"
+import UserContext from "./../../context/User/UserContext"
 import { Link } from "react-router-dom"
 
 export default function Signup() {

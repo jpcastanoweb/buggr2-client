@@ -6,7 +6,7 @@ import Home from "./components/Site/Home.js"
 import Login from "./components/Auth/Login"
 import Signup from "./components/Auth/Signup"
 import MainApp from "./components/Layout/MainApp"
-import UserState from "./context/UserState"
+import UserState from "./context/User/UserState"
 import PrivateRoute from "./components/PrivateRoute"
 import AuthRoute from "./components/AuthRoute"
 
