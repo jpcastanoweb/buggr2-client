@@ -1,3 +1,22 @@
+exports.OPP_STAGES = [
+  "New",
+  "Discovery",
+  "Proposal",
+  "Negotiation",
+  "Closed - Won",
+  "Closed - Lost",
+]
+
+exports.PROJECT_STAGES = [
+  "Analysis",
+  "Design",
+  "Implementation",
+  "Negotiation",
+  "Testing",
+  "Delivered",
+  "Maintenance",
+]
+
 exports.toDateString = (dateS) => {
   const date = new Date(dateS)
   return (

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import ProjectContext from "../../context/Project/ProjectContext"
 import { toDateString } from "./../../_helperFunctions"
 
@@ -24,12 +24,14 @@ export default function SingleProject(props) {
           </h2>
         </div>
         <div className="mt-4 flex md:mt-0 md:ml-4">
-          <button
-            type="button"
-            className="ml-3 inline-flex items-center px-4 py-2 border border-transparent border-purple-900 rounded-full shadow-sm text-sm font-medium text-black bg-white hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Edit
-          </button>
+          <Link to={`/app/projects/edit/${projectid}`}>
+            <button
+              type="button"
+              className="ml-3 inline-flex items-center px-4 py-2 border border-transparent border-purple-900 rounded-full shadow-sm text-sm font-medium text-black bg-white hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Edit
+            </button>
+          </Link>
           <button
             type="button"
             className="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-purple-900 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

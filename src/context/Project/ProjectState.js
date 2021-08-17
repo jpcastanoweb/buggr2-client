@@ -23,12 +23,26 @@ const ProjectState = (props) => {
       console.log(error.message)
     }
   }
+
+  const submitEditProject = async (data) => {
+    try {
+      const res = await axiosClient.post(`api/projects/${data._id}/edit`, data)
+      dispatch({
+        type: "UPDATE_PROJECT",
+        payload: res.data,
+      })
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
   return (
     <ProjectContext.Provider
       value={{
         project: globalState.project,
         projectid: globalState.projectid,
         loadProject,
+        submitEditProject,
       }}
     >
       {props.children}

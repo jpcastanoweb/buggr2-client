@@ -25,13 +25,11 @@ const CustomerState = (props) => {
   }
 
   const submitEditCustomer = async (data) => {
-    console.log(data)
     try {
       const res = await axiosClient.post(
         `/api/customers/${data._id}/edit`,
         data
       )
-      console.log(res)
       dispatch({
         type: "UPDATE_CUSTOMER",
         payload: res.data,
