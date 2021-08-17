@@ -5,13 +5,11 @@ import { toDateString } from "./../../_helperFunctions"
 
 export default function SingleProject(props) {
   const { projectid } = useParams()
-  console.log(projectid)
 
   const projectCtx = useContext(ProjectContext)
   const { project, loadProject } = projectCtx
 
   useEffect(() => {
-    console.log("entering useffect for project")
     loadProject(projectid)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

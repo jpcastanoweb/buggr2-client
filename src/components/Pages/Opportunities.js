@@ -27,15 +27,15 @@ export default function Opportunities() {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
+              className="h-6 w-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M12 4v16m8-8H4"
               />
             </svg>
@@ -44,111 +44,109 @@ export default function Opportunities() {
       </div>
       {/* Divider */}
       <hr className="border-gray-300 mb-3" />
-      <div class="pb-5 border-b border-gray-200">
-        <h3 class="text-lg leading-6 font-medium text-gray-900">
+      <div className="pb-5 border-b border-gray-200">
+        <h3 className="text-lg leading-6 font-medium text-gray-900">
           Sort Filter Search
         </h3>
       </div>
       {/* Table */}
-      <div class="flex flex-col">
-        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+      <div className="flex flex-col">
+        <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
                   <tr>
                     <th
                       scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       Title
                     </th>
                     <th
                       scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       Stage
                     </th>
                     <th
                       scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       Value
                     </th>
                     <th
                       scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       Customer
                     </th>
                     <th
                       scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       Opened
                     </th>
                     <th
                       scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       Expected Close Date
                     </th>
 
-                    <th scope="col" class="relative px-6 py-3">
-                      <span class="sr-only">Edit</span>
+                    <th scope="col" className="relative px-6 py-3">
+                      <span className="sr-only">Edit</span>
                     </th>
-                    <th scope="col" class="relative px-6 py-3">
-                      <span class="sr-only">View</span>
+                    <th scope="col" className="relative px-6 py-3">
+                      <span className="sr-only">View</span>
                     </th>
                   </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                  {opportunities.map((elem) => {
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {opportunities.map((elem, i) => {
                     return (
-                      <>
-                        <tr>
-                          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {elem.title ? elem.title : "N/A"}
-                          </td>
-                          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {elem.currentStage ? elem.currentStage : "N/A"}
-                          </td>
-                          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {elem.dollarValue ? elem.dollarValue : "N/A"}
-                          </td>
-                          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {elem.forCustomer.name
-                              ? elem.forCustomer.name
-                              : "N/A"}
-                          </td>
-                          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {elem.openedDate
-                              ? toDateString(elem.openedDate)
-                              : "N/A"}
-                          </td>
-                          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {elem.closeDate
-                              ? toDateString(elem.closeDate)
-                              : "N/A"}
-                          </td>
-                          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <Link
-                              to={`/app/opportunities/edit/${elem._id}`}
-                              class="text-indigo-600 hover:text-indigo-900"
-                            >
-                              Edit
-                            </Link>
-                          </td>
-                          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <Link
-                              to={`/app/opportunities/${elem._id}`}
-                              class="text-indigo-600 hover:text-indigo-900"
-                            >
-                              View
-                            </Link>
-                          </td>
-                        </tr>
-                      </>
+                      <tr key={i}>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {elem.title ? elem.title : "N/A"}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {elem.currentStage ? elem.currentStage : "N/A"}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {elem.dollarValue ? elem.dollarValue : "N/A"}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {elem.forCustomer.name
+                            ? elem.forCustomer.name
+                            : "N/A"}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {elem.openedDate
+                            ? toDateString(elem.openedDate)
+                            : "N/A"}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {elem.closeDate
+                            ? toDateString(elem.closeDate)
+                            : "N/A"}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                          <Link
+                            to={`/app/opportunities/edit/${elem._id}`}
+                            className="text-indigo-600 hover:text-indigo-900"
+                          >
+                            Edit
+                          </Link>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                          <Link
+                            to={`/app/opportunities/${elem._id}`}
+                            className="text-indigo-600 hover:text-indigo-900"
+                          >
+                            View
+                          </Link>
+                        </td>
+                      </tr>
                     )
                   })}
                 </tbody>

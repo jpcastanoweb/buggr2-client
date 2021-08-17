@@ -28,7 +28,7 @@ import SingleOpporunity from "../Pages/SingleOpportunity"
 export default function MainApp(props) {
   // GLOBAL STATE
   const orgCtx = useContext(OrgContext)
-  const { orgId, loadOrg, loadCustomers } = orgCtx
+  const { loadOrg } = orgCtx
 
   const userCtx = useContext(UserContext)
   const { user } = userCtx
@@ -107,7 +107,7 @@ export default function MainApp(props) {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  stroke-width="2"
+                  strokeWidth="2"
                   d="M6 18L18 6M6 6l12 12"
                 />
               </svg>

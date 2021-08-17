@@ -29,7 +29,6 @@ export default function Signup() {
 
   const sendData = (event) => {
     event.preventDefault()
-    console.log("sending data")
     registerUser(data)
   }
 

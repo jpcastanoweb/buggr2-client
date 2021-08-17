@@ -5,13 +5,11 @@ import { toDateString } from "./../../_helperFunctions"
 
 export default function SingleOpportunity(props) {
   const { opportunityid } = useParams()
-  console.log(opportunityid)
 
   const oppCtx = useContext(OpportunityContext)
   const { opportunity, loadOpportunity } = oppCtx
 
   useEffect(() => {
-    console.log("entering useffect for opp")
     loadOpportunity(opportunityid)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

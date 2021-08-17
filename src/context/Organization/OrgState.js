@@ -44,11 +44,9 @@ const OrgState = (props) => {
 
   const loadProjects = async () => {
     try {
-      console.log("Orgid in globalstate", globalState.orgId)
       const res = await axiosClient.post(`/api/projects`, {
         belongsTo: globalState.orgId,
       })
-      console.log(res)
 
       dispatch({
         type: "UPDATE_PROJECTS",
@@ -61,11 +59,9 @@ const OrgState = (props) => {
 
   const loadOpportunities = async () => {
     try {
-      console.log("Orgid in globalstate", globalState.orgId)
       const res = await axiosClient.post(`/api/opportunities`, {
         belongsTo: globalState.orgId,
       })
-      console.log(res)
 
       dispatch({
         type: "UPDATE_OPPORTUNITIES",

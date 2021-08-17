@@ -18,8 +18,6 @@ const UserState = (props) => {
   const [globalState, dispatch] = useReducer(UserReducer, initialState)
 
   const registerUser = async (dataForm) => {
-    console.log("Dataform: ", dataForm)
-
     try {
       const res = await axiosClient.post("/api/users/register", dataForm)
       console.log(res)
@@ -62,8 +60,6 @@ const UserState = (props) => {
   }
 
   const loginUser = async (dataForm) => {
-    console.log(dataForm)
-
     try {
       const res = await axiosClient.post("/api/auth/login", dataForm)
 

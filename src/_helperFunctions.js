@@ -1,6 +1,5 @@
 exports.toDateString = (dateS) => {
   const date = new Date(dateS)
-  console.log(date)
   return (
     date.getFullYear() +
     "-" +
