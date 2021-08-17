@@ -29,16 +29,46 @@ const OrgState = (props) => {
   }
 
   const loadCustomers = async () => {
-    console.log("trying to load customers")
+    try {
+      const res = await axiosClient.post(`/api/customers`, {
+        belongsTo: globalState.orgId,
+      })
+      dispatch({
+        type: "UPDATE_CUSTOMERS",
+        payload: res.data,
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const loadProjects = async () => {
     try {
       console.log("Orgid in globalstate", globalState.orgId)
-      const res = await axiosClient.post(`/api/customers`, {
+      const res = await axiosClient.post(`/api/projects`, {
         belongsTo: globalState.orgId,
       })
       console.log(res)
 
       dispatch({
-        type: "UPDATE_CUSTOMERS",
+        type: "UPDATE_PROJECTS",
+        payload: res.data,
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const loadOpportunities = async () => {
+    try {
+      console.log("Orgid in globalstate", globalState.orgId)
+      const res = await axiosClient.post(`/api/opportunities`, {
+        belongsTo: globalState.orgId,
+      })
+      console.log(res)
+
+      dispatch({
+        type: "UPDATE_OPPORTUNITIES",
         payload: res.data,
       })
     } catch (error) {
@@ -52,8 +82,12 @@ const OrgState = (props) => {
         org: globalState.org,
         orgId: globalState.orgId,
         customers: globalState.customers,
+        projects: globalState.projects,
+        opportunities: globalState.opportunities,
         loadOrg,
         loadCustomers,
+        loadProjects,
+        loadOpportunities,
       }}
     >
       {props.children}

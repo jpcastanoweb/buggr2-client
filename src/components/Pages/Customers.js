@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react"
 import { Link } from "react-router-dom"
 import OrgContext from "../../context/Organization/OrgContext"
 
-export default function Customers(props) {
+export default function Customers() {
   const orgCtx = useContext(OrgContext)
   const { customers, loadCustomers } = orgCtx
 

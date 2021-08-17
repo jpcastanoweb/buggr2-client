@@ -14,6 +14,18 @@ const reducers = (globalState, action) => {
         customers: action.payload,
       }
 
+    case "UPDATE_PROJECTS":
+      return {
+        ...globalState,
+        projects: action.payload,
+      }
+
+    case "UPDATE_OPPORTUNITIES":
+      return {
+        ...globalState,
+        opportunities: action.payload,
+      }
+
     default:
       return globalState
   }
