@@ -1,6 +1,15 @@
-import React, { useState } from "react"
+// dependencies
+import React, { useState, useEffect, useContext } from "react"
 import { Link } from "react-router-dom"
+
+// images
 import mainLogoNoText from "./../../images/main_logo_notext.png"
+
+// contexts
+import OrgContext from "./../../context/Organization/OrgContext"
+import UserContext from "./../../context/User/UserContext"
+
+// components
 import Customers from "../Pages/Customers"
 import Dashboard from "../Pages/Dashboard"
 import Opportunities from "../Pages/Opportunities"
@@ -9,7 +18,25 @@ import PrivateRoute from "../PrivateRoute"
 import UserNav from "../misc/UserNav"
 
 export default function MainApp(props) {
+  // GLOBAL STATE
+  const orgCtx = useContext(OrgContext)
+  const { org, orgId, customers, loadOrg, loadCustomers } = orgCtx
+
+  const userCtx = useContext(UserContext)
+  const { user } = userCtx
+
+  // LOCAL STATE
   const [activeTab, setActiveTab] = useState("dashboard")
+
+  useEffect(() => {
+    const loadAll = async () => {
+      await loadOrg(user.organizations[0])
+      await loadCustomers(orgId)
+    }
+
+    loadAll()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className="h-screen flex overflow-hidden bg-gray-100">
