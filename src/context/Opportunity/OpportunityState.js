@@ -30,7 +30,6 @@ const OpportunityState = (props) => {
         `api/opportunities/${data._id}/edit`,
         data
       )
-      console.log(res)
       dispatch({
         type: "UPDATE_OPPORTUNITY",
         payload: res.data,
@@ -39,6 +38,19 @@ const OpportunityState = (props) => {
       console.log(error.message)
     }
   }
+
+  const submitCreateOpportunity = async (data) => {
+    try {
+      const res = await axiosClient.post("/api/opportunities/create", data)
+      dispatch({
+        type: "UPDATE_OPPORTUNITY",
+        payload: res.data,
+      })
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
   return (
     <OpportunityContext.Provider
       value={{
@@ -46,6 +58,7 @@ const OpportunityState = (props) => {
         opportunityid: globalState.opportunityid,
         loadOpportunity,
         submitEditOpportunity,
+        submitCreateOpportunity,
       }}
     >
       {props.children}

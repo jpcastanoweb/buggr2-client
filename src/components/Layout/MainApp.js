@@ -27,6 +27,9 @@ import SingleOpporunity from "../Pages/SingleOpportunity"
 import EditCustomer from "../Pages/EditCustomer"
 import EditProject from "../Pages/EditProject"
 import EditOpportunity from "../Pages/EditOpportunity"
+import AddCustomer from "../Pages/AddCustomer"
+import AddOpportunity from "../Pages/AddOpportunity"
+import AddProject from "../Pages/AddProject"
 
 export default function MainApp(props) {
   let { path } = useRouteMatch()
@@ -300,6 +303,11 @@ export default function MainApp(props) {
                     />
                     <PrivateRoute
                       exact
+                      path={`${path}/customers/new`}
+                      component={AddCustomer}
+                    />
+                    <PrivateRoute
+                      exact
                       path={`${path}/customers/:customerid`}
                       component={SingleCustomer}
                     />
@@ -308,10 +316,16 @@ export default function MainApp(props) {
                       path={`${path}/customers/edit/:customerid`}
                       component={EditCustomer}
                     />
+
                     <PrivateRoute
                       exact
                       path={`${path}/opportunities`}
                       component={Opportunities}
+                    />
+                    <PrivateRoute
+                      exact
+                      path={`${path}/opportunities/new`}
+                      component={AddOpportunity}
                     />
                     <PrivateRoute
                       exact
@@ -323,10 +337,16 @@ export default function MainApp(props) {
                       path={`${path}/opportunities/edit/:opportunityid`}
                       component={EditOpportunity}
                     />
+
                     <PrivateRoute
                       exact
                       path={`${path}/projects`}
                       component={Projects}
+                    />
+                    <PrivateRoute
+                      exact
+                      path={`${path}/projects/new`}
+                      component={AddProject}
                     />
                     <PrivateRoute
                       exact

@@ -26,7 +26,19 @@ const ProjectState = (props) => {
 
   const submitEditProject = async (data) => {
     try {
-      const res = await axiosClient.post(`api/projects/${data._id}/edit`, data)
+      const res = await axiosClient.post(`/api/projects/${data._id}/edit`, data)
+      dispatch({
+        type: "UPDATE_PROJECT",
+        payload: res.data,
+      })
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  const submitCreateProject = async (data) => {
+    try {
+      const res = await axiosClient.post("/api/projects/create", data)
       dispatch({
         type: "UPDATE_PROJECT",
         payload: res.data,
@@ -43,6 +55,7 @@ const ProjectState = (props) => {
         projectid: globalState.projectid,
         loadProject,
         submitEditProject,
+        submitCreateProject,
       }}
     >
       {props.children}
