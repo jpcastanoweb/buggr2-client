@@ -9,6 +9,9 @@ import mainLogoNoText from "./../../images/main_logo_notext.png"
 import OrgContext from "./../../context/Organization/OrgContext"
 import UserContext from "./../../context/User/UserContext"
 
+// states
+import CustomerState from "../../context/Customer/CustomerState"
+
 // components
 import Customers from "../Pages/Customers"
 import Dashboard from "../Pages/Dashboard"
@@ -16,6 +19,9 @@ import Opportunities from "../Pages/Opportunities"
 import Projects from "../Pages/Projects"
 import PrivateRoute from "../PrivateRoute"
 import UserNav from "../misc/UserNav"
+import SingleCustomer from "../Pages/SingleCustomer"
+import SingleProject from "../Pages/SingleProject"
+import SingleOpporunity from "../Pages/SingleOpportunity"
 
 export default function MainApp(props) {
   // GLOBAL STATE
@@ -274,22 +280,41 @@ export default function MainApp(props) {
 
       <main className="flex-1 relative overflow-y-auto focus:outline-none">
         <div className="py-6">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <PrivateRoute exact path={props.path} component={Dashboard} />
-            <PrivateRoute
-              exact
-              path={`${props.path}/customers`}
-              component={Customers}
-            />
-            <PrivateRoute
-              path={`${props.path}/opportunities`}
-              component={Opportunities}
-            />
-            <PrivateRoute
-              path={`${props.path}/projects`}
-              component={Projects}
-            />
-          </div>
+          <CustomerState>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+              <PrivateRoute exact path={props.path} component={Dashboard} />
+              <PrivateRoute
+                exact
+                path={`${props.path}/customers`}
+                component={Customers}
+              />
+              <PrivateRoute
+                exact
+                path={`${props.path}/customers/:customerid`}
+                component={SingleCustomer}
+              />
+              <PrivateRoute
+                exact
+                path={`${props.path}/opportunities`}
+                component={Opportunities}
+              />
+              <PrivateRoute
+                exact
+                path={`${props.path}/opportunities/:opportunityId`}
+                component={SingleOpporunity}
+              />
+              <PrivateRoute
+                exact
+                path={`${props.path}/projects`}
+                component={Projects}
+              />
+              <PrivateRoute
+                exact
+                path={`${props.path}/projects/:projectId`}
+                component={SingleProject}
+              />
+            </div>
+          </CustomerState>
         </div>
       </main>
     </div>
