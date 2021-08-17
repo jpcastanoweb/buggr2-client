@@ -20,13 +20,13 @@ import UserNav from "../misc/UserNav"
 export default function MainApp(props) {
   // GLOBAL STATE
   const orgCtx = useContext(OrgContext)
-  const { org, orgId, customers, loadOrg, loadCustomers } = orgCtx
+  const { orgId, loadOrg, loadCustomers } = orgCtx
 
   const userCtx = useContext(UserContext)
   const { user } = userCtx
 
   // LOCAL STATE
-  const [activeTab, setActiveTab] = useState("dashboard")
+  const [activeTab, setActiveTab] = useState("")
 
   useEffect(() => {
     const loadAll = async () => {
