@@ -23,12 +23,30 @@ const CustomerState = (props) => {
       console.log(error.message)
     }
   }
+
+  const submitEditCustomer = async (data) => {
+    console.log(data)
+    try {
+      const res = await axiosClient.post(
+        `/api/customers/${data._id}/edit`,
+        data
+      )
+      console.log(res)
+      dispatch({
+        type: "UPDATE_CUSTOMER",
+        payload: res.data,
+      })
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
   return (
     <CustomerContext.Provider
       value={{
         customer: globalState.customer,
         customerid: globalState.customerid,
         loadCustomer,
+        submitEditCustomer,
       }}
     >
       {props.children}

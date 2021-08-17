@@ -5,6 +5,7 @@ import { toDateString } from "./../../_helperFunctions"
 
 export default function SingleCustomer(props) {
   const { customerid } = useParams()
+  console.log(props)
 
   const customerCtx = useContext(CustomerContext)
   const { customer, loadCustomer } = customerCtx
@@ -24,12 +25,14 @@ export default function SingleCustomer(props) {
           </h2>
         </div>
         <div className="mt-4 flex md:mt-0 md:ml-4">
-          <button
-            type="button"
-            className="ml-3 inline-flex items-center px-4 py-2 border border-transparent border-purple-900 rounded-full shadow-sm text-sm font-medium text-black bg-white hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Edit
-          </button>
+          <Link to={`/app/customers/edit/${customerid}`}>
+            <button
+              type="button"
+              className="ml-3 inline-flex items-center px-4 py-2 border border-transparent border-purple-900 rounded-full shadow-sm text-sm font-medium text-black bg-white hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Edit
+            </button>
+          </Link>
         </div>
       </div>
       {/* Divider */}

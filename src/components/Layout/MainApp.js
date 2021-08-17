@@ -1,6 +1,6 @@
 // dependencies
 import React, { useState, useEffect, useContext } from "react"
-import { Link } from "react-router-dom"
+import { Link, Switch, useRouteMatch } from "react-router-dom"
 
 // images
 import mainLogoNoText from "./../../images/main_logo_notext.png"
@@ -24,8 +24,13 @@ import UserNav from "../misc/UserNav"
 import SingleCustomer from "../Pages/SingleCustomer"
 import SingleProject from "../Pages/SingleProject"
 import SingleOpporunity from "../Pages/SingleOpportunity"
+import EditCustomer from "../Pages/EditCustomer"
+import EditProject from "../Pages/EditProject"
+import EditOpportunity from "../Pages/EditOpportunity"
 
 export default function MainApp(props) {
+  let { path } = useRouteMatch()
+
   // GLOBAL STATE
   const orgCtx = useContext(OrgContext)
   const { loadOrg } = orgCtx
@@ -286,37 +291,54 @@ export default function MainApp(props) {
             <ProjectState>
               <OpportunityState>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                  <PrivateRoute exact path={props.path} component={Dashboard} />
-                  <PrivateRoute
-                    exact
-                    path={`${props.path}/customers`}
-                    component={Customers}
-                  />
-                  <PrivateRoute
-                    exact
-                    path={`${props.path}/customers/:customerid`}
-                    component={SingleCustomer}
-                  />
-                  <PrivateRoute
-                    exact
-                    path={`${props.path}/opportunities`}
-                    component={Opportunities}
-                  />
-                  <PrivateRoute
-                    exact
-                    path={`${props.path}/opportunities/:opportunityid`}
-                    component={SingleOpporunity}
-                  />
-                  <PrivateRoute
-                    exact
-                    path={`${props.path}/projects`}
-                    component={Projects}
-                  />
-                  <PrivateRoute
-                    exact
-                    path={`${props.path}/projects/:projectid`}
-                    component={SingleProject}
-                  />
+                  <Switch>
+                    <PrivateRoute exact path={path} component={Dashboard} />
+                    <PrivateRoute
+                      exact
+                      path={`${path}/customers`}
+                      component={Customers}
+                    />
+                    <PrivateRoute
+                      exact
+                      path={`${path}/customers/:customerid`}
+                      component={SingleCustomer}
+                    />
+                    <PrivateRoute
+                      exact
+                      path={`${path}/customers/edit/:customerid`}
+                      component={EditCustomer}
+                    />
+                    <PrivateRoute
+                      exact
+                      path={`${path}/opportunities`}
+                      component={Opportunities}
+                    />
+                    <PrivateRoute
+                      exact
+                      path={`${path}/opportunities/:opportunityid`}
+                      component={SingleOpporunity}
+                    />
+                    <PrivateRoute
+                      exact
+                      path={`${path}/opportunities/edit/:opportunityid`}
+                      component={EditOpportunity}
+                    />
+                    <PrivateRoute
+                      exact
+                      path={`${path}/projects`}
+                      component={Projects}
+                    />
+                    <PrivateRoute
+                      exact
+                      path={`${path}/projects/:projectid`}
+                      component={SingleProject}
+                    />
+                    <PrivateRoute
+                      exact
+                      path={`${path}/projects/edit/:projectid`}
+                      component={EditProject}
+                    />
+                  </Switch>
                 </div>
               </OpportunityState>
             </ProjectState>
