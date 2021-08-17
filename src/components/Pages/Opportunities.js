@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import OrgContext from "../../context/Organization/OrgContext"
 import { toDateString } from "./../../_helperFunctions"
 
-export default function Customers() {
+export default function Opportunities() {
   const orgCtx = useContext(OrgContext)
   const { opportunities, loadOpportunities } = orgCtx
 

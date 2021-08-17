@@ -11,6 +11,8 @@ import UserContext from "./../../context/User/UserContext"
 
 // states
 import CustomerState from "../../context/Customer/CustomerState"
+import ProjectState from "../../context/Project/ProjectState"
+import OpportunityState from "../../context/Opportunity/OpportunityState"
 
 // components
 import Customers from "../Pages/Customers"
@@ -37,7 +39,7 @@ export default function MainApp(props) {
   useEffect(() => {
     const loadAll = async () => {
       await loadOrg(user.organizations[0])
-      await loadCustomers(orgId)
+      // await loadCustomers(orgId)
     }
 
     loadAll()
@@ -281,39 +283,43 @@ export default function MainApp(props) {
       <main className="flex-1 relative overflow-y-auto focus:outline-none">
         <div className="py-6">
           <CustomerState>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              <PrivateRoute exact path={props.path} component={Dashboard} />
-              <PrivateRoute
-                exact
-                path={`${props.path}/customers`}
-                component={Customers}
-              />
-              <PrivateRoute
-                exact
-                path={`${props.path}/customers/:customerid`}
-                component={SingleCustomer}
-              />
-              <PrivateRoute
-                exact
-                path={`${props.path}/opportunities`}
-                component={Opportunities}
-              />
-              <PrivateRoute
-                exact
-                path={`${props.path}/opportunities/:opportunityId`}
-                component={SingleOpporunity}
-              />
-              <PrivateRoute
-                exact
-                path={`${props.path}/projects`}
-                component={Projects}
-              />
-              <PrivateRoute
-                exact
-                path={`${props.path}/projects/:projectId`}
-                component={SingleProject}
-              />
-            </div>
+            <ProjectState>
+              <OpportunityState>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                  <PrivateRoute exact path={props.path} component={Dashboard} />
+                  <PrivateRoute
+                    exact
+                    path={`${props.path}/customers`}
+                    component={Customers}
+                  />
+                  <PrivateRoute
+                    exact
+                    path={`${props.path}/customers/:customerid`}
+                    component={SingleCustomer}
+                  />
+                  <PrivateRoute
+                    exact
+                    path={`${props.path}/opportunities`}
+                    component={Opportunities}
+                  />
+                  <PrivateRoute
+                    exact
+                    path={`${props.path}/opportunities/:opportunityid`}
+                    component={SingleOpporunity}
+                  />
+                  <PrivateRoute
+                    exact
+                    path={`${props.path}/projects`}
+                    component={Projects}
+                  />
+                  <PrivateRoute
+                    exact
+                    path={`${props.path}/projects/:projectid`}
+                    component={SingleProject}
+                  />
+                </div>
+              </OpportunityState>
+            </ProjectState>
           </CustomerState>
         </div>
       </main>
