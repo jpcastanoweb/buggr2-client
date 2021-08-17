@@ -62,7 +62,7 @@ export default function Projects() {
                       scope="col"
                       class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      Project
+                      Title
                     </th>
                     <th
                       scope="col"
@@ -108,16 +108,14 @@ export default function Projects() {
                     return (
                       <>
                         <tr>
-                          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                              {elem.title ? elem.title : "N/A"}
-                            </td>
+                          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {elem.title ? elem.title : "N/A"}
                           </td>
                           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {elem.currentStage ? elem.currentStage : "N/A"}
                           </td>
                           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {elem.dollarValue ? elem.currentStage : "N/A"}
+                            {elem.dollarValue ? elem.dollarValue : "N/A"}
                           </td>
                           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {elem.forCustomer.name
