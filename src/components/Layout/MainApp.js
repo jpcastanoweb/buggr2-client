@@ -1,23 +1,15 @@
-import React, { useContext, useState } from "react"
+import React, { useState } from "react"
 import { Link } from "react-router-dom"
-import mainLogoNoText from "./../../main_logo_notext.png"
+import mainLogoNoText from "./../../images/main_logo_notext.png"
 import Customers from "../Pages/Customers"
 import Dashboard from "../Pages/Dashboard"
 import Opportunities from "../Pages/Opportunities"
 import Projects from "../Pages/Projects"
 import PrivateRoute from "../PrivateRoute"
-import UserContext from "../../context/User/UserContext"
+import UserNav from "../misc/UserNav"
 
 export default function MainApp(props) {
-  const userCtx = useContext(UserContext)
-
-  const { signout } = userCtx
-
-  const submitSignout = (e) => {
-    signout()
-  }
-
-  const [activeTab, setActiveTab] = useState("")
+  const [activeTab, setActiveTab] = useState("dashboard")
 
   return (
     <div className="h-screen flex overflow-hidden bg-gray-100">
@@ -52,7 +44,7 @@ export default function MainApp(props) {
         From: "translate-x-0"
         To: "-translate-x-full"
     --> */}
-        <div className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-russianViolet">
+        <div className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-purple-900">
           {/* <!--
         Close button, show/hide based on off-canvas menu state.
 
@@ -103,9 +95,9 @@ export default function MainApp(props) {
                 to="/app"
                 className={
                   (activeTab === "dashboard"
-                    ? "border-r-4 border-etonBlue  "
+                    ? "border-r-4 border-green-400  "
                     : "") +
-                  "px-10 text-indigo-100 hover:bg-russianViolet-light group flex items-center px-2 py-2 text-sm font-medium "
+                  "px-10 text-indigo-100 hover:bg-purple-700 group flex items-center px-2 py-2 text-sm font-medium "
                 }
                 onClick={() => {
                   setActiveTab("dashboard")
@@ -119,9 +111,9 @@ export default function MainApp(props) {
                 to="/app/customers"
                 className={
                   (activeTab === "customers"
-                    ? "border-r-4 border-etonBlue  "
+                    ? "border-r-4 border-green-400  "
                     : "") +
-                  "px-10 text-indigo-100 hover:bg-russianViolet-light group flex items-center px-2 py-2 text-sm font-medium "
+                  "px-10 text-indigo-100 hover:bg-purple-700 group flex items-center px-2 py-2 text-sm font-medium "
                 }
                 onClick={() => {
                   setActiveTab("customers")
@@ -134,9 +126,9 @@ export default function MainApp(props) {
                 to="/app/opportunities"
                 className={
                   (activeTab === "opportunities"
-                    ? "border-r-4 border-etonBlue  "
+                    ? "border-r-4 border-green-400  "
                     : "") +
-                  "px-10 text-indigo-100 hover:bg-russianViolet-light group flex items-center px-2 py-2 text-sm font-medium "
+                  "px-10 text-indigo-100 hover:bg-purple-700 group flex items-center px-2 py-2 text-sm font-medium "
                 }
                 onClick={() => {
                   setActiveTab("opportunities")
@@ -150,9 +142,9 @@ export default function MainApp(props) {
                 to="/app/projects"
                 className={
                   (activeTab === "projects"
-                    ? "border-r-4 border-etonBlue  "
+                    ? "border-r-4 border-green-400  "
                     : "") +
-                  "px-10 text-indigo-100 hover:bg-russianViolet-light group flex items-center px-2 py-2 text-sm font-medium "
+                  "px-10 text-indigo-100 hover:bg-purple-700 group flex items-center px-2 py-2 text-sm font-medium "
                 }
                 onClick={() => {
                   setActiveTab("projects")
@@ -169,7 +161,7 @@ export default function MainApp(props) {
         </div>
       </div>
       {/* <!-- Static sidebar for desktop --> */}
-      <div className="bg-russianViolet md:flex md:flex-shrink-0">
+      <div className="bg-purple-900 md:flex md:flex-shrink-0">
         <div className="flex flex-col w-64">
           {/* <!-- Sidebar component, swap this element with another sidebar if you like --> */}
           <div className="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto">
@@ -189,9 +181,9 @@ export default function MainApp(props) {
                   to="/app"
                   className={
                     (activeTab === "dashboard"
-                      ? "border-r-4 border-etonBlue  "
+                      ? "border-r-4 border-green-400  "
                       : "") +
-                    "px-10 text-indigo-100 hover:bg-russianViolet-light group flex items-center px-2 py-2 text-sm font-medium "
+                    "px-10 text-indigo-100 hover:bg-purple-700 group flex items-center px-2 py-2 text-sm font-medium "
                   }
                   onClick={() => {
                     setActiveTab("dashboard")
@@ -205,9 +197,9 @@ export default function MainApp(props) {
                   to="/app/customers"
                   className={
                     (activeTab === "customers"
-                      ? "border-r-4 border-etonBlue  "
+                      ? "border-r-4 border-green-400  "
                       : "") +
-                    "px-10 text-indigo-100 hover:bg-russianViolet-light group flex items-center px-2 py-2 text-sm font-medium "
+                    "px-10 text-indigo-100 hover:bg-purple-700 group flex items-center px-2 py-2 text-sm font-medium "
                   }
                   onClick={() => {
                     setActiveTab("customers")
@@ -220,9 +212,9 @@ export default function MainApp(props) {
                   to="/app/opportunities"
                   className={
                     (activeTab === "opportunities"
-                      ? "border-r-4 border-etonBlue  "
+                      ? "border-r-4 border-green-400  "
                       : "") +
-                    "px-10 text-indigo-100 hover:bg-russianViolet-light group flex items-center px-2 py-2 text-sm font-medium "
+                    "px-10 text-indigo-100 hover:bg-purple-700 group flex items-center px-2 py-2 text-sm font-medium "
                   }
                   onClick={() => {
                     setActiveTab("opportunities")
@@ -236,9 +228,9 @@ export default function MainApp(props) {
                   to="/app/projects"
                   className={
                     (activeTab === "projects"
-                      ? "border-r-4 border-etonBlue  "
+                      ? "border-r-4 border-green-400  "
                       : "") +
-                    "px-10 text-indigo-100 hover:bg-russianViolet-light group flex items-center px-2 py-2 text-sm font-medium "
+                    "px-10 text-indigo-100 hover:bg-purple-700 group flex items-center px-2 py-2 text-sm font-medium "
                   }
                   onClick={() => {
                     setActiveTab("projects")
@@ -249,13 +241,7 @@ export default function MainApp(props) {
               </nav>
             </div>
           </div>
-          <button
-            onClick={(e) => {
-              submitSignout(e)
-            }}
-          >
-            Logout
-          </button>
+          <UserNav />
         </div>
       </div>
 

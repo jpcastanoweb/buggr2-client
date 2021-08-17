@@ -1,5 +1,5 @@
 // Auth/Signup.js
-import logo from "./../../main_logo_notext.png"
+import logo from "./../../images/main_logo_notext.png"
 import React, { useState, useContext } from "react"
 
 import UserContext from "./../../context/User/UserContext"
@@ -35,7 +35,7 @@ export default function Signup() {
 
   return (
     <div className="min-h-screen bg-white flex">
-      <div className="hidden lg:block relative w-0 flex-1 bg-russianViolet text-white">
+      <div className="hidden lg:block relative w-0 flex-1 bg-purple-900 text-white">
         <div className="container h-full flex flex-row justify-center items-center">
           <img
             src={logo}
@@ -55,7 +55,7 @@ export default function Signup() {
               width="50"
               className="d-inline-block align-text-top"
             />
-            <span className="font-body text-2xl m-2 text-russianViolet">
+            <span className="font-body text-2xl m-2 text-purple-900">
               Buggr
             </span>
           </div>
@@ -174,7 +174,7 @@ export default function Signup() {
                 <div>
                   <button
                     type="submit"
-                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-russianViolet hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-900 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     Sign Up
                   </button>
