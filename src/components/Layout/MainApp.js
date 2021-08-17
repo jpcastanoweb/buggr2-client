@@ -162,7 +162,7 @@ export default function MainApp(props) {
       </div>
       {/* <!-- Static sidebar for desktop --> */}
       <div className="bg-purple-900 md:flex md:flex-shrink-0">
-        <div className="flex flex-col w-64">
+        <div className="flex flex-col w-52">
           {/* <!-- Sidebar component, swap this element with another sidebar if you like --> */}
           <div className="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto">
             <div className="flex items-center flex-shrink-0 px-4">
