@@ -53,15 +53,30 @@ export default function SingleCustomer(props) {
 
         <div>
           <p className="mb-1 text-xs">Contact Full Name</p>
-          <p className="">Jane Doe</p>
+          <p className="">
+            {customer.mainContact
+              ? customer.mainContact.firstName +
+                (customer.mainContact.lastName
+                  ? customer.mainContact.lastName
+                  : "")
+              : "N/A"}
+          </p>
         </div>
         <div>
           <p className="mb-1 text-xs">Contact Email Address</p>
-          <p className="">jane@gmail.com</p>
+          <p className="">
+            {customer.mainContact ? customer.mainContact.email : "N/A"}
+          </p>
         </div>
         <div>
           <p className="mb-1 text-xs">Contact Phone Number</p>
-          <p className="fs-5">(224) 777-777</p>
+          <p className="fs-5">
+            {customer.mainContact
+              ? customer.mainContact.phoneNumber
+                ? customer.mainContact.phoneNumber
+                : "N/A"
+              : "N/A"}
+          </p>
         </div>
       </div>
       {/* Divider */}
