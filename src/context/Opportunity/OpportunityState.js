@@ -51,6 +51,21 @@ const OpportunityState = (props) => {
     }
   }
 
+  const submitDeleteOpportunity = async (id) => {
+    try {
+      await axiosClient.post(`/api/opportunities/${id}/delete`)
+      dispatch({
+        type: "UPDATE_OPPORTUNITY",
+        payload: {
+          opportunity: {},
+          opportunityid: "",
+        },
+      })
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
   return (
     <OpportunityContext.Provider
       value={{
@@ -59,6 +74,7 @@ const OpportunityState = (props) => {
         loadOpportunity,
         submitEditOpportunity,
         submitCreateOpportunity,
+        submitDeleteOpportunity,
       }}
     >
       {props.children}

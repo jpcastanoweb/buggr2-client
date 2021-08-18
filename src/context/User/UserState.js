@@ -20,7 +20,6 @@ const UserState = (props) => {
   const registerUser = async (dataForm) => {
     try {
       const res = await axiosClient.post("/api/users/register", dataForm)
-      console.log(res)
 
       dispatch({
         type: "REGISTER_SUCCESS",

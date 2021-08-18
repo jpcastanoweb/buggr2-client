@@ -48,6 +48,21 @@ const ProjectState = (props) => {
     }
   }
 
+  const submitDeleteProject = async (id) => {
+    try {
+      await axiosClient.post(`/api/projects/${id}/delete`)
+      dispatch({
+        type: "UPDATE_PROJECT",
+        payload: {
+          project: {},
+          projectid: "",
+        },
+      })
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
   return (
     <ProjectContext.Provider
       value={{
@@ -56,6 +71,7 @@ const ProjectState = (props) => {
         loadProject,
         submitEditProject,
         submitCreateProject,
+        submitDeleteProject,
       }}
     >
       {props.children}

@@ -5,7 +5,6 @@ import { toDateString } from "./../../_helperFunctions"
 
 export default function SingleCustomer(props) {
   const { customerid } = useParams()
-  console.log(props)
 
   const customerCtx = useContext(CustomerContext)
   const { customer, loadCustomer } = customerCtx
