@@ -94,7 +94,9 @@ const OpportunityState = (props) => {
         type: "UPDATE_OPPORTUNITY",
         payload: res.data,
       })
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (

@@ -70,6 +70,7 @@ export default function SingleOpportunity(props) {
   }
 
   const sendAssignContactData = async (e) => {
+    e.preventDefault()
     setAssigningContact(false)
     await submitAssignContact({
       contactid: assignContactData.contactid,
