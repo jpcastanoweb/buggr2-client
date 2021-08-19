@@ -130,7 +130,7 @@ export default function SingleProject(props) {
         <div>
           <p className="mb-1 text-xs">Goal Date</p>
           <p className="">
-            {project.goalDate ? toDateString(project.goalDate) : "N/A"}
+            {project.dueDate ? toDateString(project.dueDate) : "N/A"}
           </p>
         </div>
         <div>

@@ -16,7 +16,6 @@ import OpportunityState from "../../context/Opportunity/OpportunityState"
 
 // components
 import Customers from "../Pages/Customers"
-import Dashboard from "../Pages/Dashboard"
 import Opportunities from "../Pages/Opportunities"
 import Projects from "../Pages/Projects"
 import PrivateRoute from "../PrivateRoute"
@@ -72,23 +71,6 @@ export default function MainApp(props) {
             </div>
             <div className="mt-5 flex-1 flex flex-col">
               <nav className="flex-1 space-y-1">
-                {/* <!-- Current: "bg-indigo-800 text-white", Default: "text-indigo-100 hover:bg-indigo-600" --> */}
-                <Link
-                  to="/app"
-                  className={
-                    (activeTab === "dashboard"
-                      ? "border-r-4 border-green-400  "
-                      : "") +
-                    "px-10 text-indigo-100 hover:bg-purple-700 group flex items-center px-2 py-2 text-sm font-medium "
-                  }
-                  onClick={() => {
-                    setActiveTab("dashboard")
-                  }}
-                >
-                  {/* <!-- Heroicon name: outline/home --> */}
-                  Dashboard
-                </Link>
-
                 <Link
                   to="/app/customers"
                   className={
@@ -148,7 +130,6 @@ export default function MainApp(props) {
               <OpportunityState>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                   <Switch>
-                    <PrivateRoute exact path={path} component={Dashboard} />
                     <PrivateRoute
                       exact
                       path={`${path}/customers`}

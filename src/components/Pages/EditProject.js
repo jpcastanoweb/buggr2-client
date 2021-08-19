@@ -122,10 +122,10 @@ export default function EditProject() {
                     <div class="max-w-lg flex rounded-md shadow-sm">
                       <input
                         type="date"
-                        name="goalDate"
-                        id="goalDate"
-                        autocomplete="goalDate"
-                        value={toDateString(data.goalDate)}
+                        name="dueDate"
+                        id="dueDate"
+                        autocomplete="dueDate"
+                        value={toDateString(data.dueDate)}
                         class="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                         onChange={(e) => {
                           handleChange(e)

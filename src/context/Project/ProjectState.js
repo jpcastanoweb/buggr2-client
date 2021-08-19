@@ -25,6 +25,7 @@ const ProjectState = (props) => {
   }
 
   const submitEditProject = async (data) => {
+    console.log(data)
     try {
       const res = await axiosClient.post(`/api/projects/${data._id}/edit`, data)
       dispatch({
