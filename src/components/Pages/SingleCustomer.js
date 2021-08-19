@@ -8,7 +8,7 @@ export default function SingleCustomer(props) {
 
   const customerCtx = useContext(CustomerContext)
   const { customer, loadCustomer, submitAddContact } = customerCtx
-  const [addingCustomer, setAddingCustomer] = useState(false)
+  const [addingContact, setAddingContact] = useState(false)
   const [contactData, setContactData] = useState({
     firstName: null,
     lastName: null,
@@ -17,7 +17,6 @@ export default function SingleCustomer(props) {
     ownerid: null,
   })
   const [loading, setLoading] = useState(true)
-  const [potentialBusiness, setPotentialBusiness] = useState(0)
 
   const handleAddContactChange = (e) => {
     e.preventDefault()
@@ -28,7 +27,7 @@ export default function SingleCustomer(props) {
   }
 
   const sendData = async (e) => {
-    setAddingCustomer(false)
+    setAddingContact(false)
     await submitAddContact({
       firstName: contactData.firstName,
       lastName: contactData.lastName,
@@ -48,7 +47,7 @@ export default function SingleCustomer(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return (
+  return !loading ? (
     <div>
       {/* Heading */}
       <div className="mb-3 md:flex md:items-center md:justify-between">
@@ -342,7 +341,7 @@ export default function SingleCustomer(props) {
                           <button
                             className="w-full text-left"
                             onClick={() => {
-                              setAddingCustomer(true)
+                              setAddingContact(true)
                             }}
                           >
                             {" "}
@@ -393,7 +392,7 @@ export default function SingleCustomer(props) {
                           <button
                             className="w-full text-left"
                             // onClick={() => {
-                            //   setAddingCustomer(true)
+                            //   setAddingContact(true)
                             // }}
                           >
                             {" "}
@@ -410,7 +409,7 @@ export default function SingleCustomer(props) {
         </div>
       </div>
       {/* MODALS */}
-      {addingCustomer ? (
+      {addingContact ? (
         <>
           <form
             onSubmit={(e) => {
@@ -575,7 +574,7 @@ export default function SingleCustomer(props) {
                       class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                       onClick={(e) => {
                         e.preventDefault()
-                        setAddingCustomer(false)
+                        setAddingContact(false)
                       }}
                     >
                       Cancel
@@ -590,5 +589,7 @@ export default function SingleCustomer(props) {
         ""
       )}
     </div>
+  ) : (
+    ""
   )
 }

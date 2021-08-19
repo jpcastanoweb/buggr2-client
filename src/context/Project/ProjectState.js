@@ -63,6 +63,22 @@ const ProjectState = (props) => {
     }
   }
 
+  const submitAssignContact = async (data) => {
+    try {
+      const res = await axiosClient.post(
+        `/api/projects/${data.projectid}/addcontact`,
+        {
+          contactid: data.contactid,
+        }
+      )
+      console.log("Res from assign contact", res)
+      dispatch({
+        type: "UPDATE_PROJECT",
+        payload: res.data,
+      })
+    } catch (error) {}
+  }
+
   return (
     <ProjectContext.Provider
       value={{
@@ -72,6 +88,7 @@ const ProjectState = (props) => {
         submitEditProject,
         submitCreateProject,
         submitDeleteProject,
+        submitAssignContact,
       }}
     >
       {props.children}

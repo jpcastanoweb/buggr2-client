@@ -15,7 +15,7 @@ const CustomerState = (props) => {
   const loadCustomer = async (customerid) => {
     try {
       const res = await axiosClient.get(`/api/customers/${customerid}`)
-      dispatch({
+      await dispatch({
         type: "UPDATE_CUSTOMER",
         payload: res.data,
       })

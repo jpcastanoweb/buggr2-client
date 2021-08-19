@@ -5,6 +5,7 @@ import { toDateString, PROJECT_STAGES } from "../../_helperFunctions"
 
 export default function EditProject() {
   const { projectid } = useParams()
+  console.log(PROJECT_STAGES)
 
   const projectCtx = useContext(ProjectContext)
   const { projectid: id, project, loadProject, submitEditProject } = projectCtx
@@ -183,6 +184,44 @@ export default function EditProject() {
                             </option>
                           )
                         })}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                  <label
+                    for="mainContact"
+                    class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                  >
+                    Main Contact
+                  </label>
+                  <div class="mt-1 sm:mt-0 sm:col-span-2">
+                    <div class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
+                      <select
+                        type="text"
+                        name="mainContact"
+                        id="mainContact"
+                        autocomplete="mainContact"
+                        value={data.mainContact}
+                        class="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                        onChange={(e) => {
+                          handleChange(e)
+                        }}
+                      >
+                        <option value={0}>Select Option</option>
+                        {project.associatedContacts ? (
+                          project.associatedContacts.map((e, i) => {
+                            return (
+                              <option key={i} value={e._id}>
+                                {e.firstName +
+                                  " " +
+                                  (e.lastName ? e.lastName : "")}
+                              </option>
+                            )
+                          })
+                        ) : (
+                          <option>No Contacts Available</option>
+                        )}
                       </select>
                     </div>
                   </div>

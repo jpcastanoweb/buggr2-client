@@ -83,6 +83,22 @@ const OpportunityState = (props) => {
     }
   }
 
+  const submitAssignContact = async (data) => {
+    try {
+      const res = await axiosClient.post(
+        `/api/opportunities/${data.opportunityid}/addcontact`,
+        {
+          contactid: data.contactid,
+        }
+      )
+      console.log("Res from assign contact", res)
+      dispatch({
+        type: "UPDATE_OPPORTUNITY",
+        payload: res.data,
+      })
+    } catch (error) {}
+  }
+
   return (
     <OpportunityContext.Provider
       value={{
@@ -93,6 +109,7 @@ const OpportunityState = (props) => {
         submitCreateOpportunity,
         submitDeleteOpportunity,
         submitConvertOpportunity,
+        submitAssignContact,
       }}
     >
       {props.children}
