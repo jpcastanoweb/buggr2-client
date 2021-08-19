@@ -11,7 +11,6 @@ exports.PROJECT_STAGES = [
   "Analysis",
   "Design",
   "Implementation",
-  "Negotiation",
   "Testing",
   "Delivered",
   "Maintenance",
