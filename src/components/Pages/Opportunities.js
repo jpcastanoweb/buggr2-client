@@ -44,6 +44,27 @@ export default function Opportunities() {
           </Link>
         </div>
       </div>
+      <hr className="border-gray-300 mb-3" />
+      {/* Information grid */}
+      <div className="grid grid-cols-3 gap-2 mb-3">
+        <div>
+          <p className="mb-1 text-l">Potential Business</p>
+          <p className="text-xl">
+            {opportunities
+              ? opportunities.reduce((a, b) => {
+                  if (
+                    b.currentStage !== "Closed - Won" &&
+                    b.currentStage !== "Closed - Lost"
+                  ) {
+                    return a + b.dollarValue
+                  } else {
+                    return a
+                  }
+                }, 0)
+              : ""}{" "}
+          </p>
+        </div>
+      </div>
       {/* Divider */}
       <hr className="border-gray-300 mb-3" />
       <div className="pb-5 border-b border-gray-200">

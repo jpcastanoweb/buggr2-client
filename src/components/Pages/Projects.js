@@ -45,6 +45,16 @@ export default function Projects() {
           </Link>
         </div>
       </div>
+      <hr className="border-gray-300 mb-3" />
+      {/* Information grid */}
+      <div className="grid grid-cols-3 gap-2 mb-3">
+        <div>
+          <p className="mb-1 text-l">Total Revenue</p>
+          <p className="text-xl">
+            {projects ? projects.reduce((a, b) => a + b.dollarValue, 0) : ""}{" "}
+          </p>
+        </div>
+      </div>
       {/* Divider */}
       <hr className="border-gray-300 mb-3" />
       <div className="pb-5 border-b border-gray-200">
