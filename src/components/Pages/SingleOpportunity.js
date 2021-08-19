@@ -45,12 +45,10 @@ export default function SingleOpportunity(props) {
 
   const handleConversion = async (e) => {
     e.preventDefault()
-    console.log("Will convert with:", convertData)
     const newProject = await submitConvertOpportunity(
       opportunityid,
       convertData
     )
-    console.log("Returned project from conversion: ", newProject)
     setConvertedProjectId(newProject._id)
     setConverted(true)
   }

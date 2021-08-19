@@ -67,7 +67,6 @@ const OpportunityState = (props) => {
   }
 
   const submitConvertOpportunity = async (id, dataForm) => {
-    console.log("Dataform in state: ", dataForm)
     try {
       const res = await axiosClient.post(
         `/api/opportunities/${id}/convert`,
@@ -91,7 +90,6 @@ const OpportunityState = (props) => {
           contactid: data.contactid,
         }
       )
-      console.log("Res from assign contact", res)
       dispatch({
         type: "UPDATE_OPPORTUNITY",
         payload: res.data,

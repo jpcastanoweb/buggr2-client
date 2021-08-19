@@ -5,7 +5,6 @@ import { toDateString, PROJECT_STAGES } from "../../_helperFunctions"
 
 export default function EditProject() {
   const { projectid } = useParams()
-  console.log(PROJECT_STAGES)
 
   const projectCtx = useContext(ProjectContext)
   const { projectid: id, project, loadProject, submitEditProject } = projectCtx

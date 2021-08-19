@@ -40,7 +40,6 @@ export default function SingleProject(props) {
   }
 
   const sendAssignContactData = async (e) => {
-    console.log("project id", project._id)
     setAssigningContact(false)
     await submitAssignContact({
       contactid: assignContactData.contactid,

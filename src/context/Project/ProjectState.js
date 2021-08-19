@@ -25,7 +25,6 @@ const ProjectState = (props) => {
   }
 
   const submitEditProject = async (data) => {
-    console.log(data)
     try {
       const res = await axiosClient.post(`/api/projects/${data._id}/edit`, data)
       dispatch({
@@ -72,7 +71,6 @@ const ProjectState = (props) => {
           contactid: data.contactid,
         }
       )
-      console.log("Res from assign contact", res)
       dispatch({
         type: "UPDATE_PROJECT",
         payload: res.data,
