@@ -41,7 +41,19 @@ const CustomerState = (props) => {
 
   const submitCreateCustomer = async (data) => {
     try {
-      const res = await axiosClient.post("api/customers/create", data)
+      const res = await axiosClient.post("/api/customers/create", data)
+      dispatch({
+        type: "UPDATE_CUSTOMER",
+        payload: res.data,
+      })
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  const submitAddContact = async (data) => {
+    try {
+      const res = await axiosClient.post("/api/contacts/create", data)
       dispatch({
         type: "UPDATE_CUSTOMER",
         payload: res.data,
@@ -59,6 +71,7 @@ const CustomerState = (props) => {
         loadCustomer,
         submitEditCustomer,
         submitCreateCustomer,
+        submitAddContact,
       }}
     >
       {props.children}
