@@ -16,6 +16,8 @@ export default function SingleCustomer(props) {
     phoneNumber: null,
     ownerid: null,
   })
+  const [loading, setLoading] = useState(true)
+  const [potentialBusiness, setPotentialBusiness] = useState(0)
 
   const handleAddContactChange = (e) => {
     e.preventDefault()
@@ -37,9 +39,14 @@ export default function SingleCustomer(props) {
   }
 
   useEffect(() => {
-    loadCustomer(customerid)
+    const loadEverything = async () => {
+      await loadCustomer(customerid)
+      setLoading(false)
+    }
+
+    loadEverything()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customer])
+  }, [])
 
   return (
     <div>
@@ -67,15 +74,32 @@ export default function SingleCustomer(props) {
       <div className="grid grid-cols-3 gap-2 mb-3">
         <div>
           <p className="mb-1 text-xs">Potential Business</p>
-          <p className="">{"N/A"}</p>
+          <p className="">
+            {customer.opportunities
+              ? customer.opportunities.reduce((a, b) => {
+                  if (
+                    b.currentStage !== "Closed - Won" &&
+                    b.currentStage !== "Closed - Lost"
+                  ) {
+                    return a + b.dollarValue
+                  } else {
+                    return a
+                  }
+                }, 0)
+              : ""}{" "}
+          </p>
         </div>
         <div>
           <p className="mb-1 text-xs">Project Revenue</p>
-          <p className="">{"N/A"}</p>
+          <p className="">
+            {customer.projects
+              ? customer.projects.reduce((a, b) => a + b.dollarValue, 0)
+              : ""}{" "}
+          </p>
         </div>
         <div>
           <p className="mb-1 text-xs">Customer Since</p>
-          <p className="">{"N/A"}</p>
+          <p className="">{toDateString(customer.createdAt)}</p>
         </div>
 
         <div>
@@ -303,15 +327,15 @@ export default function SingleCustomer(props) {
         </div>
         <div className="bg-gray-100 grid md:grid-cols-3 xl:grid-cols-1 gap-8">
           <div className="container flex justify-center">
-            <div className="flex-grow border-b border-gray-200 sm:rounded-lg bg-purple-100">
+            <div className="flex-grow sm:rounded-lg ">
               <div className="relative shadow-sm rounded-lg ">
-                <div className="py-3 px-4 rounded-lg bg-white">
+                <div className="py-3 px-4 rounded-lg bg-purple-100  ">
                   <div className="flex justify-between align-center py-2">
                     <h3 className="text-lg align-middle leading-6 font-medium text-gray-900 w-h-10">
                       Contacts
                     </h3>
                   </div>
-                  <div className="bg-white shadow overflow-hidden rounded-md max-h-56 overflow-scroll">
+                  <div className="bg-white shadow overflow-hidden rounded-md max-h-52 overflow-scroll">
                     <ul className="divide-y divide-gray-200">
                       <li>
                         <div className="p-3 hover:bg-gray-100">
@@ -354,43 +378,31 @@ export default function SingleCustomer(props) {
             </div>
           </div>
           <div className="container flex justify-center">
-            <div className="">
-              <div className="bg-white relative shadow-sm rounded-lg">
-                <div className="py-6 px-8 rounded-lg bg-white">
-                  <h1 className="text-gray-700 font-bold text-2xl mb-3 hover:text-gray-900 hover:cursor-pointer">
-                    I'm supper dog for you.
-                  </h1>
-                  <p className="text-gray-700 tracking-wide">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Eum, labore. Ea debitis beatae sequi deleniti.
-                  </p>
-                  <button className="mt-6 py-2 px-4 bg-yellow-400 text-gray-800 font-bold rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                    Buy Now
-                  </button>
-                </div>
-                <div className="absolute top-2 right-2 py-2 px-4 bg-white rounded-lg">
-                  <span className="text-md">$150</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="container flex justify-center">
-            <div className="">
-              <div className="bg-white relative shadow-sm rounded-lg">
-                <div className="py-6 px-8 rounded-lg bg-white">
-                  <h1 className="text-gray-700 font-bold text-2xl mb-3 hover:text-gray-900 hover:cursor-pointer">
-                    I'm supper dog for you.
-                  </h1>
-                  <p className="text-gray-700 tracking-wide">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Eum, labore. Ea debitis beatae sequi deleniti.
-                  </p>
-                  <button className="mt-6 py-2 px-4 bg-yellow-400 text-gray-800 font-bold rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                    Buy Now
-                  </button>
-                </div>
-                <div className="absolute top-2 right-2 py-2 px-4 bg-white rounded-lg">
-                  <span className="text-md">$150</span>
+            <div className="flex-grow  sm:rounded-lg">
+              <div className="relative shadow-sm rounded-lg ">
+                <div className="py-3 px-4 rounded-lg bg-purple-100">
+                  <div className="flex justify-between align-center py-2">
+                    <h3 className="text-lg align-middle leading-6 font-medium text-gray-900 w-h-10">
+                      Notes
+                    </h3>
+                  </div>
+                  <div className="bg-white shadow overflow-hidden rounded-md max-h-56 overflow-scroll">
+                    <ul className="divide-y divide-gray-200">
+                      <li>
+                        <div className="p-3 hover:bg-gray-100">
+                          <button
+                            className="w-full text-left"
+                            // onClick={() => {
+                            //   setAddingCustomer(true)
+                            // }}
+                          >
+                            {" "}
+                            + Add Note
+                          </button>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
@@ -413,15 +425,15 @@ export default function SingleCustomer(props) {
             >
               <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 {/* <!--
-      Background overlay, show/hide based on modal state.
+                  Background overlay, show/hide based on modal state.
 
-      Entering: "ease-out duration-300"
-        From: "opacity-0"
-        To: "opacity-100"
-      Leaving: "ease-in duration-200"
-        From: "opacity-100"
-        To: "opacity-0"
-    --> */}
+                  Entering: "ease-out duration-300"
+                    From: "opacity-0"
+                    To: "opacity-100"
+                  Leaving: "ease-in duration-200"
+                    From: "opacity-100"
+                    To: "opacity-0"
+                --> */}
                 <div
                   class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
                   aria-hidden="true"
@@ -436,15 +448,15 @@ export default function SingleCustomer(props) {
                 </span>
 
                 {/* <!--
-      Modal panel, show/hide based on modal state.
+                  Modal panel, show/hide based on modal state.
 
-      Entering: "ease-out duration-300"
-        From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-        To: "opacity-100 translate-y-0 sm:scale-100"
-      Leaving: "ease-in duration-200"
-        From: "opacity-100 translate-y-0 sm:scale-100"
-        To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-    --> */}
+                  Entering: "ease-out duration-300"
+                    From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    To: "opacity-100 translate-y-0 sm:scale-100"
+                  Leaving: "ease-in duration-200"
+                    From: "opacity-100 translate-y-0 sm:scale-100"
+                    To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                --> */}
 
                 <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                   <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
