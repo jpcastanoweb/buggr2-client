@@ -29,6 +29,7 @@ import EditOpportunity from "../Pages/EditOpportunity"
 import AddCustomer from "../Pages/AddCustomer"
 import AddOpportunity from "../Pages/AddOpportunity"
 import AddProject from "../Pages/AddProject"
+import Settings from "./Settings"
 
 export default function MainApp(props) {
   let { path } = useRouteMatch()
@@ -191,6 +192,11 @@ export default function MainApp(props) {
                       exact
                       path={`${path}/projects/edit/:projectid`}
                       component={EditProject}
+                    />
+                    <PrivateRoute
+                      exact
+                      path={`${path}/settings`}
+                      component={Settings}
                     />
                   </Switch>
                 </div>
