@@ -55,13 +55,7 @@ export default function Projects() {
           </p>
         </div>
       </div>
-      {/* Divider */}
-      <hr className="border-gray-300 mb-3" />
-      <div className="pb-5 border-b border-gray-200">
-        <h3 className="text-lg leading-6 font-medium text-gray-900">
-          Sort Filter Search
-        </h3>
-      </div>
+
       {/* Table */}
       <div className="flex flex-col">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

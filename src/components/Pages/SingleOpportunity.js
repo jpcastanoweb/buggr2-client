@@ -3,6 +3,10 @@ import { useParams, Link, Redirect } from "react-router-dom"
 import OpportunityContext from "../../context/Opportunity/OpportunityContext"
 import CustomerContext from "../../context/Customer/CustomerContext"
 import { toDateString } from "./../../_helperFunctions"
+import { OPP_STAGES, OPP_STAGES_WITH_VALUES } from "./../../_helperFunctions"
+import CompletedStep from "../misc/CompletedStep"
+import CurrentStep from "../misc/CurrentStep"
+import UpcomingStep from "../misc/UpcomingStep"
 
 export default function SingleOpportunity(props) {
   const { opportunityid } = useParams()
@@ -32,6 +36,64 @@ export default function SingleOpportunity(props) {
     contactid: null,
   })
   const [loading, setLoading] = useState(true)
+
+  /* Processing for Status Bar */
+  const generateBar = () => {
+    const currentStage = OPP_STAGES_WITH_VALUES[opportunity.currentStage]
+
+    let list = []
+
+    if (opportunity.currentStage === "Closed - Lost") {
+      for (let i = 0; i < 4; i++) {
+        list.push(
+          <CompletedStep
+            number={i}
+            name={OPP_STAGES[i]}
+            max={OPP_STAGES.length - 1}
+          />
+        )
+      }
+      list.push(
+        <CompletedStep
+          number={4}
+          name="Closed - Lost"
+          max={OPP_STAGES.length - 1}
+          red={true}
+        />
+      )
+      return list
+    }
+
+    for (let i = 0; i < OPP_STAGES.length - 1; i++) {
+      if (i < currentStage - 1) {
+        list.push(
+          <CompletedStep
+            number={i}
+            name={OPP_STAGES[i]}
+            max={OPP_STAGES.length - 1}
+          />
+        )
+      } else if (i === currentStage - 1) {
+        list.push(
+          <CurrentStep
+            name={OPP_STAGES[i]}
+            number={i}
+            max={OPP_STAGES.length - 1}
+          />
+        )
+      } else {
+        list.push(
+          <UpcomingStep
+            name={OPP_STAGES[i]}
+            number={i}
+            max={OPP_STAGES.length - 1}
+          />
+        )
+      }
+    }
+
+    return list
+  }
 
   const handleDelete = async (e) => {
     e.preventDefault()
@@ -201,94 +263,104 @@ export default function SingleOpportunity(props) {
 
       {/* Divider */}
       <hr className="border-gray-300 mb-3" />
-      <div className="xl:grid xl:grid-cols-3 xl:gap-10 ">
-        <div className="xl:col-span-2 ">Hola</div>
-        <div className="bg-gray-100 grid md:grid-cols-3 xl:grid-cols-1 gap-8">
-          <div className="container flex justify-center">
-            <div className="flex-grow sm:rounded-lg ">
-              <div className="relative shadow-sm rounded-lg ">
-                <div className="py-3 px-4 rounded-lg bg-purple-100  ">
-                  <div className="flex justify-between align-center py-2">
-                    <h3 className="text-lg align-middle leading-6 font-medium text-gray-900 w-h-10">
-                      Associated Contacts
-                    </h3>
-                  </div>
-                  <div className="bg-white shadow overflow-hidden rounded-md max-h-52 overflow-scroll">
-                    <ul className="divide-y divide-gray-200">
+      <div className="mb-10">
+        {/* <!-- This example requires Tailwind CSS v2.0+ --> */}
+        <nav aria-label="Progress">
+          <ol class="border border-gray-300 rounded-md divide-y divide-gray-300 lg:flex lg:divide-y-0">
+            <React.Fragment>
+              {generateBar().map((e) => {
+                return e
+              })}
+            </React.Fragment>
+          </ol>
+        </nav>
+      </div>
+      <div className="bg-gray-100 grid grid-cols-3 xl:col-span-1 gap-8">
+        <div className="container flex justify-center">
+          <div className="flex-grow sm:rounded-lg ">
+            <div className="relative shadow-sm rounded-lg ">
+              <div className="py-3 px-4 rounded-lg bg-purple-100  ">
+                <div className="flex justify-between align-center py-2">
+                  <h3 className="text-lg align-middle leading-6 font-medium text-gray-900 w-h-10">
+                    Associated Contacts
+                  </h3>
+                </div>
+                <div className="bg-white shadow overflow-hidden rounded-md max-h-52 overflow-scroll">
+                  <ul className="divide-y divide-gray-200">
+                    <li>
+                      <div className="p-3 hover:bg-gray-100">
+                        <button
+                          className="w-full text-left"
+                          onClick={async () => {
+                            if (opportunity.forCustomer)
+                              await loadCustomer(opportunity.forCustomer._id)
+                            setAssigningContact(true)
+                          }}
+                        >
+                          {" "}
+                          + Assign Contact
+                        </button>
+                      </div>
+                    </li>
+                    {opportunity.associatedContacts ? (
+                      opportunity.associatedContacts.map((e, i) => {
+                        return (
+                          <li key={i}>
+                            <div className="p-3">
+                              {e.firstName + " " + e.lastName}
+                              <br />
+                              Email: {e.email}
+                              <br />
+                              {e.phoneNumber
+                                ? "Phone Number: " + e.phoneNumber
+                                : ""}
+                            </div>
+                          </li>
+                        )
+                      })
+                    ) : (
                       <li>
-                        <div className="p-3 hover:bg-gray-100">
-                          <button
-                            className="w-full text-left"
-                            onClick={async () => {
-                              if (opportunity.forCustomer)
-                                await loadCustomer(opportunity.forCustomer._id)
-                              setAssigningContact(true)
-                            }}
-                          >
-                            {" "}
-                            + Assign Contact
-                          </button>
-                        </div>
+                        <div className="p-3">No Contacts</div>
                       </li>
-                      {opportunity.associatedContacts ? (
-                        opportunity.associatedContacts.map((e, i) => {
-                          return (
-                            <li key={i}>
-                              <div className="p-3">
-                                {e.firstName + " " + e.lastName}
-                                <br />
-                                Email: {e.email}
-                                <br />
-                                {e.phoneNumber
-                                  ? "Phone Number: " + e.phoneNumber
-                                  : ""}
-                              </div>
-                            </li>
-                          )
-                        })
-                      ) : (
-                        <li>
-                          <div className="p-3">No Contacts</div>
-                        </li>
-                      )}
-                    </ul>
-                  </div>
+                    )}
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
-          <div className="container flex justify-center">
-            <div className="flex-grow  sm:rounded-lg">
-              <div className="relative shadow-sm rounded-lg ">
-                <div className="py-3 px-4 rounded-lg bg-purple-100">
-                  <div className="flex justify-between align-center py-2">
-                    <h3 className="text-lg align-middle leading-6 font-medium text-gray-900 w-h-10">
-                      Notes
-                    </h3>
-                  </div>
-                  <div className="bg-white shadow overflow-hidden rounded-md max-h-56 overflow-scroll">
-                    <ul className="divide-y divide-gray-200">
-                      <li>
-                        <div className="p-3 hover:bg-gray-100">
-                          <button
-                            className="w-full text-left"
-                            // onClick={() => {
-                            //   setAddingCustomer(true)
-                            // }}
-                          >
-                            {" "}
-                            + Add Note
-                          </button>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
+        </div>
+        <div className="container flex justify-center">
+          <div className="flex-grow  sm:rounded-lg">
+            <div className="relative shadow-sm rounded-lg ">
+              <div className="py-3 px-4 rounded-lg bg-purple-100">
+                <div className="flex justify-between align-center py-2">
+                  <h3 className="text-lg align-middle leading-6 font-medium text-gray-900 w-h-10">
+                    Notes
+                  </h3>
+                </div>
+                <div className="bg-white shadow overflow-hidden rounded-md max-h-56 overflow-scroll">
+                  <ul className="divide-y divide-gray-200">
+                    <li>
+                      <div className="p-3 hover:bg-gray-100">
+                        <button
+                          className="w-full text-left"
+                          // onClick={() => {
+                          //   setAddingCustomer(true)
+                          // }}
+                        >
+                          {" "}
+                          + Add Note
+                        </button>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
       {/* MODAL for DELETE */}
 
       {deleteModalActive ? (

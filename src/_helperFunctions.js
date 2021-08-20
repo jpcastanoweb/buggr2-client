@@ -26,3 +26,21 @@ exports.toDateString = (dateS) => {
     (date.getDate() > 8 ? date.getDate() + 1 : "0" + (date.getDate() + 1))
   )
 }
+
+exports.OPP_STAGES_WITH_VALUES = {
+  New: 1,
+  Discovery: 2,
+  Proposal: 3,
+  Negotiation: 4,
+  "Closed - Won": 5,
+  "Closed - Lost": 6,
+}
+
+exports.PROJECT_STAGES_WITH_VALUES = {
+  Analysis: 1,
+  Design: 2,
+  Implementation: 3,
+  Testing: 4,
+  Delivered: 5,
+  Maintenance: 6,
+}

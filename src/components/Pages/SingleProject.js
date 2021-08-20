@@ -2,7 +2,14 @@ import React, { useContext, useEffect, useState } from "react"
 import { useParams, Link, Redirect } from "react-router-dom"
 import ProjectContext from "../../context/Project/ProjectContext"
 import CustomerContext from "../../context/Customer/CustomerContext"
-import { toDateString } from "./../../_helperFunctions"
+import {
+  PROJECT_STAGES,
+  PROJECT_STAGES_WITH_VALUES,
+  toDateString,
+} from "./../../_helperFunctions"
+import CompletedStep from "../misc/CompletedStep"
+import CurrentStep from "../misc/CurrentStep"
+import UpcomingStep from "../misc/UpcomingStep"
 
 export default function SingleProject(props) {
   const { projectid } = useParams()
@@ -21,6 +28,41 @@ export default function SingleProject(props) {
   })
   const [loading, setLoading] = useState(true)
 
+  const generateBar = () => {
+    const currentStage = PROJECT_STAGES_WITH_VALUES[project.currentStage]
+
+    let list = []
+
+    for (let i = 0; i < PROJECT_STAGES.length - 1; i++) {
+      if (i < currentStage - 1) {
+        list.push(
+          <CompletedStep
+            number={i}
+            name={PROJECT_STAGES[i]}
+            max={PROJECT_STAGES.length - 1}
+          />
+        )
+      } else if (i === currentStage - 1) {
+        list.push(
+          <CurrentStep
+            name={PROJECT_STAGES[i]}
+            number={i}
+            max={PROJECT_STAGES.length - 1}
+          />
+        )
+      } else {
+        list.push(
+          <UpcomingStep
+            name={PROJECT_STAGES[i]}
+            number={i}
+            max={PROJECT_STAGES.length - 1}
+          />
+        )
+      }
+    }
+
+    return list
+  }
   const handleDelete = async (e) => {
     e.preventDefault()
     try {
@@ -160,94 +202,104 @@ export default function SingleProject(props) {
 
       {/* Divider */}
       <hr className="border-gray-300 mb-3" />
-      <div className="xl:grid xl:grid-cols-3 xl:gap-10 ">
-        <div className="xl:col-span-2 ">Hola</div>
-        <div className="bg-gray-100 grid md:grid-cols-3 xl:grid-cols-1 gap-8">
-          <div className="container flex justify-center">
-            <div className="flex-grow sm:rounded-lg ">
-              <div className="relative shadow-sm rounded-lg ">
-                <div className="py-3 px-4 rounded-lg bg-purple-100  ">
-                  <div className="flex justify-between align-center py-2">
-                    <h3 className="text-lg align-middle leading-6 font-medium text-gray-900 w-h-10">
-                      Associated Contacts
-                    </h3>
-                  </div>
-                  <div className="bg-white shadow overflow-hidden rounded-md max-h-52 overflow-scroll">
-                    <ul className="divide-y divide-gray-200">
+      <div className="mb-10">
+        {/* <!-- This example requires Tailwind CSS v2.0+ --> */}
+        <nav aria-label="Progress">
+          <ol class="border border-gray-300 rounded-md divide-y divide-gray-300 lg:flex lg:divide-y-0">
+            <React.Fragment>
+              {generateBar().map((e) => {
+                return e
+              })}
+            </React.Fragment>
+          </ol>
+        </nav>
+      </div>
+      <div className="bg-gray-100 grid grid-cols-3 xl:col-span-1 gap-8">
+        <div className="container flex justify-center">
+          <div className="flex-grow sm:rounded-lg ">
+            <div className="relative shadow-sm rounded-lg ">
+              <div className="py-3 px-4 rounded-lg bg-purple-100  ">
+                <div className="flex justify-between align-center py-2">
+                  <h3 className="text-lg align-middle leading-6 font-medium text-gray-900 w-h-10">
+                    Associated Contacts
+                  </h3>
+                </div>
+                <div className="bg-white shadow overflow-hidden rounded-md max-h-52 overflow-scroll">
+                  <ul className="divide-y divide-gray-200">
+                    <li>
+                      <div className="p-3 hover:bg-gray-100">
+                        <button
+                          className="w-full text-left"
+                          onClick={async () => {
+                            if (project.forCustomer)
+                              await loadCustomer(project.forCustomer._id)
+                            setAssigningContact(true)
+                          }}
+                        >
+                          {" "}
+                          + Assign Contact
+                        </button>
+                      </div>
+                    </li>
+                    {project.associatedContacts ? (
+                      project.associatedContacts.map((e, i) => {
+                        return (
+                          <li key={i}>
+                            <div className="p-3">
+                              {e.firstName + " " + e.lastName}
+                              <br />
+                              Email: {e.email}
+                              <br />
+                              {e.phoneNumber
+                                ? "Phone Number: " + e.phoneNumber
+                                : ""}
+                            </div>
+                          </li>
+                        )
+                      })
+                    ) : (
                       <li>
-                        <div className="p-3 hover:bg-gray-100">
-                          <button
-                            className="w-full text-left"
-                            onClick={async () => {
-                              if (project.forCustomer)
-                                await loadCustomer(project.forCustomer._id)
-                              setAssigningContact(true)
-                            }}
-                          >
-                            {" "}
-                            + Assign Contact
-                          </button>
-                        </div>
+                        <div className="p-3">No Contacts</div>
                       </li>
-                      {project.associatedContacts ? (
-                        project.associatedContacts.map((e, i) => {
-                          return (
-                            <li key={i}>
-                              <div className="p-3">
-                                {e.firstName + " " + e.lastName}
-                                <br />
-                                Email: {e.email}
-                                <br />
-                                {e.phoneNumber
-                                  ? "Phone Number: " + e.phoneNumber
-                                  : ""}
-                              </div>
-                            </li>
-                          )
-                        })
-                      ) : (
-                        <li>
-                          <div className="p-3">No Contacts</div>
-                        </li>
-                      )}
-                    </ul>
-                  </div>
+                    )}
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
-          <div className="container flex justify-center">
-            <div className="flex-grow  sm:rounded-lg">
-              <div className="relative shadow-sm rounded-lg ">
-                <div className="py-3 px-4 rounded-lg bg-purple-100">
-                  <div className="flex justify-between align-center py-2">
-                    <h3 className="text-lg align-middle leading-6 font-medium text-gray-900 w-h-10">
-                      Notes
-                    </h3>
-                  </div>
-                  <div className="bg-white shadow overflow-hidden rounded-md max-h-56 overflow-scroll">
-                    <ul className="divide-y divide-gray-200">
-                      <li>
-                        <div className="p-3 hover:bg-gray-100">
-                          <button
-                            className="w-full text-left"
-                            // onClick={() => {
-                            //   setAddingCustomer(true)
-                            // }}
-                          >
-                            {" "}
-                            + Add Note
-                          </button>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
+        </div>
+        <div className="container flex justify-center">
+          <div className="flex-grow  sm:rounded-lg">
+            <div className="relative shadow-sm rounded-lg ">
+              <div className="py-3 px-4 rounded-lg bg-purple-100">
+                <div className="flex justify-between align-center py-2">
+                  <h3 className="text-lg align-middle leading-6 font-medium text-gray-900 w-h-10">
+                    Notes
+                  </h3>
+                </div>
+                <div className="bg-white shadow overflow-hidden rounded-md max-h-56 overflow-scroll">
+                  <ul className="divide-y divide-gray-200">
+                    <li>
+                      <div className="p-3 hover:bg-gray-100">
+                        <button
+                          className="w-full text-left"
+                          // onClick={() => {
+                          //   setAddingCustomer(true)
+                          // }}
+                        >
+                          {" "}
+                          + Add Note
+                        </button>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
       {/* MODAL for DELETE */}
 
       {modalActive ? (
