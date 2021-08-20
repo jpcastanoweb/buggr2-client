@@ -50,17 +50,17 @@ export default function SubscribePage() {
           </div>
         </div>
         <div class="bg-white">
-          <div class="max-w-xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
+          <div class="max-w-xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
             <div class="sm:flex sm:flex-col sm:align-center">
-              <h1 class="text-5xl font-extrabold text-gray-900 sm:text-center">
+              <h1 class="mt-5 text-4xl font-extrabold text-gray-900 sm:text-center">
                 Activate Your Account
               </h1>
-              <p class="mt-5 text-xl text-gray-500 sm:text-center">
+              <p class="mt-5 text-md text-gray-500 sm:text-center">
                 Start managing your team's projects and pay monthly or yearly.
               </p>
             </div>
-            <div class="mt-12 space-y-4 xs:flex xs:flex-column sm:mt-16 sm:space-y-0 sm:gap-6 lg:max-w-xl lg:mx-auto xl:max-w-none xl:mx-0 ">
-              <div class="border border-gray-200 rounded-lg shadow-sm divide-y divide-gray-200">
+            <div class="mt-4 space-y-4 xs:flex xs:flex-column sm:mt-8 sm:space-y-0 sm:gap-10 lg:max-w-xl lg:mx-auto xl:max-w-none xl:mx-0 ">
+              <div class="border border-gray-200 mb-5 rounded-lg shadow-sm divide-y divide-gray-200">
                 <div class="p-6">
                   <h2 class="text-lg leading-6 font-medium text-gray-900">
                     Monthly
@@ -90,7 +90,7 @@ export default function SubscribePage() {
               <div class="border border-gray-200 rounded-lg shadow-sm divide-y divide-gray-200">
                 <div class="p-6">
                   <h2 class="text-lg leading-6 font-medium text-gray-900">
-                    Freelancer
+                    Yearly
                   </h2>
                   <p class="mt-4 text-sm text-gray-500">
                     Gain access to Buggr's full set of features for a yearly fee
