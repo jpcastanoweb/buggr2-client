@@ -15,6 +15,7 @@ const reducers = (globalState, action) => {
         ...globalState,
         authStatus: true,
         user: action.payload,
+        activeSubscription: action.payload.activeSubscription,
       }
 
     case "SIGNOUT_USER":
@@ -24,7 +25,22 @@ const reducers = (globalState, action) => {
         token: null,
         user: null,
         authStatus: null,
+        activeSubscription: null,
+        sessionUrl: null,
       }
+
+    case "PURCHASE_SESSION_CREATED":
+      return {
+        ...globalState,
+        sessionUrl: action.payload.data,
+      }
+
+    case "ERASE_REDIRECT":
+      return {
+        ...globalState,
+        redirect_url: null,
+      }
+
     default:
       return globalState
   }

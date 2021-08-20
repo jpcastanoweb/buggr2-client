@@ -18,7 +18,7 @@ import OpportunityState from "../../context/Opportunity/OpportunityState"
 import Customers from "../Pages/Customers"
 import Opportunities from "../Pages/Opportunities"
 import Projects from "../Pages/Projects"
-import PrivateRoute from "../PrivateRoute"
+import PrivateActiveSubRoute from "../PrivateActiveSubRoute"
 import UserNav from "../misc/UserNav"
 import SingleCustomer from "../Pages/SingleCustomer"
 import SingleProject from "../Pages/SingleProject"
@@ -131,69 +131,69 @@ export default function MainApp(props) {
               <OpportunityState>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                   <Switch>
-                    <PrivateRoute
+                    <PrivateActiveSubRoute
                       exact
                       path={`${path}/customers`}
                       component={Customers}
                     />
-                    <PrivateRoute
+                    <PrivateActiveSubRoute
                       exact
                       path={`${path}/customers/new`}
                       component={AddCustomer}
                     />
-                    <PrivateRoute
+                    <PrivateActiveSubRoute
                       exact
                       path={`${path}/customers/:customerid`}
                       component={SingleCustomer}
                     />
-                    <PrivateRoute
+                    <PrivateActiveSubRoute
                       exact
                       path={`${path}/customers/edit/:customerid`}
                       component={EditCustomer}
                     />
 
-                    <PrivateRoute
+                    <PrivateActiveSubRoute
                       exact
                       path={`${path}/opportunities`}
                       component={Opportunities}
                     />
-                    <PrivateRoute
+                    <PrivateActiveSubRoute
                       exact
                       path={`${path}/opportunities/new`}
                       component={AddOpportunity}
                     />
-                    <PrivateRoute
+                    <PrivateActiveSubRoute
                       exact
                       path={`${path}/opportunities/:opportunityid`}
                       component={SingleOpporunity}
                     />
-                    <PrivateRoute
+                    <PrivateActiveSubRoute
                       exact
                       path={`${path}/opportunities/edit/:opportunityid`}
                       component={EditOpportunity}
                     />
 
-                    <PrivateRoute
+                    <PrivateActiveSubRoute
                       exact
                       path={`${path}/projects`}
                       component={Projects}
                     />
-                    <PrivateRoute
+                    <PrivateActiveSubRoute
                       exact
                       path={`${path}/projects/new`}
                       component={AddProject}
                     />
-                    <PrivateRoute
+                    <PrivateActiveSubRoute
                       exact
                       path={`${path}/projects/:projectid`}
                       component={SingleProject}
                     />
-                    <PrivateRoute
+                    <PrivateActiveSubRoute
                       exact
                       path={`${path}/projects/edit/:projectid`}
                       component={EditProject}
                     />
-                    <PrivateRoute
+                    <PrivateActiveSubRoute
                       exact
                       path={`${path}/settings`}
                       component={Settings}
