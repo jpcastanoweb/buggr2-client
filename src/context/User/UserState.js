@@ -66,7 +66,9 @@ const UserState = (props) => {
         type: "LOGIN_SUCCESS",
         payload: res.data,
       })
-    } catch (error) {}
+    } catch (error) {
+      if (error.response) throw Error(error.response.data)
+    }
   }
 
   const signout = async () => {

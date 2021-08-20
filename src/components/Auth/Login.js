@@ -25,8 +25,12 @@ export default function Signup() {
   }
 
   const sendData = (event) => {
-    event.preventDefault()
-    loginUser(data)
+    try {
+      event.preventDefault()
+      loginUser(data)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
