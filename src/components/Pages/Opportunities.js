@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react"
 import { Link } from "react-router-dom"
 import OrgContext from "../../context/Organization/OrgContext"
-import { toDateString } from "./../../_helperFunctions"
+import { toDateString, toDollarString } from "./../../_helperFunctions"
 
 export default function Opportunities() {
   const orgCtx = useContext(OrgContext)
@@ -50,18 +50,20 @@ export default function Opportunities() {
         <div>
           <p className="mb-1 text-l">Potential Business</p>
           <p className="text-xl">
-            {opportunities
-              ? opportunities.reduce((a, b) => {
-                  if (
-                    b.currentStage !== "Closed - Won" &&
-                    b.currentStage !== "Closed - Lost"
-                  ) {
-                    return a + b.dollarValue
-                  } else {
-                    return a
-                  }
-                }, 0)
-              : ""}{" "}
+            {toDollarString(
+              opportunities
+                ? opportunities.reduce((a, b) => {
+                    if (
+                      b.currentStage !== "Closed - Won" &&
+                      b.currentStage !== "Closed - Lost"
+                    ) {
+                      return a + b.dollarValue
+                    } else {
+                      return a
+                    }
+                  }, 0)
+                : ""
+            )}
           </p>
         </div>
       </div>
@@ -130,7 +132,9 @@ export default function Opportunities() {
                           {elem.currentStage ? elem.currentStage : "N/A"}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {elem.dollarValue ? elem.dollarValue : "N/A"}
+                          {toDollarString(
+                            elem.dollarValue ? elem.dollarValue : 0
+                          )}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {elem.forCustomer.name

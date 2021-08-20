@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react"
 import { Link } from "react-router-dom"
 import OrgContext from "../../context/Organization/OrgContext"
-import { toDateString } from "./../../_helperFunctions"
+import { toDateString, toDollarString } from "./../../_helperFunctions"
 
 export default function Projects() {
   const orgCtx = useContext(OrgContext)
@@ -51,7 +51,9 @@ export default function Projects() {
         <div>
           <p className="mb-1 text-l">Total Revenue</p>
           <p className="text-xl">
-            {projects ? projects.reduce((a, b) => a + b.dollarValue, 0) : ""}{" "}
+            {toDollarString(
+              projects ? projects.reduce((a, b) => a + b.dollarValue, 0) : ""
+            )}
           </p>
         </div>
       </div>
@@ -120,7 +122,9 @@ export default function Projects() {
                           {elem.currentStage ? elem.currentStage : "N/A"}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {elem.dollarValue ? elem.dollarValue : "N/A"}
+                          {toDollarString(
+                            elem.dollarValue ? elem.dollarValue : 0
+                          )}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {elem.forCustomer.name

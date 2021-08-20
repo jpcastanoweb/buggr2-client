@@ -3,7 +3,11 @@ import { useParams, Link, Redirect } from "react-router-dom"
 import OpportunityContext from "../../context/Opportunity/OpportunityContext"
 import CustomerContext from "../../context/Customer/CustomerContext"
 import { toDateString } from "./../../_helperFunctions"
-import { OPP_STAGES, OPP_STAGES_WITH_VALUES } from "./../../_helperFunctions"
+import {
+  OPP_STAGES,
+  OPP_STAGES_WITH_VALUES,
+  toDollarString,
+} from "./../../_helperFunctions"
 import CompletedStep from "../misc/CompletedStep"
 import CurrentStep from "../misc/CurrentStep"
 import UpcomingStep from "../misc/UpcomingStep"
@@ -209,7 +213,9 @@ export default function SingleOpportunity(props) {
         <div>
           <p className="mb-1 text-xs">Value</p>
           <p className="">
-            {opportunity.dollarValue ? opportunity.dollarValue : "N/A"}
+            {toDollarString(
+              opportunity.dollarValue ? opportunity.dollarValue : 0
+            )}
           </p>
         </div>
         <div>

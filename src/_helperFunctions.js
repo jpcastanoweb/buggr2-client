@@ -16,17 +16,6 @@ exports.PROJECT_STAGES = [
   "Maintenance",
 ]
 
-exports.toDateString = (dateS) => {
-  const date = new Date(dateS)
-  return (
-    date.getFullYear() +
-    "-" +
-    (date.getMonth() > 8 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1)) +
-    "-" +
-    (date.getDate() > 8 ? date.getDate() + 1 : "0" + (date.getDate() + 1))
-  )
-}
-
 exports.OPP_STAGES_WITH_VALUES = {
   New: 1,
   Discovery: 2,
@@ -43,4 +32,28 @@ exports.PROJECT_STAGES_WITH_VALUES = {
   Testing: 4,
   Delivered: 5,
   Maintenance: 6,
+}
+
+exports.toDateString = (dateS) => {
+  const date = new Date(dateS)
+  return (
+    date.getFullYear() +
+    "-" +
+    (date.getMonth() > 8 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1)) +
+    "-" +
+    (date.getDate() > 8 ? date.getDate() + 1 : "0" + (date.getDate() + 1))
+  )
+}
+
+exports.toDollarString = (val) => {
+  let formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+
+    // These options are needed to round to whole numbers if that's what you want.
+    minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+    maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+  })
+
+  return formatter.format(val)
 }

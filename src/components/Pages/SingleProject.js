@@ -6,6 +6,7 @@ import {
   PROJECT_STAGES,
   PROJECT_STAGES_WITH_VALUES,
   toDateString,
+  toDollarString,
 } from "./../../_helperFunctions"
 import CompletedStep from "../misc/CompletedStep"
 import CurrentStep from "../misc/CurrentStep"
@@ -152,7 +153,7 @@ export default function SingleProject(props) {
         <div>
           <p className="mb-1 text-xs">Value</p>
           <p className="">
-            {project.dollarValue ? project.dollarValue : "N/A"}
+            {toDollarString(project.dollarValue ? project.dollarValue : "N/A")}
           </p>
         </div>
         <div>

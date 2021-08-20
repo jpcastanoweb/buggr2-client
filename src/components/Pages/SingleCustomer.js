@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import { useParams, Link } from "react-router-dom"
 import CustomerContext from "../../context/Customer/CustomerContext"
-import { toDateString } from "./../../_helperFunctions"
+import { toDateString, toDollarString } from "./../../_helperFunctions"
 
 export default function SingleCustomer(props) {
   const { customerid } = useParams()
@@ -74,26 +74,30 @@ export default function SingleCustomer(props) {
         <div>
           <p className="mb-1 text-xs">Potential Business</p>
           <p className="">
-            {customer.opportunities
-              ? customer.opportunities.reduce((a, b) => {
-                  if (
-                    b.currentStage !== "Closed - Won" &&
-                    b.currentStage !== "Closed - Lost"
-                  ) {
-                    return a + b.dollarValue
-                  } else {
-                    return a
-                  }
-                }, 0)
-              : ""}{" "}
+            {toDollarString(
+              customer.opportunities
+                ? customer.opportunities.reduce((a, b) => {
+                    if (
+                      b.currentStage !== "Closed - Won" &&
+                      b.currentStage !== "Closed - Lost"
+                    ) {
+                      return a + b.dollarValue
+                    } else {
+                      return a
+                    }
+                  }, 0)
+                : ""
+            )}
           </p>
         </div>
         <div>
           <p className="mb-1 text-xs">Project Revenue</p>
           <p className="">
-            {customer.projects
-              ? customer.projects.reduce((a, b) => a + b.dollarValue, 0)
-              : ""}{" "}
+            {toDollarString(
+              customer.projects
+                ? customer.projects.reduce((a, b) => a + b.dollarValue, 0)
+                : ""
+            )}
           </p>
         </div>
         <div>
@@ -192,7 +196,9 @@ export default function SingleCustomer(props) {
                                 {elem.currentStage ? elem.currentStage : "N/A"}
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {elem.dollarValue ? elem.dollarValue : "N/A"}
+                                {toDollarString(
+                                  elem.dollarValue ? elem.dollarValue : 0
+                                )}
                               </td>
 
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -287,7 +293,9 @@ export default function SingleCustomer(props) {
                                 {elem.currentStage ? elem.currentStage : "N/A"}
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {elem.dollarValue ? elem.dollarValue : "N/A"}
+                                {toDollarString(
+                                  elem.dollarValue ? elem.dollarValue : 0
+                                )}
                               </td>
 
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

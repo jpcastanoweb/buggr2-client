@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import OrgContext from "../../context/Organization/OrgContext"
+import { toDollarString } from "../../_helperFunctions"
 
 export default function Customers() {
   const orgCtx = useContext(OrgContext)
@@ -55,11 +56,6 @@ export default function Customers() {
       </div>
       {/* Divider */}
       <hr className="border-gray-300 mb-3" />
-      <div className="pb-5 border-b border-gray-200">
-        <h3 className="text-lg leading-6 font-medium text-gray-900">
-          Sort Filter Search
-        </h3>
-      </div>
       {/* Table */}
       <div className="flex flex-col">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -84,6 +80,12 @@ export default function Customers() {
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
+                      Open New Business
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
                       Contact Name
                     </th>
 
@@ -103,10 +105,36 @@ export default function Customers() {
                           {elem.name}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          10000
+                          {toDollarString(
+                            elem.projects
+                              ? elem.projects.reduce((a, b) => {
+                                  return a + b.dollarValue
+                                }, 0)
+                              : ""
+                          )}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          Jane Cooper
+                          {toDollarString(
+                            elem.opportunities
+                              ? elem.opportunities.reduce((a, b) => {
+                                  if (
+                                    b.currentStage !== "Closed - Won" &&
+                                    b.currentStage !== "Closed - Lost"
+                                  ) {
+                                    return a + b.dollarValue
+                                  } else {
+                                    return a
+                                  }
+                                }, 0)
+                              : ""
+                          )}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {elem.mainContact
+                            ? elem.mainContact.firstName +
+                              " " +
+                              elem.mainContact.lastName
+                            : "N/A"}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <Link
