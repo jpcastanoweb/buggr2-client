@@ -215,7 +215,7 @@ export default function SingleProject(props) {
           </ol>
         </nav>
       </div>
-      <div className="bg-gray-100 grid grid-cols-3 xl:col-span-1 gap-8">
+      <div className="bg-gray-100 grid md:grid-cols-3 xl:col-span-1 gap-5">
         <div className="container flex justify-center">
           <div className="flex-grow sm:rounded-lg ">
             <div className="relative shadow-sm rounded-lg ">
@@ -270,7 +270,7 @@ export default function SingleProject(props) {
           </div>
         </div>
         <div className="container flex justify-center">
-          <div className="flex-grow  sm:rounded-lg">
+          <div className="flex-grow h-100 sm:rounded-lg">
             <div className="relative shadow-sm rounded-lg ">
               <div className="py-3 px-4 rounded-lg bg-purple-100">
                 <div className="flex justify-between align-center py-2">
@@ -278,22 +278,28 @@ export default function SingleProject(props) {
                     Notes
                   </h3>
                 </div>
-                <div className="bg-white shadow overflow-hidden rounded-md max-h-56 overflow-scroll">
-                  <ul className="divide-y divide-gray-200">
-                    <li>
-                      <div className="p-3 hover:bg-gray-100">
-                        <button
-                          className="w-full text-left"
-                          // onClick={() => {
-                          //   setAddingCustomer(true)
-                          // }}
-                        >
-                          {" "}
-                          + Add Note
-                        </button>
-                      </div>
-                    </li>
-                  </ul>
+                <div className="bg-white shadow overflow-hidden rounded-md h-52 max-h-56 overflow-scroll">
+                  <div className="w-100 h-full flex justify-center items-center text-gray-700 text-lg">
+                    Coming Soon
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="container flex justify-center">
+          <div className="flex-grow h-100 sm:rounded-lg">
+            <div className="relative shadow-sm rounded-lg ">
+              <div className="py-3 px-4 rounded-lg bg-purple-100">
+                <div className="flex justify-between align-center py-2">
+                  <h3 className="text-lg align-middle leading-6 font-medium text-gray-900 w-h-10">
+                    Documents
+                  </h3>
+                </div>
+                <div className="bg-white shadow overflow-hidden rounded-md h-52 max-h-56 overflow-scroll">
+                  <div className="w-100 h-full flex justify-center items-center text-gray-700 text-lg">
+                    Coming Soon
+                  </div>
                 </div>
               </div>
             </div>
