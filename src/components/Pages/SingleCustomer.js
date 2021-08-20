@@ -27,7 +27,6 @@ export default function SingleCustomer(props) {
   }
 
   const sendData = async (e) => {
-    setAddingContact(false)
     await submitAddContact({
       firstName: contactData.firstName,
       lastName: contactData.lastName,
@@ -35,6 +34,7 @@ export default function SingleCustomer(props) {
       phoneNumber: contactData.phoneNumber,
       ownerid: customer._id,
     })
+    setAddingContact(false)
   }
 
   useEffect(() => {
