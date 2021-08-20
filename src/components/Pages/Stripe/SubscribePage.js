@@ -9,6 +9,7 @@ export default function SubscribePage() {
     sessionUrl,
     startMonthlyCheckoutSession,
     startYearlyCheckoutSession,
+    signout,
     eraseRedirect,
   } = userCtx
 
@@ -49,8 +50,30 @@ export default function SubscribePage() {
             <span className="font-body text-3xl m-2">Buggr</span>
           </div>
         </div>
-        <div class="bg-white">
-          <div class="max-w-xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+        <div class="bg-white text-black">
+          <button
+            class="flex flex-row gap-5 mt-5 pl-5 text-black hover:text-gray-400"
+            onClick={() => {
+              signout()
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M7 16l-4-4m0 0l4-4m-4 4h18"
+              />
+            </svg>
+            <div className="">Sign Out</div>
+          </button>
+          <div class="max-w-xl mx-auto pt-5 pb-10 px-4 sm:px-6 lg:px-8">
             <div class="sm:flex sm:flex-col sm:align-center">
               <h1 class="mt-5 text-4xl font-extrabold text-gray-900 sm:text-center">
                 Activate Your Account
