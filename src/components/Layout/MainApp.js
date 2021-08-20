@@ -30,6 +30,7 @@ import AddCustomer from "../Pages/AddCustomer"
 import AddOpportunity from "../Pages/AddOpportunity"
 import AddProject from "../Pages/AddProject"
 import Settings from "./Settings"
+import Dashboard from "../Pages/Dashboard"
 
 export default function MainApp(props) {
   let { path } = useRouteMatch()
@@ -131,6 +132,11 @@ export default function MainApp(props) {
               <OpportunityState>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                   <Switch>
+                    <PrivateActiveSubRoute
+                      exact
+                      path={`${path}/`}
+                      component={Dashboard}
+                    />
                     <PrivateActiveSubRoute
                       exact
                       path={`${path}/customers`}

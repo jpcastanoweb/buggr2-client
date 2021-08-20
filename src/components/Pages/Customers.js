@@ -1,17 +1,26 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import OrgContext from "../../context/Organization/OrgContext"
 
 export default function Customers() {
   const orgCtx = useContext(OrgContext)
   const { customers, loadCustomers } = orgCtx
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    loadCustomers()
+    const load = async () => {
+      await loadCustomers()
+      setLoading(false)
+    }
+
+    load()
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return (
+  return loading ? (
+    <></>
+  ) : (
     <div>
       {/* Heading */}
       <div className="mb-3 md:flex md:items-center md:justify-between">

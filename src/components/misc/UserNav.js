@@ -21,11 +21,6 @@ export default function UserNav() {
       className="w-full h-14 bg-purple-900 flex flex-row p-3 justify-between items-center"
     >
       <div className="flex flex-row items-center text-indigo-100">
-        <img
-          className="inline-block h-6 w-6 rounded-full"
-          src={defaultPicture}
-          alt=""
-        />
         <span className="ml-3">
           {user.firstName} {user.lastName}
         </span>

@@ -26,7 +26,7 @@ export default function AuthRoute({ component: Component, ...props }) {
       render={() => {
         if (loading) return null
         return authStatus ? (
-          <Redirect to="/app" {...props} />
+          <Redirect to="/app/customers" {...props} />
         ) : (
           <Component {...props} />
         )

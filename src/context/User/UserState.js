@@ -137,7 +137,6 @@ const UserState = (props) => {
         {
           firstName: dataForm.firstName,
           lastName: dataForm.lastName,
-          pictureURL: dataForm.pictureUrl,
         }
       )
 
