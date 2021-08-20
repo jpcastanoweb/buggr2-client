@@ -150,6 +150,16 @@ export default function Signup() {
                   </div>
                 </div>
                 <div className="space-y-1">
+                  Pasword Requires:
+                  <ul className="list-disc pl-10">
+                    <li>At least 1 uppercase letter</li>
+                    <li>At least 1 lowercase letter</li>
+                    <li>At least 1 symbol </li>
+                    <li>At least 1 number</li>
+                    <li>At least 8 characters</li>
+                  </ul>
+                </div>
+                <div className="space-y-1">
                   <label
                     // for="password"
                     className="block text-sm font-medium text-gray-700"
