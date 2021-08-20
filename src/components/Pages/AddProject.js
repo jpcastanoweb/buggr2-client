@@ -6,7 +6,7 @@ import { toDateString, PROJECT_STAGES } from "../../_helperFunctions"
 
 export default function EditProject() {
   const projectCtx = useContext(ProjectContext)
-  const { projectid, submitCreateProject } = projectCtx
+  const { submitCreateProject } = projectCtx
 
   const orgCtx = useContext(OrgContext)
   const { org, loadOrg } = orgCtx

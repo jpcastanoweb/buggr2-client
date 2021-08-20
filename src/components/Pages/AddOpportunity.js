@@ -6,7 +6,7 @@ import { toDateString, OPP_STAGES } from "../../_helperFunctions"
 
 export default function EditOpportunity() {
   const opportunityCtx = useContext(OpportunityContext)
-  const { opportunityid, submitCreateOpportunity } = opportunityCtx
+  const { submitCreateOpportunity } = opportunityCtx
 
   const orgCtx = useContext(OrgContext)
   const { org, loadOrg } = orgCtx
@@ -16,7 +16,7 @@ export default function EditOpportunity() {
     openedDate: null,
     closeDate: null,
     dollarValue: 0,
-    currentStage: "Analysis",
+    currentStage: "New",
     belongsTo: org._id,
     forCustomer: "",
   })
@@ -210,11 +210,7 @@ export default function EditOpportunity() {
                       }}
                     >
                       {OPP_STAGES.map((e, i) => {
-                        return e === data.currentStage ? (
-                          <option key={i} value={e} selected>
-                            {e}
-                          </option>
-                        ) : (
+                        return (
                           <option key={i} value={e}>
                             {e}
                           </option>
