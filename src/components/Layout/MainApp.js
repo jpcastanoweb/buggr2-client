@@ -77,9 +77,9 @@ export default function MainApp(props) {
                   to="/app/customers"
                   className={
                     (activeTab === "customers"
-                      ? "border-r-4 border-green-400  flex flex-row justify-start items-center"
+                      ? "border-r-4 border-green-400"
                       : "") +
-                    "px-6 text-lg text-indigo-100 flex flex-row justify-start items-center hover:bg-purple-700 group flex items-center px-2 py-2 text-sm font-medium "
+                    "px-6 text-lg border-green-400 text-indigo-100 flex flex-row justify-start items-center hover:bg-purple-700 group flex items-center px-6 py-2 text-sm font-medium "
                   }
                   onClick={() => {
                     setActiveTab("customers")
@@ -105,13 +105,13 @@ export default function MainApp(props) {
                 <Link
                   to="/app/opportunities"
                   className={
-                    (activeTab === "customers"
-                      ? "border-r-4 border-green-400  flex flex-row justify-start items-center"
+                    (activeTab === "opportunities"
+                      ? "border-r-4 border-green-400"
                       : "") +
-                    "px-6 text-lg text-indigo-100 flex flex-row justify-start items-center hover:bg-purple-700 group flex items-center px-2 py-2 text-sm font-medium "
+                    "px-6 text-lg border-green-400 text-indigo-100 flex flex-row justify-start items-center hover:bg-purple-700 group flex items-center px-6 py-2 text-sm font-medium "
                   }
                   onClick={() => {
-                    setActiveTab("customers")
+                    setActiveTab("opportunities")
                   }}
                 >
                   <svg
@@ -135,13 +135,13 @@ export default function MainApp(props) {
                 <Link
                   to="/app/projects"
                   className={
-                    (activeTab === "customers"
-                      ? "border-r-4 border-green-400  flex flex-row justify-start items-center"
+                    (activeTab === "projects"
+                      ? "border-r-4 border-green-400"
                       : "") +
-                    "px-6 text-lg text-indigo-100 flex flex-row justify-start items-center hover:bg-purple-700 group flex items-center px-2 py-2 text-sm font-medium "
+                    "px-6 text-lg border-green-400 text-indigo-100 flex flex-row justify-start items-center hover:bg-purple-700 group flex items-center px-6 py-2 text-sm font-medium "
                   }
                   onClick={() => {
-                    setActiveTab("customers")
+                    setActiveTab("projects")
                   }}
                 >
                   <svg
