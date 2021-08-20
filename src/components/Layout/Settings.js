@@ -4,18 +4,41 @@ import UserContext from "./../../context/User/UserContext.js"
 
 export default function Settings() {
   const userCtx = useContext(UserContext)
-  const { user } = userCtx
+  const { user, submitEditAccount, submitEditProfile } = userCtx
 
-  const [accountData, setAccountData] = useState({
+  const [data, setData] = useState({
     email: user.email,
     password: user.password,
-  })
-
-  const [profileData, setProfileData] = useState({
     firstName: user.firstName,
     lastName: user.lastName,
     pictureUrl: user.pictureUrl,
   })
+
+  const handleChange = (e) => {
+    e.preventDefault()
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  const sendAccountData = (e) => {
+    e.preventDefault()
+    submitEditAccount({
+      userid: user._id,
+      email: data.email,
+    })
+  }
+
+  const sendProfileData = (e) => {
+    e.preventDefault()
+    submitEditProfile({
+      userid: user._id,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      pictureURL: data.pictureUrl,
+    })
+  }
 
   return (
     <div className="mb-3 ">
@@ -31,10 +54,6 @@ export default function Settings() {
               <h3 class="text-lg leading-6 font-medium text-gray-900">
                 Account
               </h3>
-              <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                This information will be displayed publicly so be careful what
-                you share.
-              </p>
             </div>
 
             <div class="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
@@ -48,30 +67,29 @@ export default function Settings() {
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                   <input
                     type="text"
-                    name="first-name"
-                    id="first-name"
-                    autocomplete="given-name"
+                    name="email"
+                    id="email"
+                    autocomplete="email"
+                    value={data.email}
                     class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                    onChange={(e) => {
+                      handleChange(e)
+                    }}
                   />
                 </div>
               </div>
-
-              <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                <label
-                  for="last-name"
-                  class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+            </div>
+            <div class="pt-5">
+              <div class="flex justify-end">
+                <button
+                  type="submit"
+                  class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  onClick={(e) => {
+                    sendAccountData(e)
+                  }}
                 >
-                  Password
-                </label>
-                <div class="mt-1 sm:mt-0 sm:col-span-2">
-                  <input
-                    type="text"
-                    name="last-name"
-                    id="last-name"
-                    autocomplete="family-name"
-                    class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-                  />
-                </div>
+                  Save
+                </button>
               </div>
             </div>
           </form>
@@ -80,24 +98,25 @@ export default function Settings() {
               <h3 class="text-lg leading-6 font-medium text-gray-900">
                 Profile
               </h3>
-              <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                Use a permanent address where you can receive mail.
-              </p>
             </div>
             <div class="space-y-6 sm:space-y-5">
               <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                 <label
-                  for="first-name"
+                  for="firstName"
                   class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                 >
-                  First name
+                  First Name
                 </label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                   <input
                     type="text"
-                    name="first-name"
-                    id="first-name"
-                    autocomplete="given-name"
+                    name="firstName"
+                    id="firstName"
+                    autocomplete="firstName"
+                    value={data.firstName}
+                    onChange={(e) => {
+                      handleChange(e)
+                    }}
                     class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
                   />
                 </div>
@@ -105,7 +124,7 @@ export default function Settings() {
 
               <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                 <label
-                  for="last-name"
+                  for="lastName"
                   class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                 >
                   Last name
@@ -113,9 +132,13 @@ export default function Settings() {
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                   <input
                     type="text"
-                    name="last-name"
-                    id="last-name"
-                    autocomplete="family-name"
+                    name="lastName"
+                    id="lastName"
+                    autocomplete="lastName"
+                    value={data.lastName}
+                    onChange={(e) => {
+                      handleChange(e)
+                    }}
                     class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
                   />
                 </div>
@@ -141,6 +164,7 @@ export default function Settings() {
                     </span>
                     <button
                       type="button"
+                      disabled={true}
                       class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                       Change
@@ -149,24 +173,20 @@ export default function Settings() {
                 </div>
               </div>
             </div>
+            <div class="pt-5">
+              <div class="flex justify-end">
+                <button
+                  type="submit"
+                  class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  onClick={(e) => {
+                    sendProfileData(e)
+                  }}
+                >
+                  Save
+                </button>
+              </div>
+            </div>
           </form>
-        </div>
-
-        <div class="pt-5">
-          <div class="flex justify-end">
-            <button
-              type="button"
-              class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Save
-            </button>
-          </div>
         </div>
       </div>
     </div>

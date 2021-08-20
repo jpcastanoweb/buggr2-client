@@ -75,6 +75,44 @@ const UserState = (props) => {
     })
   }
 
+  const submitEditAccount = async (dataForm) => {
+    try {
+      const res = await axiosClient.post(
+        `/api/users/${dataForm.userid}/update-email`,
+        {
+          email: dataForm.email,
+        }
+      )
+
+      dispatch({
+        type: "GET_USER_INFO",
+        payload: res.data,
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const submitEditProfile = async (dataForm) => {
+    try {
+      const res = await axiosClient.post(
+        `/api/users/${dataForm.userid}/update-profile`,
+        {
+          firstName: dataForm.firstName,
+          lastName: dataForm.lastName,
+          pictureURL: dataForm.pictureUrl,
+        }
+      )
+
+      dispatch({
+        type: "GET_USER_INFO",
+        payload: res.data,
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -85,6 +123,8 @@ const UserState = (props) => {
         verifyingToken,
         loginUser,
         signout,
+        submitEditAccount,
+        submitEditProfile,
       }}
     >
       {props.children}
