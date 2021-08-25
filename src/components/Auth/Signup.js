@@ -5,6 +5,10 @@ import React, { useState, useContext } from "react"
 import UserContext from "./../../context/User/UserContext"
 import { Link } from "react-router-dom"
 
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/
+const emailRegex =
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
 export default function Signup() {
   const userCtx = useContext(UserContext)
 
@@ -15,7 +19,11 @@ export default function Signup() {
     lastName: "",
     email: "",
     password: "",
-    confirmPassword: "",
+  })
+  const [errors, setErrors] = useState({
+    firstName: "",
+    email: "",
+    password: "",
   })
 
   const handleChange = (event) => {
@@ -25,11 +33,53 @@ export default function Signup() {
       ...data,
       [event.target.name]: event.target.value,
     })
+
+    const { name, value } = event.target
+
+    switch (name) {
+      case "firstName":
+        setErrors({
+          ...errors,
+          [name]:
+            value.length < 2 ? "First Name must be 2 characters long!" : "",
+        })
+        break
+      case "email":
+        setErrors({
+          ...errors,
+          [name]: emailRegex.test(value) ? "" : "Email is not valid!",
+        })
+        break
+      case "password":
+        setErrors({
+          ...errors,
+          [name]:
+            passwordRegex.test(value) && value.length > 7
+              ? ""
+              : "Password needs to have at least 8 characters and must contain at least one number, one lowercase and one uppercase letter.",
+        })
+        break
+
+      default:
+        break
+    }
+
+    console.log(errors)
   }
 
   const sendData = (event) => {
     event.preventDefault()
-    registerUser(data)
+
+    if (validateForm(errors)) registerUser(data)
+  }
+
+  const validateForm = (errors) => {
+    let valid = true
+    Object.values(errors).forEach(
+      // if we have an error string set valid to false
+      (val) => val.length > 0 && (valid = false)
+    )
+    return valid
   }
 
   return (
@@ -67,47 +117,62 @@ export default function Signup() {
           <div className="mt-8">
             <div className="mt-6">
               <form
-                className="space-y-6"
+                className="space-y-4"
                 onSubmit={(e) => {
                   sendData(e)
                 }}
+                noValidate
               >
-                <div className=" flex flex-row justify-between">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      First Name
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        id="firstName"
-                        name="firstName"
-                        type="text"
-                        required
-                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        onChange={(e) => {
-                          handleChange(e)
-                        }}
-                      />
+                <div>
+                  <div className="flex flex-row justify-between">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        First Name
+                      </label>
+                      <div className="mt-1">
+                        <input
+                          id="firstName"
+                          name="firstName"
+                          type="text"
+                          required
+                          className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                          onChange={(e) => {
+                            handleChange(e)
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Last Name
+                      </label>
+                      <div className="mt-1">
+                        <input
+                          id="lastName"
+                          name="lastName"
+                          type="text"
+                          required
+                          className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                          onChange={(e) => {
+                            handleChange(e)
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Last Name
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        id="lastName"
-                        name="lastName"
-                        type="text"
-                        required
-                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        onChange={(e) => {
-                          handleChange(e)
-                        }}
-                      />
+                  {errors.firstName.length > 0 && (
+                    <div class="rounded-md bg-red-50 p-2 mt-1">
+                      <div class="flex">
+                        <div class="ml-2">
+                          <div class="text-sm text-red-700">
+                            <span className="error">{errors.firstName}</span>{" "}
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
+
                 <div>
                   <label
                     // for="email"
@@ -127,6 +192,17 @@ export default function Signup() {
                       }}
                     />
                   </div>
+                  {errors.email.length > 0 && (
+                    <div class="rounded-md bg-red-50 p-2 mt-1">
+                      <div class="flex">
+                        <div class="ml-2">
+                          <div class="text-sm text-red-700">
+                            <span className="error">{errors.email}</span>{" "}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div className="space-y-1">
@@ -148,36 +224,17 @@ export default function Signup() {
                       }}
                     />
                   </div>
-                </div>
-                <div className="space-y-1">
-                  Pasword Requires:
-                  <ul className="list-disc pl-10">
-                    <li>At least 1 uppercase letter</li>
-                    <li>At least 1 lowercase letter</li>
-                    <li>At least 1 symbol </li>
-                    <li>At least 1 number</li>
-                    <li>At least 8 characters</li>
-                  </ul>
-                </div>
-                <div className="space-y-1">
-                  <label
-                    // for="password"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Confirm Password
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      type="password"
-                      required
-                      className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      onChange={(e) => {
-                        handleChange(e)
-                      }}
-                    />
-                  </div>
+                  {errors.password.length > 0 && (
+                    <div class="rounded-md bg-red-50 p-2 mt-1">
+                      <div class="flex">
+                        <div class="ml-2">
+                          <div class="text-sm text-red-700">
+                            <span className="error">{errors.password}</span>{" "}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div>
