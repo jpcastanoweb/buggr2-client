@@ -1,5 +1,4 @@
 import React, { useContext } from "react"
-import defaultPicture from "./../../images/defaultPicture2.png"
 import UserContext from "../../context/User/UserContext"
 import { Link } from "react-router-dom"
 import useComponentVisible from "../../hooks/useComponentVisible"

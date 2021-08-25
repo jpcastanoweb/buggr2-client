@@ -5,7 +5,7 @@ import OrgContext from "../../context/Organization/OrgContext"
 
 export default function EditCustomer(props) {
   const customerCtx = useContext(CustomerContext)
-  const { customerid, submitCreateCustomer } = customerCtx
+  const { submitCreateCustomer } = customerCtx
 
   const orgCtx = useContext(OrgContext)
   const { org, loadOrg } = orgCtx

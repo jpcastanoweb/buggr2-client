@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react"
+import React, { useReducer } from "react"
 import UserContext from "./UserContext"
 import UserReducer from "./UserReducer"
 
@@ -22,7 +22,6 @@ const UserState = (props) => {
   const registerUser = async (dataForm) => {
     try {
       const res = await axiosClient.post("/api/users/register", dataForm)
-      // sendCustomerToStripe(dataForm)
 
       dispatch({
         type: "REGISTER_SUCCESS",
@@ -67,7 +66,7 @@ const UserState = (props) => {
         payload: res.data,
       })
     } catch (error) {
-      if (error.response) throw Error(error.response.data)
+      if (error.response) return error.response.data
     }
   }
 
@@ -160,7 +159,6 @@ const UserState = (props) => {
       const response = await axiosClient.get(
         `/api/stripe/request-session/${session_id}`
       )
-      console.log(response)
       return response.data
     } catch (error) {
       console.log(error)
@@ -172,7 +170,6 @@ const UserState = (props) => {
       const response = await axiosClient.get(
         `/api/stripe/request-subscription/${subscription_id}`
       )
-      console.log(response)
       return response.data
     } catch (error) {
       console.log(error)
@@ -180,8 +177,6 @@ const UserState = (props) => {
   }
 
   const setUserSubscriptionStatus = async (subscription, userid) => {
-    console.log("Subscription in state", subscription)
-    console.log("User id in state", userid)
     try {
       const response = await axiosClient.post(
         `/api/users/${userid}/update-subscription-status`,

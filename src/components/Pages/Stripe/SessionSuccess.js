@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react"
-import { useParams, useLocation, Link } from "react-router-dom"
+import { useLocation, Link } from "react-router-dom"
 import UserContext from "../../../context/User/UserContext"
 
 //custom hook
@@ -8,7 +8,6 @@ function useQuery() {
 }
 
 export default function SessionSuccess() {
-  const { session_id } = useParams()
   const userCtx = useContext(UserContext)
   const {
     user,
@@ -17,7 +16,6 @@ export default function SessionSuccess() {
     setUserSubscriptionStatus,
   } = userCtx
   const query = useQuery()
-  console.log(query.get("session_id"))
 
   useEffect(() => {
     const submitRequestSession = async () => {
@@ -34,6 +32,7 @@ export default function SessionSuccess() {
     }
 
     submitRequestSession()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
