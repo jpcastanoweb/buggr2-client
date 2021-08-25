@@ -1,6 +1,9 @@
 import React, { useContext, useState } from "react"
 import UserContext from "./../../context/User/UserContext.js"
 
+const emailRegex =
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
 export default function Settings() {
   const userCtx = useContext(UserContext)
   const { user, submitEditAccount, submitEditProfile } = userCtx
@@ -11,6 +14,12 @@ export default function Settings() {
     firstName: user.firstName,
     lastName: user.lastName,
   })
+  const [accountErrors, setAccountErrors] = useState({
+    email: "",
+  })
+  const [profileErrors, setProfileErrors] = useState({
+    firstName: "",
+  })
 
   const handleChange = (e) => {
     e.preventDefault()
@@ -18,23 +27,57 @@ export default function Settings() {
       ...data,
       [e.target.name]: e.target.value,
     })
+
+    const { name, value } = e.target
+
+    switch (name) {
+      case "email":
+        setAccountErrors({
+          ...accountErrors,
+          [name]: emailRegex.test(value) ? "" : "Email is not valid!",
+        })
+        break
+      case "firstName":
+        setProfileErrors({
+          ...profileErrors,
+          [name]:
+            value.length < 2 ? "First Name must be 2 characters long!" : "",
+        })
+        break
+
+      default:
+        break
+    }
   }
 
   const sendAccountData = (e) => {
     e.preventDefault()
-    submitEditAccount({
-      userid: user._id,
-      email: data.email,
-    })
+    if (validateForm(accountErrors)) {
+      submitEditAccount({
+        userid: user._id,
+        email: data.email,
+      })
+    }
   }
 
   const sendProfileData = (e) => {
     e.preventDefault()
-    submitEditProfile({
-      userid: user._id,
-      firstName: data.firstName,
-      lastName: data.lastName,
-    })
+    if (validateForm(profileErrors)) {
+      submitEditProfile({
+        userid: user._id,
+        firstName: data.firstName,
+        lastName: data.lastName,
+      })
+    }
+  }
+
+  const validateForm = (errors) => {
+    let valid = true
+    Object.values(errors).forEach(
+      // if we have an error string set valid to false
+      (val) => val.length > 0 && (valid = false)
+    )
+    return valid
   }
 
   return (
@@ -46,7 +89,7 @@ export default function Settings() {
       </div>
       <div class="space-y-8 divide-y divide-gray-200">
         <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
-          <form>
+          <form noValidate>
             <div>
               <h3 class="text-lg leading-6 font-medium text-gray-900">
                 Account
@@ -74,6 +117,17 @@ export default function Settings() {
                     }}
                   />
                 </div>
+                {accountErrors.email.length > 0 && (
+                  <div class="rounded-md bg-red-50 p-2 mt-1">
+                    <div class="flex">
+                      <div class="ml-2">
+                        <div class="text-sm text-red-700">
+                          <span className="error">{accountErrors.email}</span>{" "}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
             <div class="pt-5">
@@ -90,7 +144,7 @@ export default function Settings() {
               </div>
             </div>
           </form>
-          <form class="pt-8 space-y-6 sm:pt-10 sm:space-y-5">
+          <form class="pt-8 space-y-6 sm:pt-10 sm:space-y-5" noValidate>
             <div>
               <h3 class="text-lg leading-6 font-medium text-gray-900">
                 Profile
@@ -117,6 +171,19 @@ export default function Settings() {
                     class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
                   />
                 </div>
+                {profileErrors.firstName.length > 0 && (
+                  <div class="rounded-md bg-red-50 p-2 mt-1">
+                    <div class="flex">
+                      <div class="ml-2">
+                        <div class="text-sm text-red-700">
+                          <span className="error">
+                            {profileErrors.firstName}
+                          </span>{" "}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">

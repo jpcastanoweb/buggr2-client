@@ -21,6 +21,10 @@ export default function EditOpportunity() {
     forCustomer: "",
   })
   const [editing, setEditing] = useState(true)
+  const [errors, setErrors] = useState({
+    title: "",
+    forCustomer: "",
+  })
 
   const handleChange = (e) => {
     e.preventDefault(e)
@@ -28,18 +32,51 @@ export default function EditOpportunity() {
       ...data,
       [e.target.name]: e.target.value,
     })
+
+    const { name, value } = e.target
+
+    switch (name) {
+      case "title":
+        setErrors({
+          ...errors,
+          [name]: value.length < 1 ? "Opportunity's Title cannot be empty" : "",
+        })
+        break
+      case "forCustomer":
+        setErrors({
+          ...errors,
+          [name]:
+            value === "Select Customer" ? "Customer cannot be left blank" : "",
+        })
+        break
+
+      default:
+        break
+    }
   }
 
   const sendData = async (e) => {
     e.preventDefault()
-    try {
-      await submitCreateOpportunity(data)
-      // Redirect to customer page
-      loadOrg(org._id)
-      setEditing(false)
-    } catch (error) {
-      console.log(error)
+
+    if (validateForm(errors)) {
+      try {
+        await submitCreateOpportunity(data)
+        // Redirect to customer page
+        loadOrg(org._id)
+        setEditing(false)
+      } catch (error) {
+        console.log(error)
+      }
     }
+  }
+
+  const validateForm = (errors) => {
+    let valid = true
+    Object.values(errors).forEach(
+      // if we have an error string set valid to false
+      (val) => val.length > 0 && (valid = false)
+    )
+    return valid
   }
 
   return editing ? (
@@ -85,6 +122,17 @@ export default function EditOpportunity() {
                     />
                   </div>
                 </div>
+                {errors.title.length > 0 && (
+                  <div class="rounded-md bg-red-50 p-2 mt-1">
+                    <div class="flex">
+                      <div class="ml-2">
+                        <div class="text-sm text-red-700">
+                          <span className="error">{errors.title}</span>{" "}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
               <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                 <label
@@ -119,6 +167,17 @@ export default function EditOpportunity() {
                     </select>
                   </div>
                 </div>
+                {errors.forCustomer.length > 0 && (
+                  <div class="rounded-md bg-red-50 p-2 mt-1">
+                    <div class="flex">
+                      <div class="ml-2">
+                        <div class="text-sm text-red-700">
+                          <span className="error">{errors.forCustomer}</span>{" "}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
               <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                 <label

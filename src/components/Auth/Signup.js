@@ -63,8 +63,6 @@ export default function Signup() {
       default:
         break
     }
-
-    console.log(errors)
   }
 
   const sendData = (event) => {

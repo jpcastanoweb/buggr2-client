@@ -17,6 +17,9 @@ export default function EditOpportunity() {
   const [data, setData] = useState(opportunity)
   const [editing, setEditing] = useState(true)
   const [loading, setLoading] = useState(true)
+  const [errors, setErrors] = useState({
+    title: "",
+  })
 
   const handleChange = (e) => {
     e.preventDefault(e)
@@ -24,17 +27,42 @@ export default function EditOpportunity() {
       ...data,
       [e.target.name]: e.target.value,
     })
+
+    const { name, value } = e.target
+
+    switch (name) {
+      case "title":
+        setErrors({
+          ...errors,
+          [name]: value.length < 1 ? "Opportunity's Title cannot be empty" : "",
+        })
+        break
+
+      default:
+        break
+    }
   }
 
   const sendData = async (e) => {
     e.preventDefault()
-    try {
-      await submitEditOpportunity(data)
-      // Redirect to customer page
-      setEditing(false)
-    } catch (error) {
-      console.log(error)
+    if (validateForm(errors)) {
+      try {
+        await submitEditOpportunity(data)
+        // Redirect to customer page
+        setEditing(false)
+      } catch (error) {
+        console.log(error)
+      }
     }
+  }
+
+  const validateForm = (errors) => {
+    let valid = true
+    Object.values(errors).forEach(
+      // if we have an error string set valid to false
+      (val) => val.length > 0 && (valid = false)
+    )
+    return valid
   }
 
   useEffect(() => {
@@ -91,6 +119,17 @@ export default function EditOpportunity() {
                       />
                     </div>
                   </div>
+                  {errors.title.length > 0 && (
+                    <div class="rounded-md bg-red-50 p-2 mt-1">
+                      <div class="flex">
+                        <div class="ml-2">
+                          <div class="text-sm text-red-700">
+                            <span className="error">{errors.title}</span>{" "}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                   <label

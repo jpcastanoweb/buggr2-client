@@ -3,6 +3,9 @@ import { useParams, Link } from "react-router-dom"
 import CustomerContext from "../../context/Customer/CustomerContext"
 import { toDateString, toDollarString } from "./../../_helperFunctions"
 
+const emailRegex =
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
 export default function SingleCustomer(props) {
   const { customerid } = useParams()
 
@@ -17,6 +20,10 @@ export default function SingleCustomer(props) {
     ownerid: null,
   })
   const [loading, setLoading] = useState(true)
+  const [errors, setErrors] = useState({
+    firstName: "",
+    email: "",
+  })
 
   const handleAddContactChange = (e) => {
     e.preventDefault()
@@ -24,17 +31,51 @@ export default function SingleCustomer(props) {
       ...contactData,
       [e.target.name]: e.target.value,
     })
+
+    const { name, value } = e.target
+
+    switch (name) {
+      case "firstName":
+        setErrors({
+          ...errors,
+          [name]:
+            value.length < 2
+              ? "First Name must be at least 2 characters long!"
+              : "",
+        })
+        break
+      case "email":
+        setErrors({
+          ...errors,
+          [name]: emailRegex.test(value) ? "" : "Email is not valid!",
+        })
+        break
+
+      default:
+        break
+    }
   }
 
   const sendData = async (e) => {
-    await submitAddContact({
-      firstName: contactData.firstName,
-      lastName: contactData.lastName,
-      email: contactData.email,
-      phoneNumber: contactData.phoneNumber,
-      ownerid: customer._id,
-    })
-    setAddingContact(false)
+    if (validateForm(errors)) {
+      await submitAddContact({
+        firstName: contactData.firstName,
+        lastName: contactData.lastName,
+        email: contactData.email,
+        phoneNumber: contactData.phoneNumber,
+        ownerid: customer._id,
+      })
+      setAddingContact(false)
+    }
+  }
+
+  const validateForm = (errors) => {
+    let valid = true
+    Object.values(errors).forEach(
+      // if we have an error string set valid to false
+      (val) => val.length > 0 && (valid = false)
+    )
+    return valid
   }
 
   useEffect(() => {
@@ -429,6 +470,7 @@ export default function SingleCustomer(props) {
             onSubmit={(e) => {
               sendData(e)
             }}
+            noValidate
           >
             <div
               class="fixed z-10 inset-0 overflow-y-auto"
@@ -495,7 +537,6 @@ export default function SingleCustomer(props) {
                                 name="firstName"
                                 id="firstName"
                                 autocomplete="firstName"
-                                required
                                 class="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                                 onChange={(e) => {
                                   handleAddContactChange(e)
@@ -504,6 +545,19 @@ export default function SingleCustomer(props) {
                             </div>
                           </div>
                         </div>
+                        {errors.firstName.length > 0 && (
+                          <div class="rounded-md bg-red-50 p-2 mt-1">
+                            <div class="flex">
+                              <div class="ml-2">
+                                <div class="text-sm text-red-700">
+                                  <span className="error">
+                                    {errors.firstName}
+                                  </span>{" "}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
                         <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                           <label
                             for="name"
@@ -518,7 +572,6 @@ export default function SingleCustomer(props) {
                                 name="lastName"
                                 id="lastName"
                                 autocomplete="lastName"
-                                required
                                 class="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                                 onChange={(e) => {
                                   handleAddContactChange(e)
@@ -541,7 +594,6 @@ export default function SingleCustomer(props) {
                                 name="email"
                                 id="email"
                                 autocomplete="email"
-                                required
                                 class="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                                 onChange={(e) => {
                                   handleAddContactChange(e)
@@ -550,6 +602,17 @@ export default function SingleCustomer(props) {
                             </div>
                           </div>
                         </div>
+                        {errors.email.length > 0 && (
+                          <div class="rounded-md bg-red-50 p-2 mt-1">
+                            <div class="flex">
+                              <div class="ml-2">
+                                <div class="text-sm text-red-700">
+                                  <span className="error">{errors.email}</span>{" "}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
                         <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                           <label
                             for="name"
@@ -564,7 +627,6 @@ export default function SingleCustomer(props) {
                                 name="phoneNumber"
                                 id="phoneNumber"
                                 autocomplete="phoneNumber"
-                                required
                                 class="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                                 onChange={(e) => {
                                   handleAddContactChange(e)
@@ -589,6 +651,10 @@ export default function SingleCustomer(props) {
                       onClick={(e) => {
                         e.preventDefault()
                         setAddingContact(false)
+                        setErrors({
+                          firstName: "",
+                          email: "",
+                        })
                       }}
                     >
                       Cancel
