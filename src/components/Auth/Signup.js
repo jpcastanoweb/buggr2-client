@@ -68,6 +68,24 @@ export default function Signup() {
   const sendData = (event) => {
     event.preventDefault()
 
+    if (data.firstName.length === 0 || data.email.length === 0) {
+      if (data.firstName.length === 0) {
+        setErrors({
+          ...errors,
+          firstName: "First Name cannot be left blank.",
+        })
+      }
+
+      if (data.email.length === 0) {
+        setErrors({
+          ...errors,
+          email: "Email cannot be left blank.",
+        })
+
+        return
+      }
+    }
+
     if (validateForm(errors)) registerUser(data)
   }
 
