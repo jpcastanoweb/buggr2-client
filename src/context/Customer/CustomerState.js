@@ -63,6 +63,18 @@ const CustomerState = (props) => {
     }
   }
 
+  const submitAddNote = async (data) => {
+    try {
+      const res = await axiosClient.post("/api/notes/addnote", data)
+      dispatch({
+        type: "UPDATE_CUSTOMER",
+        payload: res.data,
+      })
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
   return (
     <CustomerContext.Provider
       value={{
@@ -72,6 +84,7 @@ const CustomerState = (props) => {
         submitEditCustomer,
         submitCreateCustomer,
         submitAddContact,
+        submitAddNote,
       }}
     >
       {props.children}

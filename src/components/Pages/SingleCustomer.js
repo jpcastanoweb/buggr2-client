@@ -10,14 +10,25 @@ export default function SingleCustomer(props) {
   const { customerid } = useParams()
 
   const customerCtx = useContext(CustomerContext)
-  const { customer, loadCustomer, submitAddContact } = customerCtx
+  const { customer, loadCustomer, submitAddContact, submitAddNote } =
+    customerCtx
   const [addingContact, setAddingContact] = useState(false)
+  const [addingNote, setAddingNote] = useState(false)
   const [contactData, setContactData] = useState({
     firstName: null,
     lastName: null,
     email: null,
     phoneNumber: null,
     ownerid: null,
+  })
+  const [noteData, setNoteData] = useState({
+    title: "",
+    content: "",
+  })
+  const [viewNote, setViewNote] = useState(false)
+  const [currentNote, setCurrentNote] = useState({
+    title: "",
+    content: "",
   })
   const [loading, setLoading] = useState(true)
   const [errors, setErrors] = useState({
@@ -56,6 +67,14 @@ export default function SingleCustomer(props) {
     }
   }
 
+  const handleAddNoteChange = (e) => {
+    e.preventDefault()
+    setNoteData({
+      ...noteData,
+      [e.target.name]: e.target.value,
+    })
+  }
+
   const sendData = async (e) => {
     if (validateForm(errors)) {
       await submitAddContact({
@@ -67,6 +86,17 @@ export default function SingleCustomer(props) {
       })
       setAddingContact(false)
     }
+  }
+
+  const sendNoteData = async (e) => {
+    const fullData = {
+      title: noteData.title,
+      content: noteData.content,
+      onModel: "Customer",
+      ownerid: customer._id,
+    }
+    await submitAddNote(fullData)
+    setAddingNote(false)
   }
 
   const validateForm = (errors) => {
@@ -373,6 +403,7 @@ export default function SingleCustomer(props) {
             </div>
           </div>
         </div>
+        {/* Notes, Contacts */}
         <div className="bg-gray-100 grid md:grid-cols-3 xl:grid-cols-1 gap-8">
           <div className="container flex justify-center">
             <div className="flex-grow sm:rounded-lg ">
@@ -386,7 +417,7 @@ export default function SingleCustomer(props) {
                   <div className="bg-white shadow overflow-hidden rounded-md max-h-52 overflow-scroll">
                     <ul className="divide-y divide-gray-200">
                       <li>
-                        <div className="p-3 hover:bg-gray-100">
+                        <div className="p-3 hover:bg-gray-200">
                           <button
                             className="w-full text-left"
                             onClick={() => {
@@ -426,7 +457,7 @@ export default function SingleCustomer(props) {
             </div>
           </div>
           <div className="container flex justify-center">
-            <div className="flex-grow h-100 sm:rounded-lg">
+            <div className="flex-grow h-100 max-w-full sm:rounded-lg">
               <div className="relative shadow-sm rounded-lg ">
                 <div className="py-3 px-4 rounded-lg bg-purple-100">
                   <div className="flex justify-between align-center py-2">
@@ -434,10 +465,51 @@ export default function SingleCustomer(props) {
                       Notes
                     </h3>
                   </div>
-                  <div className="bg-white shadow overflow-hidden rounded-md h-52 max-h-56 overflow-scroll">
-                    <div className="w-100 h-full flex justify-center items-center text-gray-700 text-lg">
-                      Coming Soon
-                    </div>
+                  <div className="bg-white shadow overflow-ellipsis rounded-md h-52 max-h-56 overflow-scroll">
+                    <ul className="divide-y divide-gray-200 overflow-ellipsis">
+                      <li className="w-100">
+                        <div className="p-3 hover:bg-gray-200">
+                          <button
+                            className="w-full text-left"
+                            onClick={() => {
+                              setAddingNote(true)
+                            }}
+                          >
+                            {" "}
+                            + Add Note
+                          </button>
+                        </div>
+                      </li>
+                      {customer.notes ? (
+                        customer.notes.map((e, i) => {
+                          return (
+                            <li key={i} className="overflow-ellipsis">
+                              <button
+                                onClick={(event) => {
+                                  event.preventDefault()
+                                  setCurrentNote(e)
+                                  setViewNote(true)
+                                }}
+                                className="p-3 w-full max-w-full text-left hover:bg-gray-200"
+                              >
+                                <span>{e.title}</span>
+                                <br />
+                                <span className="text-xs">
+                                  Created On:{" "}
+                                  {e.createdAt ? toDateString(e.createdAt) : ""}
+                                </span>
+                                <br />
+                                <p className="text-sm truncate">{e.content}</p>
+                              </button>
+                            </li>
+                          )
+                        })
+                      ) : (
+                        <li>
+                          <div className="p-3">No Contacts</div>
+                        </li>
+                      )}
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -463,7 +535,7 @@ export default function SingleCustomer(props) {
           </div>
         </div>
       </div>
-      {/* MODALS */}
+      {/* Add Contact Modal */}
       {addingContact ? (
         <>
           <form
@@ -664,6 +736,250 @@ export default function SingleCustomer(props) {
               </div>
             </div>
           </form>
+        </>
+      ) : (
+        ""
+      )}
+      {/* Add Contact Modal */}
+      {addingNote ? (
+        <>
+          <form
+            onSubmit={(e) => {
+              sendNoteData(e)
+            }}
+            noValidate
+          >
+            <div
+              class="fixed z-10 inset-0 overflow-y-auto"
+              aria-labelledby="modal-title"
+              role="dialog"
+              aria-modal="true"
+            >
+              <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                {/* <!--
+                  Background overlay, show/hide based on modal state.
+
+                  Entering: "ease-out duration-300"
+                    From: "opacity-0"
+                    To: "opacity-100"
+                  Leaving: "ease-in duration-200"
+                    From: "opacity-100"
+                    To: "opacity-0"
+                --> */}
+                <div
+                  class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                  aria-hidden="true"
+                ></div>
+
+                {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
+                <span
+                  class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                  aria-hidden="true"
+                >
+                  &#8203;
+                </span>
+
+                {/* <!--
+                  Modal panel, show/hide based on modal state.
+
+                  Entering: "ease-out duration-300"
+                    From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    To: "opacity-100 translate-y-0 sm:scale-100"
+                  Leaving: "ease-in duration-200"
+                    From: "opacity-100 translate-y-0 sm:scale-100"
+                    To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                --> */}
+
+                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full">
+                  <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-end ">
+                      <div class="flex-grow mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                        <h3
+                          class="text-lg leading-6 font-medium text-gray-900"
+                          id="modal-title"
+                        >
+                          Add New Note to {customer.name}
+                        </h3>
+                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
+                          <label
+                            for="name"
+                            class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                          >
+                            Title *
+                          </label>
+                          <div class="mt-1 sm:mt-0 sm:col-span-2">
+                            <div class="max-w-lg flex rounded-md shadow-sm">
+                              <input
+                                type="text"
+                                name="title"
+                                id="title"
+                                autocomplete="title"
+                                class="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                                onChange={(e) => {
+                                  handleAddNoteChange(e)
+                                }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        {/* {errors.firstName.length > 0 && (
+                          <div class="rounded-md bg-red-50 p-2 mt-1">
+                            <div class="flex">
+                              <div class="ml-2">
+                                <div class="text-sm text-red-700">
+                                  <span className="error">
+                                    {errors.firstName}
+                                  </span>{" "}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )} */}
+                        <label
+                          for="content"
+                          class="block mb-3 text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                        >
+                          Content
+                        </label>
+                        <div class="mt-1 sm:mt-0 sm:col-span-2">
+                          <div class="max-w-lg flex rounded-md shadow-sm">
+                            <textarea
+                              type="text"
+                              name="content"
+                              id="content"
+                              autocomplete="content"
+                              class="w-full h-80 block focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                              onChange={(e) => {
+                                handleAddNoteChange(e)
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button
+                      type="submit"
+                      class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-900 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    >
+                      Add
+                    </button>
+                    <button
+                      type="button"
+                      class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        setAddingNote(false)
+                        // setNoteErrors({
+                        //   title: "",
+                        //   content: "",
+                        // })
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </>
+      ) : (
+        ""
+      )}
+      {/* View Note */}
+      {viewNote ? (
+        <>
+          <div
+            class="fixed z-10 inset-0 overflow-y-auto"
+            aria-labelledby="modal-title"
+            role="dialog"
+            aria-modal="true"
+          >
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+              {/* <!--
+                  Background overlay, show/hide based on modal state.
+
+                  Entering: "ease-out duration-300"
+                    From: "opacity-0"
+                    To: "opacity-100"
+                  Leaving: "ease-in duration-200"
+                    From: "opacity-100"
+                    To: "opacity-0"
+                --> */}
+              <div
+                class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                aria-hidden="true"
+              ></div>
+
+              {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
+              <span
+                class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                aria-hidden="true"
+              >
+                &#8203;
+              </span>
+
+              {/* <!--
+                  Modal panel, show/hide based on modal state.
+
+                  Entering: "ease-out duration-300"
+                    From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    To: "opacity-100 translate-y-0 sm:scale-100"
+                  Leaving: "ease-in duration-200"
+                    From: "opacity-100 translate-y-0 sm:scale-100"
+                    To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                --> */}
+
+              <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                  <div class="sm:flex sm:items-end ">
+                    <div class="flex-grow mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                      <h3
+                        class="text-lg leading-6 font-medium text-gray-900"
+                        id="modal-title"
+                      >
+                        {currentNote.title}
+                      </h3>
+                      <label
+                        for="content"
+                        class="block mb-3 text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                      >
+                        {currentNote.createdAt
+                          ? toDateString(currentNote.createdAt)
+                          : ""}
+                      </label>
+                      <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        <div class="max-w-lg flex rounded-md shadow-sm">
+                          <textarea
+                            type="text"
+                            name="content"
+                            id="content"
+                            autocomplete="content"
+                            value={currentNote.content}
+                            class="w-full h-80 block focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                  <button
+                    type="button"
+                    class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      setViewNote(false)
+                    }}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </>
       ) : (
         ""
