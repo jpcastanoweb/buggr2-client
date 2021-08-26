@@ -99,6 +99,19 @@ const OpportunityState = (props) => {
     }
   }
 
+  const submitAddNote = async (data) => {
+    console.log("Data in state:", data)
+    try {
+      const res = await axiosClient.post("/api/notes/addnote", data)
+      dispatch({
+        type: "UPDATE_CUSTOMER",
+        payload: res.data,
+      })
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
   return (
     <OpportunityContext.Provider
       value={{
@@ -110,6 +123,7 @@ const OpportunityState = (props) => {
         submitDeleteOpportunity,
         submitConvertOpportunity,
         submitAssignContact,
+        submitAddNote,
       }}
     >
       {props.children}
