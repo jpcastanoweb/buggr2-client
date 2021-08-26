@@ -506,7 +506,7 @@ export default function SingleCustomer(props) {
                         })
                       ) : (
                         <li>
-                          <div className="p-3">No Contacts</div>
+                          <div className="p-3">No Notes</div>
                         </li>
                       )}
                     </ul>

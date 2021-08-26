@@ -365,7 +365,7 @@ export default function SingleOpportunity(props) {
           </div>
         </div>
         <div className="container flex justify-center">
-          <div className="flex-grow h-100 sm:rounded-lg">
+          <div className="flex-grow h-100 max-w-full sm:rounded-lg">
             <div className="relative shadow-sm rounded-lg ">
               <div className="py-3 px-4 rounded-lg bg-purple-100">
                 <div className="flex justify-between align-center py-2">
@@ -414,7 +414,7 @@ export default function SingleOpportunity(props) {
                       })
                     ) : (
                       <li>
-                        <div className="p-3">No Contacts</div>
+                        <div className="p-3">No Notes</div>
                       </li>
                     )}
                   </ul>
