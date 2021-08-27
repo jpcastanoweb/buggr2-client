@@ -37,8 +37,40 @@ export default function SubscribePage() {
   }, [sessionUrl])
 
   return (
-    <div>
-      <div className="min-h-screen bg-white flex md:justify-center sm:justify-center">
+    <div className="h-screen flex flex-col">
+      <div class="h-18 bg-green-400">
+        <div class="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between flex-wrap">
+            <div class="w-0 flex-1 flex items-center">
+              <span class="flex p-2 rounded-lg bg-purple-900">
+                {/* <!-- Heroicon name: outline/speakerphone --> */}
+                <svg
+                  class="h-6 w-6 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"
+                  />
+                </svg>
+              </span>
+              <p class="ml-3 font-medium text-gray-800">
+                <span>
+                  Use <i>4242 4242 4242 4242</i> as your card number on the next
+                  window to sign up for free.
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="flex-grow bg-white flex md:justify-center sm:justify-center">
         <div className="hidden lg:block relative w-0 flex-1 bg-purple-900 text-white">
           <div className="container h-full flex flex-row justify-center items-center">
             <img
@@ -92,18 +124,18 @@ export default function SubscribePage() {
                   <h2 class="text-lg leading-6 font-medium text-gray-900">
                     Monthly
                   </h2>
-                  <p class="mt-4 text-sm text-gray-500">
+                  <p class="mt-2 text-sm text-gray-500">
                     Gain access to Buggr's full set of features for a monthly
                     fee.
                   </p>
-                  <p class="mt-8">
+                  <p class="mt-4">
                     <span class="text-4xl font-extrabold text-gray-900">
                       $12
                     </span>
                     <span class="text-base font-medium text-gray-500">/mo</span>
                   </p>
                   <button
-                    class="mt-8 block w-full bg-gray-800 border border-gray-800 rounded-md py-2 text-sm font-semibold text-white text-center hover:bg-gray-900"
+                    class="mt-4 block w-full bg-gray-800 border border-gray-800 rounded-md py-2 text-sm font-semibold text-white text-center hover:bg-gray-900"
                     type="reset"
                     onClick={(e) => {
                       handleMonthlyCheckout(e)
@@ -119,11 +151,11 @@ export default function SubscribePage() {
                   <h2 class="text-lg leading-6 font-medium text-gray-900">
                     Yearly
                   </h2>
-                  <p class="mt-4 text-sm text-gray-500">
+                  <p class="mt-2 text-sm text-gray-500">
                     Gain access to Buggr's full set of features for a yearly fee
                     at a discounted rate.
                   </p>
-                  <p class="mt-8">
+                  <p class="mt-4">
                     <span class="text-4xl font-extrabold text-gray-900">
                       $120
                     </span>
@@ -131,7 +163,7 @@ export default function SubscribePage() {
                   </p>
                   <button
                     href="#"
-                    class="mt-8 block w-full bg-gray-800 border border-gray-800 rounded-md py-2 text-sm font-semibold text-white text-center hover:bg-gray-900"
+                    class="mt-4 block w-full bg-gray-800 border border-gray-800 rounded-md py-2 text-sm font-semibold text-white text-center hover:bg-gray-900"
                     onClick={(e) => {
                       handleYearlyCheckout(e)
                     }}
