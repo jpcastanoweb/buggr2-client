@@ -100,7 +100,6 @@ const OpportunityState = (props) => {
   }
 
   const submitAddNote = async (data) => {
-    console.log("Data in state:", data)
     try {
       const res = await axiosClient.post("/api/notes/addnote", data)
       dispatch({
