@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom"
 import Header from "./Header"
 import Pricing from "./Pricing"
 import Home from "./Home"
+import Footer from "./Footer"
 
 export default function Site() {
   return (
@@ -18,6 +19,7 @@ export default function Site() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   )
 }
