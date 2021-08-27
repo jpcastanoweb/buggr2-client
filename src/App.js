@@ -14,6 +14,7 @@ import SubscribePage from "./components/Pages/Stripe/SubscribePage"
 import PrivateActiveSubRoute from "./components/PrivateActiveSubRoute"
 import SessionSuccess from "./components/Pages/Stripe/SessionSuccess"
 import SessionFailed from "./components/Pages/Stripe/SessionFailed"
+import Site from "./components/Site/Site"
 
 function App() {
   return (
@@ -41,7 +42,7 @@ function App() {
               <AuthRoute exact path="/signup" component={Signup} />
               {/* Public Routes */}
               <Route path="/subscribe" component={SubscribePage}></Route>
-              <Route path="/" component={Home} />
+              <Route path="/" component={Site} />
               {/* 404 Not Found */}
             </Switch>
           </Router>
