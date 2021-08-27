@@ -15,9 +15,12 @@ export default function Header() {
         <div class="relative z-20">
           <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-5 sm:px-6 sm:py-4 lg:px-8 md:justify-start md:space-x-10">
             <div>
-              <Link to="/" class="flex">
+              <Link to="/" class="flex items-center">
                 <span class="sr-only">Buggr</span>
                 <img class="h-8 w-auto sm:h-10" src={main_logo} alt="" />
+                <span className="font-body text-3xl m-2 text-gray-700">
+                  Buggr
+                </span>
               </Link>
             </div>
             <div class="-mr-2 -my-2 md:hidden">

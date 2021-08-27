@@ -102,7 +102,7 @@ export default function Footer() {
           </Link>
         </div>
         <p class="mt-8 text-center text-base text-gray-400">
-          &copy; 2020 Buggr, Inc. All rights reserved.
+          &copy; 2021 Buggr, Inc. All rights reserved.
         </p>
       </div>
     </footer>
