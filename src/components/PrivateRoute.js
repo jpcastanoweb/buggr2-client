@@ -6,7 +6,7 @@ import UserContext from "./../context/User/UserContext"
 export default function PrivateRoute({ component: Component, ...props }) {
   const userCtx = useContext(UserContext)
 
-  const { authStatus, verifyingToken } = userCtx
+  const { user, authStatus, verifyingToken } = userCtx
 
   const [loading, setLoading] = useState(true)
 
@@ -29,7 +29,7 @@ export default function PrivateRoute({ component: Component, ...props }) {
       {...props}
       render={() => {
         if (loading) return null
-        return authStatus ? (
+        return authStatus && user.subscriptionStatus !== "active" ? (
           <Component {...props} />
         ) : (
           <Redirect {...props} to="/login" />
