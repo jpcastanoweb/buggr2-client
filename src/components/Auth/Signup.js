@@ -65,7 +65,7 @@ export default function Signup() {
     }
   }
 
-  const sendData = (event) => {
+  const sendData = async (event) => {
     event.preventDefault()
 
     if (data.firstName.length === 0 || data.email.length === 0) {
@@ -86,7 +86,15 @@ export default function Signup() {
       }
     }
 
-    if (validateForm(errors)) registerUser(data)
+    if (validateForm(errors)) {
+      const res = await registerUser(data)
+      if (res.msg === "existingEmail") {
+        setErrors({
+          ...errors,
+          email: "Email has already been used.",
+        })
+      }
+    }
   }
 
   const validateForm = (errors) => {

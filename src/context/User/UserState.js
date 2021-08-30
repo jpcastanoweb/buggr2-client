@@ -28,11 +28,12 @@ const UserState = (props) => {
         payload: res.data,
       })
     } catch (error) {
-      console.log(error.msg)
-      dispatch({
-        type: "REGISTER_ERROR",
-        payload: error,
-      })
+      // console.log(error.msg)
+      // dispatch({
+      //   type: "REGISTER_ERROR",
+      //   payload: error,
+      // })
+      if (error.response) return error.response.data
     }
   }
 
