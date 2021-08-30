@@ -2,7 +2,6 @@ import "./App.css"
 
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom"
 
-import Home from "./components/Site/Home.js"
 import Login from "./components/Auth/Login"
 import Signup from "./components/Auth/Signup"
 import MainApp from "./components/Layout/MainApp"
