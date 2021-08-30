@@ -130,9 +130,11 @@ export default function SubscribePage() {
                   </p>
                   <p class="mt-4">
                     <span class="text-4xl font-extrabold text-gray-900">
-                      $12
+                      $0
                     </span>
-                    <span class="text-base font-medium text-gray-500">/mo</span>
+                    <span class="text-base font-medium text-gray-500">
+                      <del>$12</del>/mo
+                    </span>
                   </p>
                   <button
                     class="mt-4 block w-full bg-gray-800 border border-gray-800 rounded-md py-2 text-sm font-semibold text-white text-center hover:bg-gray-900"
@@ -157,9 +159,11 @@ export default function SubscribePage() {
                   </p>
                   <p class="mt-4">
                     <span class="text-4xl font-extrabold text-gray-900">
-                      $120
+                      $0
                     </span>
-                    <span class="text-base font-medium text-gray-500">/yr</span>
+                    <span class="text-base font-medium text-gray-500">
+                      <del>$120</del>/yr
+                    </span>
                   </p>
                   <button
                     href="#"

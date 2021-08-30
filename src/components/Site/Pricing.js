@@ -33,9 +33,9 @@ export default function Pricing() {
                       </h3>
                     </div>
                     <div class="mt-4 flex items-baseline text-6xl font-extrabold">
-                      $12
+                      $0
                       <span class="ml-1 text-2xl font-medium text-gray-500">
-                        /mo
+                        <del>$12</del>/mo
                       </span>
                     </div>
                     <p class="mt-5 text-lg text-gray-500">
@@ -206,9 +206,9 @@ export default function Pricing() {
                       </h3>
                     </div>
                     <div class="mt-4 flex items-baseline text-6xl font-extrabold">
-                      $120
+                      $0
                       <span class="ml-1 text-2xl font-medium text-gray-500">
-                        /yr
+                        <del>$120</del>/yr
                       </span>
                     </div>
                     <p class="mt-5 text-lg text-gray-500">
