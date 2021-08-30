@@ -88,7 +88,7 @@ export default function Signup() {
 
     if (validateForm(errors)) {
       const res = await registerUser(data)
-      if (res.msg === "existingEmail") {
+      if (res && res.msg === "existingEmail") {
         setErrors({
           ...errors,
           email: "Email has already been used.",
