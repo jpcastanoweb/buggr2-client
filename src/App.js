@@ -55,6 +55,38 @@ function App() {
               />
 
               {/* Private Routes */}
+              <Route
+                path="/app"
+                element={
+                  <PrivateActiveSubRoute>
+                    <MainApp />
+                  </PrivateActiveSubRoute>
+                }
+              />
+              <Route
+                path="/subscribe"
+                element={
+                  <PrivateRoute>
+                    <SubscribePage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/subscribe/failed-session"
+                element={
+                  <PrivateRoute>
+                    <SessionFailed />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/subscribe/successful-session"
+                element={
+                  <PrivateRoute>
+                    <SessionSuccess />
+                  </PrivateRoute>
+                }
+              />
               {/* <PrivateActiveSubRoute path="/app" component={MainApp} />
               <PrivateRoute exact path="/subscribe" component={SubscribePage} />
               <PrivateRoute

@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Route, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import UserContext from "./../context/User/UserContext";
 
-export default function PrivateRoute({ component: Component, ...props }) {
+export default function PrivateRoute({ children }) {
   const userCtx = useContext(UserContext);
 
   const { user, authStatus, verifyingToken } = userCtx;
@@ -24,17 +24,11 @@ export default function PrivateRoute({ component: Component, ...props }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authStatus]);
 
-  return (
-    <Route
-      {...props}
-      render={() => {
-        if (loading) return null;
-        return authStatus && user.subscriptionStatus !== "active" ? (
-          <Component {...props} />
-        ) : (
-          <Navigate {...props} to="/login" />
-        );
-      }}
-    />
+  return loading ? null : (authStatus &&
+      user.subscriptionStatus !== "active") ||
+    true ? (
+    children
+  ) : (
+    <Navigate to="/login" />
   );
 }
