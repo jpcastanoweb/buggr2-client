@@ -3,7 +3,7 @@ import { Route, Navigate } from "react-router-dom";
 
 import UserContext from "./../context/User/UserContext";
 
-export default function AuthRoute({ component: Component, ...props }) {
+export default function AuthRoute({ children }) {
   const userCtx = useContext(UserContext);
 
   const { authStatus, verifyingToken } = userCtx;
@@ -20,17 +20,9 @@ export default function AuthRoute({ component: Component, ...props }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authStatus]);
 
-  return (
-    <Route
-      {...props}
-      render={() => {
-        if (loading) return null;
-        return authStatus ? (
-          <Navigate to="/app/customers" {...props} />
-        ) : (
-          <Component {...props} />
-        );
-      }}
-    />
+  return loading ? null : authStatus ? (
+    <Navigate to="/app/customers" />
+  ) : (
+    children
   );
 }

@@ -29,6 +29,31 @@ function App() {
         <OrgState>
           <BrowserRouter>
             <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<Site />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/pricing" element={<Pricing />} />
+              </Route>
+              <Route path="/subscribe" element={<SubscribePage />}></Route>
+
+              {/* Auth Routes */}
+              <Route
+                path="/login"
+                element={
+                  <AuthRoute>
+                    <Login />
+                  </AuthRoute>
+                }
+              />
+              <Route
+                path="/signup"
+                element={
+                  <AuthRoute>
+                    <Signup />
+                  </AuthRoute>
+                }
+              />
+
               {/* Private Routes */}
               {/* <PrivateActiveSubRoute path="/app" component={MainApp} />
               <PrivateRoute exact path="/subscribe" component={SubscribePage} />
@@ -42,16 +67,6 @@ function App() {
                 path="/subscribe/failed-session"
                 component={SessionFailed}
               /> */}
-
-              {/* Auth Routes */}
-              {/* <AuthRoute exact path="/login" component={Login} />
-              <AuthRoute exact path="/signup" component={Signup} /> */}
-              {/* Public Routes */}
-              <Route path="/" element={<Site />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/pricing" element={<Pricing />} />
-              </Route>
-              <Route path="/subscribe" element={<SubscribePage />}></Route>
 
               {/* 404 Not Found */}
             </Routes>
