@@ -1,9 +1,9 @@
-import React from "react"
-import { Route, Switch } from "react-router-dom"
-import Header from "./Header"
-import Pricing from "./Pricing"
-import Home from "./Home"
-import Footer from "./Footer"
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import Header from "./Header";
+import Pricing from "./Pricing";
+import Home from "./Home";
+import Footer from "./Footer";
 
 export default function Site() {
   return (
@@ -11,13 +11,13 @@ export default function Site() {
       <Header />
       <main className="flex-1 relative overflow-y-auto focus:outline-none">
         <div className="w-screen">
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/pricing" component={Pricing} />
-          </Switch>
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route exact path="/pricing" element={<Pricing />} />
+          </Routes>
         </div>
       </main>
       <Footer />
     </div>
-  )
+  );
 }

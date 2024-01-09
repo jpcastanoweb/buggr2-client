@@ -1,39 +1,39 @@
 // Auth/Signup.js
-import logo from "./../../images/main_logo_notext.png"
-import React, { useState, useContext } from "react"
+import logo from "./../../images/main_logo_notext.png";
+import React, { useState, useContext } from "react";
 
-import { Link } from "react-router-dom"
-import UserContext from "./../../context/User/UserContext"
+import { Link } from "react-router-dom";
+import UserContext from "./../../context/User/UserContext";
 
 export default function Signin() {
-  const userCtx = useContext(UserContext)
+  const userCtx = useContext(UserContext);
 
-  const { loginUser } = userCtx
+  const { loginUser } = userCtx;
 
   const [data, setData] = useState({
     email: "",
     password: "",
-  })
-  const [error, setError] = useState("")
+  });
+  const [error, setError] = useState("");
 
   const handleChange = (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
     setData({
       ...data,
       [event.target.name]: event.target.value,
-    })
-  }
+    });
+  };
 
   const sendData = async (event) => {
     try {
-      event.preventDefault()
-      const error = await loginUser(data)
-      if (error) setError(error.msg)
+      event.preventDefault();
+      const error = await loginUser(data);
+      if (error) setError(error.msg);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <>
@@ -61,7 +61,7 @@ export default function Signin() {
                 <form
                   className="space-y-6"
                   onSubmit={(e) => {
-                    sendData(e)
+                    sendData(e);
                   }}
                 >
                   <div>
@@ -79,7 +79,7 @@ export default function Signin() {
                         required
                         className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         onChange={(e) => {
-                          handleChange(e)
+                          handleChange(e);
                         }}
                       />
                     </div>
@@ -100,31 +100,31 @@ export default function Signin() {
                         required
                         className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         onChange={(e) => {
-                          handleChange(e)
+                          handleChange(e);
                         }}
                       />
                     </div>
                   </div>
                   {error.length > 0 ? (
-                    <div class="rounded-md bg-red-50 p-4">
-                      <div class="flex">
-                        <div class="flex-shrink-0">
+                    <div className="rounded-md bg-red-50 p-4">
+                      <div className="flex">
+                        <div className="flex-shrink-0">
                           {/* <!-- Heroicon name: solid/x-circle --> */}
                           <svg
-                            class="h-5 w-5 text-red-400"
+                            className="h-5 w-5 text-red-400"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
                             fill="currentColor"
                             aria-hidden="true"
                           >
                             <path
-                              fill-rule="evenodd"
+                              fillRule="evenodd"
                               d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                              clip-rule="evenodd"
+                              clipRule="evenodd"
                             />
                           </svg>
                         </div>
-                        <div class="ml-3">
+                        <div className="ml-3">
                           <span className="error">{error}</span>{" "}
                         </div>
                       </div>
@@ -164,5 +164,5 @@ export default function Signin() {
         </div>
       </div>
     </>
-  )
+  );
 }

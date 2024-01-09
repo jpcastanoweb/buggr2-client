@@ -1,36 +1,36 @@
-import React, { useContext, useEffect, useState } from "react"
-import { Route, Redirect } from "react-router-dom"
+import React, { useContext, useEffect, useState } from "react";
+import { Route, Navigate } from "react-router-dom";
 
-import UserContext from "./../context/User/UserContext"
+import UserContext from "./../context/User/UserContext";
 
 export default function AuthRoute({ component: Component, ...props }) {
-  const userCtx = useContext(UserContext)
+  const userCtx = useContext(UserContext);
 
-  const { authStatus, verifyingToken } = userCtx
+  const { authStatus, verifyingToken } = userCtx;
 
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const verifyingAuthStatus = async () => {
-      await verifyingToken()
-      return setLoading(false)
-    }
+      await verifyingToken();
+      return setLoading(false);
+    };
 
-    verifyingAuthStatus()
+    verifyingAuthStatus();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authStatus])
+  }, [authStatus]);
 
   return (
     <Route
       {...props}
       render={() => {
-        if (loading) return null
+        if (loading) return null;
         return authStatus ? (
-          <Redirect to="/app/customers" {...props} />
+          <Navigate to="/app/customers" {...props} />
         ) : (
           <Component {...props} />
-        )
+        );
       }}
     />
-  )
+  );
 }

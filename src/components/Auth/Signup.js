@@ -1,40 +1,40 @@
 // Auth/Signup.js
-import logo from "./../../images/main_logo_notext.png"
-import React, { useState, useContext } from "react"
+import logo from "./../../images/main_logo_notext.png";
+import React, { useState, useContext } from "react";
 
-import UserContext from "./../../context/User/UserContext"
-import { Link } from "react-router-dom"
+import UserContext from "./../../context/User/UserContext";
+import { Link } from "react-router-dom";
 
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/;
 const emailRegex =
-  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export default function Signup() {
-  const userCtx = useContext(UserContext)
+  const userCtx = useContext(UserContext);
 
-  const { registerUser } = userCtx
+  const { registerUser } = userCtx;
 
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-  })
+  });
   const [errors, setErrors] = useState({
     firstName: "",
     email: "",
     password: "",
-  })
+  });
 
   const handleChange = (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
     setData({
       ...data,
       [event.target.name]: event.target.value,
-    })
+    });
 
-    const { name, value } = event.target
+    const { name, value } = event.target;
 
     switch (name) {
       case "firstName":
@@ -42,14 +42,14 @@ export default function Signup() {
           ...errors,
           [name]:
             value.length < 2 ? "First Name must be 2 characters long!" : "",
-        })
-        break
+        });
+        break;
       case "email":
         setErrors({
           ...errors,
           [name]: emailRegex.test(value) ? "" : "Email is not valid!",
-        })
-        break
+        });
+        break;
       case "password":
         setErrors({
           ...errors,
@@ -57,54 +57,54 @@ export default function Signup() {
             passwordRegex.test(value) && value.length > 7
               ? ""
               : "Password needs to have at least 8 characters and must contain at least one number, one lowercase and one uppercase letter.",
-        })
-        break
+        });
+        break;
 
       default:
-        break
+        break;
     }
-  }
+  };
 
   const sendData = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
     if (data.firstName.length === 0 || data.email.length === 0) {
       if (data.firstName.length === 0) {
         setErrors({
           ...errors,
           firstName: "First Name cannot be left blank.",
-        })
+        });
       }
 
       if (data.email.length === 0) {
         setErrors({
           ...errors,
           email: "Email cannot be left blank.",
-        })
+        });
 
-        return
+        return;
       }
     }
 
     if (validateForm(errors)) {
-      const res = await registerUser(data)
+      const res = await registerUser(data);
       if (res && res.msg === "existingEmail") {
         setErrors({
           ...errors,
           email: "Email has already been used.",
-        })
+        });
       }
     }
-  }
+  };
 
   const validateForm = (errors) => {
-    let valid = true
+    let valid = true;
     Object.values(errors).forEach(
       // if we have an error string set valid to false
       (val) => val.length > 0 && (valid = false)
-    )
-    return valid
-  }
+    );
+    return valid;
+  };
 
   return (
     <div className="min-h-screen bg-white flex">
@@ -143,7 +143,7 @@ export default function Signup() {
               <form
                 className="space-y-4"
                 onSubmit={(e) => {
-                  sendData(e)
+                  sendData(e);
                 }}
                 noValidate
               >
@@ -161,7 +161,7 @@ export default function Signup() {
                           required
                           className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           onChange={(e) => {
-                            handleChange(e)
+                            handleChange(e);
                           }}
                         />
                       </div>
@@ -178,17 +178,17 @@ export default function Signup() {
                           required
                           className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           onChange={(e) => {
-                            handleChange(e)
+                            handleChange(e);
                           }}
                         />
                       </div>
                     </div>
                   </div>
                   {errors.firstName.length > 0 && (
-                    <div class="rounded-md bg-red-50 p-2 mt-1">
-                      <div class="flex">
-                        <div class="ml-2">
-                          <div class="text-sm text-red-700">
+                    <div className="rounded-md bg-red-50 p-2 mt-1">
+                      <div className="flex">
+                        <div className="ml-2">
+                          <div className="text-sm text-red-700">
                             <span className="error">{errors.firstName}</span>{" "}
                           </div>
                         </div>
@@ -212,15 +212,15 @@ export default function Signup() {
                       required
                       className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       onChange={(e) => {
-                        handleChange(e)
+                        handleChange(e);
                       }}
                     />
                   </div>
                   {errors.email.length > 0 && (
-                    <div class="rounded-md bg-red-50 p-2 mt-1">
-                      <div class="flex">
-                        <div class="ml-2">
-                          <div class="text-sm text-red-700">
+                    <div className="rounded-md bg-red-50 p-2 mt-1">
+                      <div className="flex">
+                        <div className="ml-2">
+                          <div className="text-sm text-red-700">
                             <span className="error">{errors.email}</span>{" "}
                           </div>
                         </div>
@@ -244,15 +244,15 @@ export default function Signup() {
                       required
                       className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       onChange={(e) => {
-                        handleChange(e)
+                        handleChange(e);
                       }}
                     />
                   </div>
                   {errors.password.length > 0 && (
-                    <div class="rounded-md bg-red-50 p-2 mt-1">
-                      <div class="flex">
-                        <div class="ml-2">
-                          <div class="text-sm text-red-700">
+                    <div className="rounded-md bg-red-50 p-2 mt-1">
+                      <div className="flex">
+                        <div className="ml-2">
+                          <div className="text-sm text-red-700">
                             <span className="error">{errors.password}</span>{" "}
                           </div>
                         </div>
@@ -291,5 +291,5 @@ export default function Signup() {
         </div>
       </div>
     </div>
-  )
+  );
 }

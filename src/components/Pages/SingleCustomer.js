@@ -1,49 +1,49 @@
-import React, { useContext, useEffect, useState } from "react"
-import { useParams, Link } from "react-router-dom"
-import CustomerContext from "../../context/Customer/CustomerContext"
-import { toDateString, toDollarString } from "./../../_helperFunctions"
+import React, { useContext, useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import CustomerContext from "../../context/Customer/CustomerContext";
+import { toDateString, toDollarString } from "./../../_helperFunctions";
 
 const emailRegex =
-  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export default function SingleCustomer(props) {
-  const { customerid } = useParams()
+  const { customerid } = useParams();
 
-  const customerCtx = useContext(CustomerContext)
+  const customerCtx = useContext(CustomerContext);
   const { customer, loadCustomer, submitAddContact, submitAddNote } =
-    customerCtx
-  const [addingContact, setAddingContact] = useState(false)
-  const [addingNote, setAddingNote] = useState(false)
+    customerCtx;
+  const [addingContact, setAddingContact] = useState(false);
+  const [addingNote, setAddingNote] = useState(false);
   const [contactData, setContactData] = useState({
     firstName: null,
     lastName: null,
     email: null,
     phoneNumber: null,
     ownerid: null,
-  })
+  });
   const [noteData, setNoteData] = useState({
     title: "",
     content: "",
-  })
-  const [viewNote, setViewNote] = useState(false)
+  });
+  const [viewNote, setViewNote] = useState(false);
   const [currentNote, setCurrentNote] = useState({
     title: "",
     content: "",
-  })
-  const [loading, setLoading] = useState(true)
+  });
+  const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState({
     firstName: "",
     email: "",
-  })
+  });
 
   const handleAddContactChange = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setContactData({
       ...contactData,
       [e.target.name]: e.target.value,
-    })
+    });
 
-    const { name, value } = e.target
+    const { name, value } = e.target;
 
     switch (name) {
       case "firstName":
@@ -53,27 +53,27 @@ export default function SingleCustomer(props) {
             value.length < 2
               ? "First Name must be at least 2 characters long!"
               : "",
-        })
-        break
+        });
+        break;
       case "email":
         setErrors({
           ...errors,
           [name]: emailRegex.test(value) ? "" : "Email is not valid!",
-        })
-        break
+        });
+        break;
 
       default:
-        break
+        break;
     }
-  }
+  };
 
   const handleAddNoteChange = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setNoteData({
       ...noteData,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   const sendData = async (e) => {
     if (validateForm(errors)) {
@@ -83,10 +83,10 @@ export default function SingleCustomer(props) {
         email: contactData.email,
         phoneNumber: contactData.phoneNumber,
         ownerid: customer._id,
-      })
-      setAddingContact(false)
+      });
+      setAddingContact(false);
     }
-  }
+  };
 
   const sendNoteData = async (e) => {
     const fullData = {
@@ -94,29 +94,29 @@ export default function SingleCustomer(props) {
       content: noteData.content,
       onModel: "Customer",
       ownerid: customer._id,
-    }
-    await submitAddNote(fullData)
-    setAddingNote(false)
-  }
+    };
+    await submitAddNote(fullData);
+    setAddingNote(false);
+  };
 
   const validateForm = (errors) => {
-    let valid = true
+    let valid = true;
     Object.values(errors).forEach(
       // if we have an error string set valid to false
       (val) => val.length > 0 && (valid = false)
-    )
-    return valid
-  }
+    );
+    return valid;
+  };
 
   useEffect(() => {
     const loadEverything = async () => {
-      await loadCustomer(customerid)
-      setLoading(false)
-    }
+      await loadCustomer(customerid);
+      setLoading(false);
+    };
 
-    loadEverything()
+    loadEverything();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   return !loading ? (
     <div>
@@ -152,9 +152,9 @@ export default function SingleCustomer(props) {
                       b.currentStage !== "Closed - Won" &&
                       b.currentStage !== "Closed - Lost"
                     ) {
-                      return a + b.dollarValue
+                      return a + b.dollarValue;
                     } else {
-                      return a
+                      return a;
                     }
                   }, 0)
                 : ""
@@ -294,7 +294,7 @@ export default function SingleCustomer(props) {
                                 </Link>
                               </td>
                             </tr>
-                          )
+                          );
                         })
                       ) : (
                         <></>
@@ -391,7 +391,7 @@ export default function SingleCustomer(props) {
                                 </Link>
                               </td>
                             </tr>
-                          )
+                          );
                         })
                       ) : (
                         <></>
@@ -421,7 +421,7 @@ export default function SingleCustomer(props) {
                           <button
                             className="w-full text-left"
                             onClick={() => {
-                              setAddingContact(true)
+                              setAddingContact(true);
                             }}
                           >
                             {" "}
@@ -443,7 +443,7 @@ export default function SingleCustomer(props) {
                                   : ""}
                               </div>
                             </li>
-                          )
+                          );
                         })
                       ) : (
                         <li>
@@ -472,7 +472,7 @@ export default function SingleCustomer(props) {
                           <button
                             className="w-full text-left"
                             onClick={() => {
-                              setAddingNote(true)
+                              setAddingNote(true);
                             }}
                           >
                             {" "}
@@ -486,9 +486,9 @@ export default function SingleCustomer(props) {
                             <li key={i} className="overflow-ellipsis">
                               <button
                                 onClick={(event) => {
-                                  event.preventDefault()
-                                  setCurrentNote(e)
-                                  setViewNote(true)
+                                  event.preventDefault();
+                                  setCurrentNote(e);
+                                  setViewNote(true);
                                 }}
                                 className="p-3 w-full max-w-full text-left hover:bg-gray-200"
                               >
@@ -502,7 +502,7 @@ export default function SingleCustomer(props) {
                                 <p className="text-sm truncate">{e.content}</p>
                               </button>
                             </li>
-                          )
+                          );
                         })
                       ) : (
                         <li>
@@ -540,17 +540,17 @@ export default function SingleCustomer(props) {
         <>
           <form
             onSubmit={(e) => {
-              sendData(e)
+              sendData(e);
             }}
             noValidate
           >
             <div
-              class="fixed z-10 inset-0 overflow-y-auto"
+              className="fixed z-10 inset-0 overflow-y-auto"
               aria-labelledby="modal-title"
               role="dialog"
               aria-modal="true"
             >
-              <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+              <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 {/* <!--
                   Background overlay, show/hide based on modal state.
 
@@ -562,13 +562,13 @@ export default function SingleCustomer(props) {
                     To: "opacity-0"
                 --> */}
                 <div
-                  class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                  className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
                   aria-hidden="true"
                 ></div>
 
                 {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
                 <span
-                  class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                  className="hidden sm:inline-block sm:align-middle sm:h-screen"
                   aria-hidden="true"
                 >
                   &#8203;
@@ -585,43 +585,43 @@ export default function SingleCustomer(props) {
                     To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 --> */}
 
-                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                  <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-end ">
-                      <div class="flex-grow mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                  <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div className="sm:flex sm:items-end ">
+                      <div className="flex-grow mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                         <h3
-                          class="text-lg leading-6 font-medium text-gray-900"
+                          className="text-lg leading-6 font-medium text-gray-900"
                           id="modal-title"
                         >
                           Add New Contact to {customer.name}
                         </h3>
-                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
+                        <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                           <label
                             for="name"
-                            class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                            className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                           >
                             First Name *
                           </label>
-                          <div class="mt-1 sm:mt-0 sm:col-span-2">
-                            <div class="max-w-lg flex rounded-md shadow-sm">
+                          <div className="mt-1 sm:mt-0 sm:col-span-2">
+                            <div className="max-w-lg flex rounded-md shadow-sm">
                               <input
                                 type="text"
                                 name="firstName"
                                 id="firstName"
                                 autocomplete="firstName"
-                                class="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                                className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                                 onChange={(e) => {
-                                  handleAddContactChange(e)
+                                  handleAddContactChange(e);
                                 }}
                               />
                             </div>
                           </div>
                         </div>
                         {errors.firstName.length > 0 && (
-                          <div class="rounded-md bg-red-50 p-2 mt-1">
-                            <div class="flex">
-                              <div class="ml-2">
-                                <div class="text-sm text-red-700">
+                          <div className="rounded-md bg-red-50 p-2 mt-1">
+                            <div className="flex">
+                              <div className="ml-2">
+                                <div className="text-sm text-red-700">
                                   <span className="error">
                                     {errors.firstName}
                                   </span>{" "}
@@ -630,78 +630,78 @@ export default function SingleCustomer(props) {
                             </div>
                           </div>
                         )}
-                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
+                        <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                           <label
                             for="name"
-                            class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                            className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                           >
                             Last Name
                           </label>
-                          <div class="mt-1 sm:mt-0 sm:col-span-2">
-                            <div class="max-w-lg flex rounded-md shadow-sm">
+                          <div className="mt-1 sm:mt-0 sm:col-span-2">
+                            <div className="max-w-lg flex rounded-md shadow-sm">
                               <input
                                 type="text"
                                 name="lastName"
                                 id="lastName"
                                 autocomplete="lastName"
-                                class="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                                className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                                 onChange={(e) => {
-                                  handleAddContactChange(e)
+                                  handleAddContactChange(e);
                                 }}
                               />
                             </div>
                           </div>
                         </div>
-                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
+                        <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                           <label
                             for="name"
-                            class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                            className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                           >
                             Email Address *
                           </label>
-                          <div class="mt-1 sm:mt-0 sm:col-span-2">
-                            <div class="max-w-lg flex rounded-md shadow-sm">
+                          <div className="mt-1 sm:mt-0 sm:col-span-2">
+                            <div className="max-w-lg flex rounded-md shadow-sm">
                               <input
                                 type="email"
                                 name="email"
                                 id="email"
                                 autocomplete="email"
-                                class="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                                className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                                 onChange={(e) => {
-                                  handleAddContactChange(e)
+                                  handleAddContactChange(e);
                                 }}
                               />
                             </div>
                           </div>
                         </div>
                         {errors.email.length > 0 && (
-                          <div class="rounded-md bg-red-50 p-2 mt-1">
-                            <div class="flex">
-                              <div class="ml-2">
-                                <div class="text-sm text-red-700">
+                          <div className="rounded-md bg-red-50 p-2 mt-1">
+                            <div className="flex">
+                              <div className="ml-2">
+                                <div className="text-sm text-red-700">
                                   <span className="error">{errors.email}</span>{" "}
                                 </div>
                               </div>
                             </div>
                           </div>
                         )}
-                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
+                        <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                           <label
                             for="name"
-                            class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                            className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                           >
                             Phone Number
                           </label>
-                          <div class="mt-1 sm:mt-0 sm:col-span-2">
-                            <div class="max-w-lg flex rounded-md shadow-sm">
+                          <div className="mt-1 sm:mt-0 sm:col-span-2">
+                            <div className="max-w-lg flex rounded-md shadow-sm">
                               <input
                                 type="text"
                                 name="phoneNumber"
                                 id="phoneNumber"
                                 autocomplete="phoneNumber"
-                                class="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                                className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                                 onChange={(e) => {
-                                  handleAddContactChange(e)
+                                  handleAddContactChange(e);
                                 }}
                               />
                             </div>
@@ -710,23 +710,23 @@ export default function SingleCustomer(props) {
                       </div>
                     </div>
                   </div>
-                  <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                  <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <button
                       type="submit"
-                      class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-900 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm"
+                      className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-900 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm"
                     >
                       Add
                     </button>
                     <button
                       type="button"
-                      class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                      className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                       onClick={(e) => {
-                        e.preventDefault()
-                        setAddingContact(false)
+                        e.preventDefault();
+                        setAddingContact(false);
                         setErrors({
                           firstName: "",
                           email: "",
-                        })
+                        });
                       }}
                     >
                       Cancel
@@ -745,17 +745,17 @@ export default function SingleCustomer(props) {
         <>
           <form
             onSubmit={(e) => {
-              sendNoteData(e)
+              sendNoteData(e);
             }}
             noValidate
           >
             <div
-              class="fixed z-10 inset-0 overflow-y-auto"
+              className="fixed z-10 inset-0 overflow-y-auto"
               aria-labelledby="modal-title"
               role="dialog"
               aria-modal="true"
             >
-              <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+              <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 {/* <!--
                   Background overlay, show/hide based on modal state.
 
@@ -767,13 +767,13 @@ export default function SingleCustomer(props) {
                     To: "opacity-0"
                 --> */}
                 <div
-                  class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                  className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
                   aria-hidden="true"
                 ></div>
 
                 {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
                 <span
-                  class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                  className="hidden sm:inline-block sm:align-middle sm:h-screen"
                   aria-hidden="true"
                 >
                   &#8203;
@@ -790,43 +790,43 @@ export default function SingleCustomer(props) {
                     To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 --> */}
 
-                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full">
-                  <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-end ">
-                      <div class="flex-grow mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full">
+                  <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div className="sm:flex sm:items-end ">
+                      <div className="flex-grow mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                         <h3
-                          class="text-lg leading-6 font-medium text-gray-900"
+                          className="text-lg leading-6 font-medium text-gray-900"
                           id="modal-title"
                         >
                           Add New Note to {customer.name}
                         </h3>
-                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
+                        <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                           <label
                             for="name"
-                            class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                            className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                           >
                             Title *
                           </label>
-                          <div class="mt-1 sm:mt-0 sm:col-span-2">
-                            <div class="max-w-lg flex rounded-md shadow-sm">
+                          <div className="mt-1 sm:mt-0 sm:col-span-2">
+                            <div className="max-w-lg flex rounded-md shadow-sm">
                               <input
                                 type="text"
                                 name="title"
                                 id="title"
                                 autocomplete="title"
-                                class="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                                className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                                 onChange={(e) => {
-                                  handleAddNoteChange(e)
+                                  handleAddNoteChange(e);
                                 }}
                               />
                             </div>
                           </div>
                         </div>
                         {/* {errors.firstName.length > 0 && (
-                          <div class="rounded-md bg-red-50 p-2 mt-1">
-                            <div class="flex">
-                              <div class="ml-2">
-                                <div class="text-sm text-red-700">
+                          <div className="rounded-md bg-red-50 p-2 mt-1">
+                            <div className="flex">
+                              <div className="ml-2">
+                                <div className="text-sm text-red-700">
                                   <span className="error">
                                     {errors.firstName}
                                   </span>{" "}
@@ -837,20 +837,20 @@ export default function SingleCustomer(props) {
                         )} */}
                         <label
                           for="content"
-                          class="block mb-3 text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                          className="block mb-3 text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                         >
                           Content
                         </label>
-                        <div class="mt-1 sm:mt-0 sm:col-span-2">
-                          <div class="max-w-lg flex rounded-md shadow-sm">
+                        <div className="mt-1 sm:mt-0 sm:col-span-2">
+                          <div className="max-w-lg flex rounded-md shadow-sm">
                             <textarea
                               type="text"
                               name="content"
                               id="content"
                               autocomplete="content"
-                              class="w-full h-80 block focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                              className="w-full h-80 block focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                               onChange={(e) => {
-                                handleAddNoteChange(e)
+                                handleAddNoteChange(e);
                               }}
                             />
                           </div>
@@ -858,19 +858,19 @@ export default function SingleCustomer(props) {
                       </div>
                     </div>
                   </div>
-                  <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                  <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <button
                       type="submit"
-                      class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-900 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm"
+                      className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-900 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm"
                     >
                       Add
                     </button>
                     <button
                       type="button"
-                      class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                      className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                       onClick={(e) => {
-                        e.preventDefault()
-                        setAddingNote(false)
+                        e.preventDefault();
+                        setAddingNote(false);
                         // setNoteErrors({
                         //   title: "",
                         //   content: "",
@@ -892,12 +892,12 @@ export default function SingleCustomer(props) {
       {viewNote ? (
         <>
           <div
-            class="fixed z-10 inset-0 overflow-y-auto"
+            className="fixed z-10 inset-0 overflow-y-auto"
             aria-labelledby="modal-title"
             role="dialog"
             aria-modal="true"
           >
-            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
               {/* <!--
                   Background overlay, show/hide based on modal state.
 
@@ -909,13 +909,13 @@ export default function SingleCustomer(props) {
                     To: "opacity-0"
                 --> */}
               <div
-                class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
                 aria-hidden="true"
               ></div>
 
               {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
               <span
-                class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                className="hidden sm:inline-block sm:align-middle sm:h-screen"
                 aria-hidden="true"
               >
                 &#8203;
@@ -932,46 +932,46 @@ export default function SingleCustomer(props) {
                     To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 --> */}
 
-              <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                  <div class="sm:flex sm:items-end ">
-                    <div class="flex-grow mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+              <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full">
+                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                  <div className="sm:flex sm:items-end ">
+                    <div className="flex-grow mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                       <h3
-                        class="text-lg leading-6 font-medium text-gray-900"
+                        className="text-lg leading-6 font-medium text-gray-900"
                         id="modal-title"
                       >
                         {currentNote.title}
                       </h3>
                       <label
                         for="content"
-                        class="block mb-3 text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                        className="block mb-3 text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                       >
                         {currentNote.createdAt
                           ? toDateString(currentNote.createdAt)
                           : ""}
                       </label>
-                      <div class="mt-1 sm:mt-0 sm:col-span-2">
-                        <div class="max-w-lg flex rounded-md shadow-sm">
+                      <div className="mt-1 sm:mt-0 sm:col-span-2">
+                        <div className="max-w-lg flex rounded-md shadow-sm">
                           <textarea
                             type="text"
                             name="content"
                             id="content"
                             autocomplete="content"
                             value={currentNote.content}
-                            class="w-full h-80 block focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                            className="w-full h-80 block focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                           />
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                   <button
                     type="button"
-                    class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={(e) => {
-                      e.preventDefault()
-                      setViewNote(false)
+                      e.preventDefault();
+                      setViewNote(false);
                     }}
                   >
                     Close
@@ -987,5 +987,5 @@ export default function SingleCustomer(props) {
     </div>
   ) : (
     ""
-  )
+  );
 }
