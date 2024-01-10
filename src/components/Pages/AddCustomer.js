@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import CustomerContext from "../../context/Customer/CustomerContext";
 import OrgContext from "../../context/Organization/OrgContext";
 
-export default function EditCustomer(props) {
+export default function AddCustomer(props) {
   const customerCtx = useContext(CustomerContext);
   const { submitCreateCustomer } = customerCtx;
 

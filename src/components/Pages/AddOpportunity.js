@@ -4,7 +4,7 @@ import OpportunityContext from "../../context/Opportunity/OpportunityContext";
 import OrgContext from "../../context/Organization/OrgContext";
 import { toDateString, OPP_STAGES } from "../../_helperFunctions";
 
-export default function EditOpportunity() {
+export default function AddOpportunity() {
   const opportunityCtx = useContext(OpportunityContext);
   const { submitCreateOpportunity } = opportunityCtx;
 

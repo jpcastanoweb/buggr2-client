@@ -4,7 +4,7 @@ import ProjectContext from "../../context/Project/ProjectContext";
 import OrgContext from "../../context/Organization/OrgContext";
 import { toDateString, PROJECT_STAGES } from "../../_helperFunctions";
 
-export default function EditProject() {
+export default function AddProject() {
   const projectCtx = useContext(ProjectContext);
   const { submitCreateProject } = projectCtx;
 
