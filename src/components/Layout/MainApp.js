@@ -1,6 +1,6 @@
 // dependencies
 import React, { useState, useEffect, useContext } from "react";
-import { Link, Routes, useMatch } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // images
 import mainLogoNoText from "./../../images/main_logo_notext.png";
