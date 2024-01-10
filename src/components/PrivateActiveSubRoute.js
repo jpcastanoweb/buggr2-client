@@ -1,5 +1,5 @@
-import React, { Children, useContext, useEffect, useState } from "react";
-import { Route, Navigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 
 import UserContext from "./../context/User/UserContext";
 
@@ -24,8 +24,8 @@ export default function PrivateActiveSubRoute({ children }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authStatus]);
 
-  return loading ? null : authStatus || true ? ( // TODO: delete true
-    user.subscriptionStatus === "active" || true ? ( //TODO: delete true
+  return loading ? null : authStatus ? (
+    user.subscriptionStatus === "active" ? (
       children
     ) : (
       <Navigate to="/subscribe" />

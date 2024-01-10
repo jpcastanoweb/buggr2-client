@@ -24,9 +24,7 @@ export default function PrivateRoute({ children }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authStatus]);
 
-  return loading ? null : (authStatus &&
-      user.subscriptionStatus !== "active") ||
-    true ? (
+  return loading ? null : authStatus && user.subscriptionStatus !== "active" ? (
     children
   ) : (
     <Navigate to="/login" />

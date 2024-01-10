@@ -15,26 +15,9 @@ import ProjectState from "../../context/Project/ProjectState";
 import OpportunityState from "../../context/Opportunity/OpportunityState";
 
 // components
-import Customers from "../Pages/Customers";
-import Opportunities from "../Pages/Opportunities";
-import Projects from "../Pages/Projects";
-import PrivateActiveSubRoute from "../PrivateActiveSubRoute";
 import UserNav from "../misc/UserNav";
-import SingleCustomer from "../Pages/SingleCustomer";
-import SingleProject from "../Pages/SingleProject";
-import SingleOpporunity from "../Pages/SingleOpportunity";
-import EditCustomer from "../Pages/EditCustomer";
-import EditProject from "../Pages/EditProject";
-import EditOpportunity from "../Pages/EditOpportunity";
-import AddCustomer from "../Pages/AddCustomer";
-import AddOpportunity from "../Pages/AddOpportunity";
-import AddProject from "../Pages/AddProject";
-import Settings from "./Settings";
-import Dashboard from "../Pages/Dashboard";
 
-export default function MainApp(props) {
-  let { path } = useMatch();
-
+export default function MainApp({ children }) {
   // GLOBAL STATE
   const orgCtx = useContext(OrgContext);
   const { loadOrg } = orgCtx;
@@ -174,80 +157,7 @@ export default function MainApp(props) {
             <ProjectState>
               <OpportunityState>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                  <Routes>
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/`}
-                      component={Dashboard}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/customers`}
-                      component={Customers}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/customers/new`}
-                      component={AddCustomer}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/customers/:customerid`}
-                      component={SingleCustomer}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/customers/edit/:customerid`}
-                      component={EditCustomer}
-                    />
-
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/opportunities`}
-                      component={Opportunities}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/opportunities/new`}
-                      component={AddOpportunity}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/opportunities/:opportunityid`}
-                      component={SingleOpporunity}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/opportunities/edit/:opportunityid`}
-                      component={EditOpportunity}
-                    />
-
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/projects`}
-                      component={Projects}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/projects/new`}
-                      component={AddProject}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/projects/:projectid`}
-                      component={SingleProject}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/projects/edit/:projectid`}
-                      component={EditProject}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/settings`}
-                      component={Settings}
-                    />
-                  </Routes>
+                  {children}
                 </div>
               </OpportunityState>
             </ProjectState>
