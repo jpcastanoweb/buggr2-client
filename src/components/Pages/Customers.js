@@ -1,23 +1,25 @@
-import React, { useContext, useEffect, useState } from "react"
-import { Link } from "react-router-dom"
-import OrgContext from "../../context/Organization/OrgContext"
-import { toDollarString } from "../../_helperFunctions"
+import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import OrgContext from "../../context/Organization/OrgContext";
+import { toDollarString } from "../../_helperFunctions";
 
 export default function Customers() {
-  const orgCtx = useContext(OrgContext)
-  const { customers, loadCustomers } = orgCtx
-  const [loading, setLoading] = useState(true)
+  console.log("hello");
+  const orgCtx = useContext(OrgContext);
+  const { customers, loadCustomers } = orgCtx;
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log("entered customers useEffect");
     const load = async () => {
-      await loadCustomers()
-      setLoading(false)
-    }
+      await loadCustomers();
+      setLoading(false);
+    };
 
-    load()
+    load();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   return loading ? (
     <></>
@@ -108,7 +110,7 @@ export default function Customers() {
                           {toDollarString(
                             elem.projects
                               ? elem.projects.reduce((a, b) => {
-                                  return a + b.dollarValue
+                                  return a + b.dollarValue;
                                 }, 0)
                               : ""
                           )}
@@ -121,9 +123,9 @@ export default function Customers() {
                                     b.currentStage !== "Closed - Won" &&
                                     b.currentStage !== "Closed - Lost"
                                   ) {
-                                    return a + b.dollarValue
+                                    return a + b.dollarValue;
                                   } else {
-                                    return a
+                                    return a;
                                   }
                                 }, 0)
                               : ""
@@ -153,7 +155,7 @@ export default function Customers() {
                           </Link>
                         </td>
                       </tr>
-                    )
+                    );
                   })}
                 </tbody>
               </table>
@@ -162,5 +164,5 @@ export default function Customers() {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -15,7 +15,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import AuthRoute from "./components/AuthRoute";
 import OrgState from "./context/Organization/OrgState";
 import SubscribePage from "./components/Pages/Stripe/SubscribePage";
-import PrivateActiveSubRoute from "./components/PrivateActiveSubRoute";
+import PrivateActiveSubRoute from "./components/ProtectedMainApp";
 import SessionSuccess from "./components/Pages/Stripe/SessionSuccess";
 import SessionFailed from "./components/Pages/Stripe/SessionFailed";
 import Site from "./components/Site/Site";
@@ -35,6 +35,7 @@ import AddProject from "./components/Pages/AddProject";
 import SingleProject from "./components/Pages/SingleProject";
 import EditProject from "./components/Pages/EditProject";
 import Settings from "./components/Layout/Settings";
+import { Children } from "react";
 
 function App() {
   return (
@@ -69,14 +70,7 @@ function App() {
               />
 
               {/* Private Routes */}
-              <Route
-                path="/app"
-                element={
-                  <PrivateActiveSubRoute>
-                    <MainApp />
-                  </PrivateActiveSubRoute>
-                }
-              >
+              <Route path="/app" element={<PrivateActiveSubRoute />}>
                 <Route path={""} element={<Dashboard />} />
                 <Route path={`customers`} element={<Customers />} />
                 <Route path={`customers/new`} element={<AddCustomer />} />
