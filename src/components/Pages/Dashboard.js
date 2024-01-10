@@ -1,6 +1,6 @@
-import React from "react"
-import { Redirect } from "react-router-dom"
+import React from "react";
+import { Navigate } from "react-router-dom";
 
 export default function Dashboard() {
-  return <Redirect to="/app/customers" />
+  return <Navigate to="/app/customers" />;
 }

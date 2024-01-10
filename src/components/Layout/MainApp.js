@@ -1,59 +1,42 @@
 // dependencies
-import React, { useState, useEffect, useContext } from "react"
-import { Link, Switch, useRouteMatch } from "react-router-dom"
+import React, { useState, useEffect, useContext } from "react";
+import { Link, Routes, useMatch } from "react-router-dom";
 
 // images
-import mainLogoNoText from "./../../images/main_logo_notext.png"
+import mainLogoNoText from "./../../images/main_logo_notext.png";
 
 // contexts
-import OrgContext from "./../../context/Organization/OrgContext"
-import UserContext from "./../../context/User/UserContext"
+import OrgContext from "./../../context/Organization/OrgContext";
+import UserContext from "./../../context/User/UserContext";
 
 // states
-import CustomerState from "../../context/Customer/CustomerState"
-import ProjectState from "../../context/Project/ProjectState"
-import OpportunityState from "../../context/Opportunity/OpportunityState"
+import CustomerState from "../../context/Customer/CustomerState";
+import ProjectState from "../../context/Project/ProjectState";
+import OpportunityState from "../../context/Opportunity/OpportunityState";
 
 // components
-import Customers from "../Pages/Customers"
-import Opportunities from "../Pages/Opportunities"
-import Projects from "../Pages/Projects"
-import PrivateActiveSubRoute from "../PrivateActiveSubRoute"
-import UserNav from "../misc/UserNav"
-import SingleCustomer from "../Pages/SingleCustomer"
-import SingleProject from "../Pages/SingleProject"
-import SingleOpporunity from "../Pages/SingleOpportunity"
-import EditCustomer from "../Pages/EditCustomer"
-import EditProject from "../Pages/EditProject"
-import EditOpportunity from "../Pages/EditOpportunity"
-import AddCustomer from "../Pages/AddCustomer"
-import AddOpportunity from "../Pages/AddOpportunity"
-import AddProject from "../Pages/AddProject"
-import Settings from "./Settings"
-import Dashboard from "../Pages/Dashboard"
+import UserNav from "../misc/UserNav";
 
-export default function MainApp(props) {
-  let { path } = useRouteMatch()
-
+export default function MainApp({ children }) {
   // GLOBAL STATE
-  const orgCtx = useContext(OrgContext)
-  const { loadOrg } = orgCtx
+  const orgCtx = useContext(OrgContext);
+  const { loadOrg } = orgCtx;
 
-  const userCtx = useContext(UserContext)
-  const { user } = userCtx
+  const userCtx = useContext(UserContext);
+  const { user } = userCtx;
 
   // LOCAL STATE
-  const [activeTab, setActiveTab] = useState("")
+  const [activeTab, setActiveTab] = useState("");
 
   useEffect(() => {
     const loadAll = async () => {
-      await loadOrg(user.organizations[0])
+      await loadOrg(user.organizations[0]);
       // await loadCustomers(orgId)
-    }
+    };
 
-    loadAll()
+    loadAll();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   return (
     <div className="h-screen flex overflow-hidden bg-gray-100">
@@ -82,7 +65,7 @@ export default function MainApp(props) {
                     "px-6 text-lg border-green-400 text-indigo-100 flex flex-row justify-start items-center hover:bg-purple-700 group flex items-center px-6 py-2 text-sm font-medium "
                   }
                   onClick={() => {
-                    setActiveTab("customers")
+                    setActiveTab("customers");
                   }}
                 >
                   <svg
@@ -111,7 +94,7 @@ export default function MainApp(props) {
                     "px-6 text-lg border-green-400 text-indigo-100 flex flex-row justify-start items-center hover:bg-purple-700 group flex items-center px-6 py-2 text-sm font-medium "
                   }
                   onClick={() => {
-                    setActiveTab("opportunities")
+                    setActiveTab("opportunities");
                   }}
                 >
                   <svg
@@ -141,7 +124,7 @@ export default function MainApp(props) {
                     "px-6 text-lg border-green-400 text-indigo-100 flex flex-row justify-start items-center hover:bg-purple-700 group flex items-center px-6 py-2 text-sm font-medium "
                   }
                   onClick={() => {
-                    setActiveTab("projects")
+                    setActiveTab("projects");
                   }}
                 >
                   <svg
@@ -174,80 +157,7 @@ export default function MainApp(props) {
             <ProjectState>
               <OpportunityState>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                  <Switch>
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/`}
-                      component={Dashboard}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/customers`}
-                      component={Customers}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/customers/new`}
-                      component={AddCustomer}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/customers/:customerid`}
-                      component={SingleCustomer}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/customers/edit/:customerid`}
-                      component={EditCustomer}
-                    />
-
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/opportunities`}
-                      component={Opportunities}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/opportunities/new`}
-                      component={AddOpportunity}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/opportunities/:opportunityid`}
-                      component={SingleOpporunity}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/opportunities/edit/:opportunityid`}
-                      component={EditOpportunity}
-                    />
-
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/projects`}
-                      component={Projects}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/projects/new`}
-                      component={AddProject}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/projects/:projectid`}
-                      component={SingleProject}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/projects/edit/:projectid`}
-                      component={EditProject}
-                    />
-                    <PrivateActiveSubRoute
-                      exact
-                      path={`${path}/settings`}
-                      component={Settings}
-                    />
-                  </Switch>
+                  {children}
                 </div>
               </OpportunityState>
             </ProjectState>
@@ -255,5 +165,5 @@ export default function MainApp(props) {
         </div>
       </main>
     </div>
-  )
+  );
 }

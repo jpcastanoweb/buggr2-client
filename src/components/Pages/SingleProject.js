@@ -1,92 +1,95 @@
-import React, { useContext, useEffect, useState } from "react"
-import { useParams, Link, Redirect } from "react-router-dom"
-import ProjectContext from "../../context/Project/ProjectContext"
-import CustomerContext from "../../context/Customer/CustomerContext"
+import React, { useContext, useEffect, useState } from "react";
+import { useParams, Link, Navigate } from "react-router-dom";
+import ProjectContext from "../../context/Project/ProjectContext";
+import CustomerContext from "../../context/Customer/CustomerContext";
 import {
   PROJECT_STAGES,
   PROJECT_STAGES_WITH_VALUES,
   toDateString,
   toDollarString,
-} from "./../../_helperFunctions"
-import CompletedStep from "../misc/CompletedStep"
-import CurrentStep from "../misc/CurrentStep"
-import UpcomingStep from "../misc/UpcomingStep"
+} from "./../../_helperFunctions";
+import CompletedStep from "../misc/CompletedStep";
+import CurrentStep from "../misc/CurrentStep";
+import UpcomingStep from "../misc/UpcomingStep";
 
 export default function SingleProject(props) {
-  const { projectid } = useParams()
+  const { projectid } = useParams();
 
-  const projectCtx = useContext(ProjectContext)
+  const projectCtx = useContext(ProjectContext);
   const {
     project,
     loadProject,
     submitDeleteProject,
     submitAssignContact,
     submitAddNote,
-  } = projectCtx
-  const customerCtx = useContext(CustomerContext)
-  const { customer, loadCustomer } = customerCtx
+  } = projectCtx;
+  const customerCtx = useContext(CustomerContext);
+  const { customer, loadCustomer } = customerCtx;
 
-  const [modalActive, setModalActive] = useState(false)
-  const [deleted, setDeleted] = useState(false)
-  const [assigningContact, setAssigningContact] = useState(false)
+  const [modalActive, setModalActive] = useState(false);
+  const [deleted, setDeleted] = useState(false);
+  const [assigningContact, setAssigningContact] = useState(false);
   const [assignContactData, setAssignContactData] = useState({
     contactid: null,
-  })
-  const [addingNote, setAddingNote] = useState(false)
+  });
+  const [addingNote, setAddingNote] = useState(false);
   const [noteData, setNoteData] = useState({
     title: "",
     content: "",
-  })
-  const [viewNote, setViewNote] = useState(false)
+  });
+  const [viewNote, setViewNote] = useState(false);
   const [currentNote, setCurrentNote] = useState({
     title: "",
     content: "",
-  })
-  const [loading, setLoading] = useState(true)
+  });
+  const [loading, setLoading] = useState(true);
 
   const generateBar = () => {
-    const currentStage = PROJECT_STAGES_WITH_VALUES[project.currentStage]
+    const currentStage = PROJECT_STAGES_WITH_VALUES[project.currentStage];
 
-    let list = []
+    let list = [];
 
     for (let i = 0; i < PROJECT_STAGES.length - 1; i++) {
       if (i < currentStage - 1) {
         list.push(
           <CompletedStep
+            key={i}
             number={i}
             name={PROJECT_STAGES[i]}
             max={PROJECT_STAGES.length - 1}
           />
-        )
+        );
       } else if (i === currentStage - 1) {
         list.push(
           <CurrentStep
+            key={i}
             name={PROJECT_STAGES[i]}
             number={i}
             max={PROJECT_STAGES.length - 1}
           />
-        )
+        );
       } else {
         list.push(
           <UpcomingStep
+            key={i}
             name={PROJECT_STAGES[i]}
             number={i}
             max={PROJECT_STAGES.length - 1}
           />
-        )
+        );
       }
     }
 
-    return list
-  }
+    return list;
+  };
 
   const handleAddNoteChange = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setNoteData({
       ...noteData,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   const sendNoteData = async (e) => {
     const fullData = {
@@ -94,51 +97,51 @@ export default function SingleProject(props) {
       content: noteData.content,
       onModel: "Project",
       ownerid: project._id,
-    }
-    await submitAddNote(fullData)
-    setAddingNote(false)
-  }
+    };
+    await submitAddNote(fullData);
+    setAddingNote(false);
+  };
 
   const handleDelete = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      await submitDeleteProject(projectid)
-      setDeleted(true)
+      await submitDeleteProject(projectid);
+      setDeleted(true);
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
-  }
+  };
 
   const handleAssignContactFormChange = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setAssignContactData({
       ...assignContactData,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   const sendAssignContactData = async (e) => {
-    setAssigningContact(false)
+    setAssigningContact(false);
     await submitAssignContact({
       contactid: assignContactData.contactid,
       projectid: project._id,
-    })
-  }
+    });
+  };
 
   useEffect(() => {
     const loadEverything = async () => {
-      await loadProject(projectid)
-      setLoading(false)
-    }
+      await loadProject(projectid);
+      setLoading(false);
+    };
 
-    loadEverything()
+    loadEverything();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   return loading ? (
     <></>
   ) : deleted ? (
-    <Redirect to="/app/projects" />
+    <Navigate to="/app/projects" />
   ) : (
     <>
       {/* Heading */}
@@ -161,8 +164,8 @@ export default function SingleProject(props) {
             type="button"
             className="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-red-900 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             onClick={(e) => {
-              e.preventDefault()
-              setModalActive(true)
+              e.preventDefault();
+              setModalActive(true);
             }}
           >
             Delete
@@ -217,9 +220,7 @@ export default function SingleProject(props) {
         <div>
           <p className="mb-1 text-xs">Contact Email Address</p>
           <p className="fs-5">
-            <p className="fs-5">
-              {project.mainContact ? project.mainContact.email : "N/A"}
-            </p>
+            {project.mainContact ? project.mainContact.email : "N/A"}
           </p>
         </div>
         <div>
@@ -235,10 +236,10 @@ export default function SingleProject(props) {
       <div className="mb-10">
         {/* <!-- This example requires Tailwind CSS v2.0+ --> */}
         <nav aria-label="Progress">
-          <ol class="border border-gray-300 rounded-md divide-y divide-gray-300 lg:flex lg:divide-y-0">
+          <ol className="border border-gray-300 rounded-md divide-y divide-gray-300 lg:flex lg:divide-y-0">
             <React.Fragment>
               {generateBar().map((e) => {
-                return e
+                return e;
               })}
             </React.Fragment>
           </ol>
@@ -262,8 +263,8 @@ export default function SingleProject(props) {
                           className="w-full text-left"
                           onClick={async () => {
                             if (project.forCustomer)
-                              await loadCustomer(project.forCustomer._id)
-                            setAssigningContact(true)
+                              await loadCustomer(project.forCustomer._id);
+                            setAssigningContact(true);
                           }}
                         >
                           {" "}
@@ -285,7 +286,7 @@ export default function SingleProject(props) {
                                 : ""}
                             </div>
                           </li>
-                        )
+                        );
                       })
                     ) : (
                       <li>
@@ -314,7 +315,7 @@ export default function SingleProject(props) {
                         <button
                           className="w-full text-left"
                           onClick={() => {
-                            setAddingNote(true)
+                            setAddingNote(true);
                           }}
                         >
                           {" "}
@@ -328,9 +329,9 @@ export default function SingleProject(props) {
                           <li key={i} className="overflow-ellipsis">
                             <button
                               onClick={(event) => {
-                                event.preventDefault()
-                                setCurrentNote(e)
-                                setViewNote(true)
+                                event.preventDefault();
+                                setCurrentNote(e);
+                                setViewNote(true);
                               }}
                               className="p-3 w-full max-w-full text-left hover:bg-gray-200"
                             >
@@ -344,7 +345,7 @@ export default function SingleProject(props) {
                               <p className="text-sm truncate">{e.content}</p>
                             </button>
                           </li>
-                        )
+                        );
                       })
                     ) : (
                       <li>
@@ -381,12 +382,12 @@ export default function SingleProject(props) {
 
       {modalActive ? (
         <div
-          class="fixed z-10 inset-0 overflow-y-auto"
+          className="fixed z-10 inset-0 overflow-y-auto"
           aria-labelledby="modal-title"
           role="dialog"
           aria-modal="true"
         >
-          <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             {/* <!--
               Background overlay, show/hide based on modal state.
 
@@ -398,13 +399,13 @@ export default function SingleProject(props) {
                 To: "opacity-0"
             --> */}
             <div
-              class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+              className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
               aria-hidden="true"
             ></div>
 
             {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
             <span
-              class="hidden sm:inline-block sm:align-middle sm:h-screen"
+              className="hidden sm:inline-block sm:align-middle sm:h-screen"
               aria-hidden="true"
             >
               &#8203;
@@ -420,12 +421,12 @@ export default function SingleProject(props) {
                   From: "opacity-100 translate-y-0 sm:scale-100"
                   To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               --> */}
-            <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
-              <div class="sm:flex sm:items-start">
-                <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+            <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+              <div className="sm:flex sm:items-start">
+                <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
                   {/* <!-- Heroicon name: outline/exclamation --> */}
                   <svg
-                    class="h-6 w-6 text-red-600"
+                    className="h-6 w-6 text-red-600"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -433,22 +434,22 @@ export default function SingleProject(props) {
                     aria-hidden="true"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
                     />
                   </svg>
                 </div>
-                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                   <h3
-                    class="text-lg leading-6 font-medium text-gray-900"
+                    className="text-lg leading-6 font-medium text-gray-900"
                     id="modal-title"
                   >
                     Delete {project.title}
                   </h3>
-                  <div class="mt-2">
-                    <p class="text-sm text-gray-500">
+                  <div className="mt-2">
+                    <p className="text-sm text-gray-500">
                       Are you sure you want to delete {project.title}? All of
                       its data will be permanently deleted. This action cannot
                       be undone.
@@ -456,22 +457,22 @@ export default function SingleProject(props) {
                   </div>
                 </div>
               </div>
-              <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+              <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
                 <button
                   type="button"
-                  class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
                   onClick={(e) => {
-                    handleDelete(e)
+                    handleDelete(e);
                   }}
                 >
                   Delete
                 </button>
                 <button
                   type="button"
-                  class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm"
+                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm"
                   onClick={(e) => {
-                    e.preventDefault()
-                    setModalActive(false)
+                    e.preventDefault();
+                    setModalActive(false);
                   }}
                 >
                   Cancel
@@ -489,16 +490,16 @@ export default function SingleProject(props) {
         <>
           <form
             onSubmit={(e) => {
-              sendAssignContactData(e)
+              sendAssignContactData(e);
             }}
           >
             <div
-              class="fixed z-10 inset-0 overflow-y-auto"
+              className="fixed z-10 inset-0 overflow-y-auto"
               aria-labelledby="modal-title"
               role="dialog"
               aria-modal="true"
             >
-              <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+              <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 {/* <!--
                   Background overlay, show/hide based on modal state.
 
@@ -510,13 +511,13 @@ export default function SingleProject(props) {
                     To: "opacity-0"
                 --> */}
                 <div
-                  class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                  className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
                   aria-hidden="true"
                 ></div>
 
                 {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
                 <span
-                  class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                  className="hidden sm:inline-block sm:align-middle sm:h-screen"
                   aria-hidden="true"
                 >
                   &#8203;
@@ -533,34 +534,34 @@ export default function SingleProject(props) {
                     To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 --> */}
 
-                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                  <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-end ">
-                      <div class="flex-grow mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                  <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div className="sm:flex sm:items-end ">
+                      <div className="flex-grow mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                         <h3
-                          class="text-lg leading-6 font-medium text-gray-900"
+                          className="text-lg leading-6 font-medium text-gray-900"
                           id="modal-title"
                         >
                           Assign Contact to {project.title}
                         </h3>
-                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
+                        <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                           <label
-                            for="name"
-                            class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                            htmlFor="name"
+                            className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                           >
                             Select Contact:
                           </label>
-                          <div class="mt-1 sm:mt-0 sm:col-span-2">
-                            <div class="max-w-lg flex rounded-md shadow-sm">
+                          <div className="mt-1 sm:mt-0 sm:col-span-2">
+                            <div className="max-w-lg flex rounded-md shadow-sm">
                               <select
                                 type="text"
                                 name="contactid"
                                 id="contactid"
-                                autocomplete="contactid"
+                                autoComplete="contactid"
                                 value={assignContactData.contactid}
-                                class="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                                className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                                 onChange={(e) => {
-                                  handleAssignContactFormChange(e)
+                                  handleAssignContactFormChange(e);
                                 }}
                                 required
                               >
@@ -571,7 +572,7 @@ export default function SingleProject(props) {
                                         <option key={i} value={e._id}>
                                           {e.firstName + " " + e.lastName}
                                         </option>
-                                      )
+                                      );
                                     })
                                   : ""}
                               </select>
@@ -581,19 +582,19 @@ export default function SingleProject(props) {
                       </div>
                     </div>
                   </div>
-                  <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                  <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <button
                       type="submit"
-                      class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-900 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm"
+                      className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-900 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm"
                     >
                       Add
                     </button>
                     <button
                       type="button"
-                      class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                      className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                       onClick={(e) => {
-                        e.preventDefault()
-                        setAssigningContact(false)
+                        e.preventDefault();
+                        setAssigningContact(false);
                       }}
                     >
                       Cancel
@@ -613,17 +614,17 @@ export default function SingleProject(props) {
         <>
           <form
             onSubmit={(e) => {
-              sendNoteData(e)
+              sendNoteData(e);
             }}
             noValidate
           >
             <div
-              class="fixed z-10 inset-0 overflow-y-auto"
+              className="fixed z-10 inset-0 overflow-y-auto"
               aria-labelledby="modal-title"
               role="dialog"
               aria-modal="true"
             >
-              <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+              <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 {/* <!--
                   Background overlay, show/hide based on modal state.
 
@@ -635,13 +636,13 @@ export default function SingleProject(props) {
                     To: "opacity-0"
                 --> */}
                 <div
-                  class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                  className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
                   aria-hidden="true"
                 ></div>
 
                 {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
                 <span
-                  class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                  className="hidden sm:inline-block sm:align-middle sm:h-screen"
                   aria-hidden="true"
                 >
                   &#8203;
@@ -658,43 +659,43 @@ export default function SingleProject(props) {
                     To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 --> */}
 
-                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full">
-                  <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-end ">
-                      <div class="flex-grow mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full">
+                  <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div className="sm:flex sm:items-end ">
+                      <div className="flex-grow mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                         <h3
-                          class="text-lg leading-6 font-medium text-gray-900"
+                          className="text-lg leading-6 font-medium text-gray-900"
                           id="modal-title"
                         >
                           Add New Note to {project.name}
                         </h3>
-                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
+                        <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                           <label
-                            for="name"
-                            class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                            htmlFor="name"
+                            className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                           >
                             Title *
                           </label>
-                          <div class="mt-1 sm:mt-0 sm:col-span-2">
-                            <div class="max-w-lg flex rounded-md shadow-sm">
+                          <div className="mt-1 sm:mt-0 sm:col-span-2">
+                            <div className="max-w-lg flex rounded-md shadow-sm">
                               <input
                                 type="text"
                                 name="title"
                                 id="title"
-                                autocomplete="title"
-                                class="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                                autoComplete="title"
+                                className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                                 onChange={(e) => {
-                                  handleAddNoteChange(e)
+                                  handleAddNoteChange(e);
                                 }}
                               />
                             </div>
                           </div>
                         </div>
                         {/* {errors.firstName.length > 0 && (
-                          <div class="rounded-md bg-red-50 p-2 mt-1">
-                            <div class="flex">
-                              <div class="ml-2">
-                                <div class="text-sm text-red-700">
+                          <div className="rounded-md bg-red-50 p-2 mt-1">
+                            <div className="flex">
+                              <div className="ml-2">
+                                <div className="text-sm text-red-700">
                                   <span className="error">
                                     {errors.firstName}
                                   </span>{" "}
@@ -704,21 +705,21 @@ export default function SingleProject(props) {
                           </div>
                         )} */}
                         <label
-                          for="content"
-                          class="block mb-3 text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                          htmlFor="content"
+                          className="block mb-3 text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                         >
                           Content
                         </label>
-                        <div class="mt-1 sm:mt-0 sm:col-span-2">
-                          <div class="max-w-lg flex rounded-md shadow-sm">
+                        <div className="mt-1 sm:mt-0 sm:col-span-2">
+                          <div className="max-w-lg flex rounded-md shadow-sm">
                             <textarea
                               type="text"
                               name="content"
                               id="content"
-                              autocomplete="content"
-                              class="w-full h-80 block focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                              autoComplete="content"
+                              className="w-full h-80 block focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                               onChange={(e) => {
-                                handleAddNoteChange(e)
+                                handleAddNoteChange(e);
                               }}
                             />
                           </div>
@@ -726,19 +727,19 @@ export default function SingleProject(props) {
                       </div>
                     </div>
                   </div>
-                  <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                  <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <button
                       type="submit"
-                      class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-900 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm"
+                      className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-900 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm"
                     >
                       Add
                     </button>
                     <button
                       type="button"
-                      class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                      className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                       onClick={(e) => {
-                        e.preventDefault()
-                        setAddingNote(false)
+                        e.preventDefault();
+                        setAddingNote(false);
                         // setNoteErrors({
                         //   title: "",
                         //   content: "",
@@ -761,12 +762,12 @@ export default function SingleProject(props) {
       {viewNote ? (
         <>
           <div
-            class="fixed z-10 inset-0 overflow-y-auto"
+            className="fixed z-10 inset-0 overflow-y-auto"
             aria-labelledby="modal-title"
             role="dialog"
             aria-modal="true"
           >
-            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
               {/* <!--
                   Background overlay, show/hide based on modal state.
 
@@ -778,13 +779,13 @@ export default function SingleProject(props) {
                     To: "opacity-0"
                 --> */}
               <div
-                class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
                 aria-hidden="true"
               ></div>
 
               {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
               <span
-                class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                className="hidden sm:inline-block sm:align-middle sm:h-screen"
                 aria-hidden="true"
               >
                 &#8203;
@@ -801,46 +802,46 @@ export default function SingleProject(props) {
                     To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 --> */}
 
-              <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                  <div class="sm:flex sm:items-end ">
-                    <div class="flex-grow mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+              <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full">
+                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                  <div className="sm:flex sm:items-end ">
+                    <div className="flex-grow mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                       <h3
-                        class="text-lg leading-6 font-medium text-gray-900"
+                        className="text-lg leading-6 font-medium text-gray-900"
                         id="modal-title"
                       >
                         {currentNote.title}
                       </h3>
                       <label
-                        for="content"
-                        class="block mb-3 text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                        htmlFor="content"
+                        className="block mb-3 text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                       >
                         {currentNote.createdAt
                           ? toDateString(currentNote.createdAt)
                           : ""}
                       </label>
-                      <div class="mt-1 sm:mt-0 sm:col-span-2">
-                        <div class="max-w-lg flex rounded-md shadow-sm">
+                      <div className="mt-1 sm:mt-0 sm:col-span-2">
+                        <div className="max-w-lg flex rounded-md shadow-sm">
                           <textarea
                             type="text"
                             name="content"
                             id="content"
-                            autocomplete="content"
+                            autoComplete="content"
                             value={currentNote.content}
-                            class="w-full h-80 block focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                            className="w-full h-80 block focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                           />
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                   <button
                     type="button"
-                    class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={(e) => {
-                      e.preventDefault()
-                      setViewNote(false)
+                      e.preventDefault();
+                      setViewNote(false);
                     }}
                   >
                     Close
@@ -854,5 +855,5 @@ export default function SingleProject(props) {
         ""
       )}
     </>
-  )
+  );
 }

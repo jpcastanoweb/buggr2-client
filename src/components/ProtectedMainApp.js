@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
-import UserContext from "./../context/User/UserContext";
+import UserContext from "../context/User/UserContext";
+import MainApp from "./Layout/MainApp";
 
-export default function PrivateRoute({ children }) {
+export default function ProtectedMainApp({ children }) {
   const userCtx = useContext(UserContext);
 
-  const { user, authStatus, verifyingToken } = userCtx;
+  const { authStatus, verifyingToken, user } = userCtx;
 
   const [loading, setLoading] = useState(true);
 
@@ -24,8 +25,14 @@ export default function PrivateRoute({ children }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authStatus]);
 
-  return loading ? null : authStatus && user.subscriptionStatus !== "active" ? (
-    children
+  return loading ? null : authStatus ? (
+    user.subscriptionStatus === "active" ? (
+      <MainApp>
+        <Outlet />
+      </MainApp>
+    ) : (
+      <Navigate to="/subscribe" />
+    )
   ) : (
     <Navigate to="/login" />
   );
