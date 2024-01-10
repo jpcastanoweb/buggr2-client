@@ -88,7 +88,7 @@ export default function AddCustomer(props) {
             <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
               <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                 <label
-                  for="name"
+                  htmlFor="name"
                   className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                 >
                   Name
@@ -99,7 +99,7 @@ export default function AddCustomer(props) {
                       type="text"
                       name="name"
                       id="name"
-                      autocomplete="name"
+                      autoComplete="name"
                       value={data.name}
                       className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                       onChange={(e) => {

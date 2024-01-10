@@ -629,7 +629,7 @@ export default function SingleOpportunity(props) {
                       </h3>
                       <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                         <label
-                          for="name"
+                          htmlFor="name"
                           className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                         >
                           Project Name
@@ -640,7 +640,7 @@ export default function SingleOpportunity(props) {
                               type="text"
                               name="title"
                               id="title"
-                              autocomplete="title"
+                              autoComplete="title"
                               required
                               value={convertData.title}
                               className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
@@ -653,7 +653,7 @@ export default function SingleOpportunity(props) {
                       </div>
                       <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
                         <label
-                          for="name"
+                          htmlFor="name"
                           className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                         >
                           Due Date
@@ -664,7 +664,7 @@ export default function SingleOpportunity(props) {
                               type="date"
                               name="dueDate"
                               id="dueDate"
-                              autocomplete="dueDate"
+                              autoComplete="dueDate"
                               required
                               value={convertData.dueDate}
                               className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
@@ -773,7 +773,7 @@ export default function SingleOpportunity(props) {
                         </h3>
                         <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                           <label
-                            for="name"
+                            htmlFor="name"
                             className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                           >
                             Select Contact:
@@ -784,7 +784,7 @@ export default function SingleOpportunity(props) {
                                 type="text"
                                 name="contactid"
                                 id="contactid"
-                                autocomplete="contactid"
+                                autoComplete="contactid"
                                 value={assignContactData.contactid}
                                 className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                                 onChange={(e) => {
@@ -898,7 +898,7 @@ export default function SingleOpportunity(props) {
                         </h3>
                         <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                           <label
-                            for="name"
+                            htmlFor="name"
                             className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                           >
                             Title *
@@ -909,7 +909,7 @@ export default function SingleOpportunity(props) {
                                 type="text"
                                 name="title"
                                 id="title"
-                                autocomplete="title"
+                                autoComplete="title"
                                 className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                                 onChange={(e) => {
                                   handleAddNoteChange(e);
@@ -932,7 +932,7 @@ export default function SingleOpportunity(props) {
                           </div>
                         )} */}
                         <label
-                          for="content"
+                          htmlFor="content"
                           className="block mb-3 text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                         >
                           Content
@@ -943,7 +943,7 @@ export default function SingleOpportunity(props) {
                               type="text"
                               name="content"
                               id="content"
-                              autocomplete="content"
+                              autoComplete="content"
                               className="w-full h-80 block focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                               onChange={(e) => {
                                 handleAddNoteChange(e);
@@ -1040,7 +1040,7 @@ export default function SingleOpportunity(props) {
                         {currentNote.title}
                       </h3>
                       <label
-                        for="content"
+                        htmlFor="content"
                         className="block mb-3 text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                       >
                         {currentNote.createdAt
@@ -1053,7 +1053,7 @@ export default function SingleOpportunity(props) {
                             type="text"
                             name="content"
                             id="content"
-                            autocomplete="content"
+                            autoComplete="content"
                             value={currentNote.content}
                             className="w-full h-80 block focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                           />

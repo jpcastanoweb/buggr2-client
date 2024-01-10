@@ -53,6 +53,7 @@ export default function SingleProject(props) {
       if (i < currentStage - 1) {
         list.push(
           <CompletedStep
+            key={i}
             number={i}
             name={PROJECT_STAGES[i]}
             max={PROJECT_STAGES.length - 1}
@@ -61,6 +62,7 @@ export default function SingleProject(props) {
       } else if (i === currentStage - 1) {
         list.push(
           <CurrentStep
+            key={i}
             name={PROJECT_STAGES[i]}
             number={i}
             max={PROJECT_STAGES.length - 1}
@@ -69,6 +71,7 @@ export default function SingleProject(props) {
       } else {
         list.push(
           <UpcomingStep
+            key={i}
             name={PROJECT_STAGES[i]}
             number={i}
             max={PROJECT_STAGES.length - 1}
@@ -217,9 +220,7 @@ export default function SingleProject(props) {
         <div>
           <p className="mb-1 text-xs">Contact Email Address</p>
           <p className="fs-5">
-            <p className="fs-5">
-              {project.mainContact ? project.mainContact.email : "N/A"}
-            </p>
+            {project.mainContact ? project.mainContact.email : "N/A"}
           </p>
         </div>
         <div>
@@ -545,7 +546,7 @@ export default function SingleProject(props) {
                         </h3>
                         <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                           <label
-                            for="name"
+                            htmlFor="name"
                             className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                           >
                             Select Contact:
@@ -556,7 +557,7 @@ export default function SingleProject(props) {
                                 type="text"
                                 name="contactid"
                                 id="contactid"
-                                autocomplete="contactid"
+                                autoComplete="contactid"
                                 value={assignContactData.contactid}
                                 className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                                 onChange={(e) => {
@@ -670,7 +671,7 @@ export default function SingleProject(props) {
                         </h3>
                         <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                           <label
-                            for="name"
+                            htmlFor="name"
                             className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                           >
                             Title *
@@ -681,7 +682,7 @@ export default function SingleProject(props) {
                                 type="text"
                                 name="title"
                                 id="title"
-                                autocomplete="title"
+                                autoComplete="title"
                                 className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                                 onChange={(e) => {
                                   handleAddNoteChange(e);
@@ -704,7 +705,7 @@ export default function SingleProject(props) {
                           </div>
                         )} */}
                         <label
-                          for="content"
+                          htmlFor="content"
                           className="block mb-3 text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                         >
                           Content
@@ -715,7 +716,7 @@ export default function SingleProject(props) {
                               type="text"
                               name="content"
                               id="content"
-                              autocomplete="content"
+                              autoComplete="content"
                               className="w-full h-80 block focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                               onChange={(e) => {
                                 handleAddNoteChange(e);
@@ -812,7 +813,7 @@ export default function SingleProject(props) {
                         {currentNote.title}
                       </h3>
                       <label
-                        for="content"
+                        htmlFor="content"
                         className="block mb-3 text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                       >
                         {currentNote.createdAt
@@ -825,7 +826,7 @@ export default function SingleProject(props) {
                             type="text"
                             name="content"
                             id="content"
-                            autocomplete="content"
+                            autoComplete="content"
                             value={currentNote.content}
                             className="w-full h-80 block focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                           />

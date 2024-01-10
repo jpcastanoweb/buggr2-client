@@ -597,7 +597,7 @@ export default function SingleCustomer(props) {
                         </h3>
                         <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                           <label
-                            for="name"
+                            htmlFor="name"
                             className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                           >
                             First Name *
@@ -608,7 +608,7 @@ export default function SingleCustomer(props) {
                                 type="text"
                                 name="firstName"
                                 id="firstName"
-                                autocomplete="firstName"
+                                autoComplete="firstName"
                                 className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                                 onChange={(e) => {
                                   handleAddContactChange(e);
@@ -632,7 +632,7 @@ export default function SingleCustomer(props) {
                         )}
                         <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                           <label
-                            for="name"
+                            htmlFor="name"
                             className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                           >
                             Last Name
@@ -643,7 +643,7 @@ export default function SingleCustomer(props) {
                                 type="text"
                                 name="lastName"
                                 id="lastName"
-                                autocomplete="lastName"
+                                autoComplete="lastName"
                                 className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                                 onChange={(e) => {
                                   handleAddContactChange(e);
@@ -654,7 +654,7 @@ export default function SingleCustomer(props) {
                         </div>
                         <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                           <label
-                            for="name"
+                            htmlFor="name"
                             className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                           >
                             Email Address *
@@ -665,7 +665,7 @@ export default function SingleCustomer(props) {
                                 type="email"
                                 name="email"
                                 id="email"
-                                autocomplete="email"
+                                autoComplete="email"
                                 className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                                 onChange={(e) => {
                                   handleAddContactChange(e);
@@ -687,7 +687,7 @@ export default function SingleCustomer(props) {
                         )}
                         <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                           <label
-                            for="name"
+                            htmlFor="name"
                             className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                           >
                             Phone Number
@@ -698,7 +698,7 @@ export default function SingleCustomer(props) {
                                 type="text"
                                 name="phoneNumber"
                                 id="phoneNumber"
-                                autocomplete="phoneNumber"
+                                autoComplete="phoneNumber"
                                 className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                                 onChange={(e) => {
                                   handleAddContactChange(e);
@@ -802,7 +802,7 @@ export default function SingleCustomer(props) {
                         </h3>
                         <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                           <label
-                            for="name"
+                            htmlFor="name"
                             className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                           >
                             Title *
@@ -813,7 +813,7 @@ export default function SingleCustomer(props) {
                                 type="text"
                                 name="title"
                                 id="title"
-                                autocomplete="title"
+                                autoComplete="title"
                                 className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                                 onChange={(e) => {
                                   handleAddNoteChange(e);
@@ -836,7 +836,7 @@ export default function SingleCustomer(props) {
                           </div>
                         )} */}
                         <label
-                          for="content"
+                          htmlFor="content"
                           className="block mb-3 text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                         >
                           Content
@@ -847,7 +847,7 @@ export default function SingleCustomer(props) {
                               type="text"
                               name="content"
                               id="content"
-                              autocomplete="content"
+                              autoComplete="content"
                               className="w-full h-80 block focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                               onChange={(e) => {
                                 handleAddNoteChange(e);
@@ -943,7 +943,7 @@ export default function SingleCustomer(props) {
                         {currentNote.title}
                       </h3>
                       <label
-                        for="content"
+                        htmlFor="content"
                         className="block mb-3 text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                       >
                         {currentNote.createdAt
@@ -956,7 +956,7 @@ export default function SingleCustomer(props) {
                             type="text"
                             name="content"
                             id="content"
-                            autocomplete="content"
+                            autoComplete="content"
                             value={currentNote.content}
                             className="w-full h-80 block focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                           />

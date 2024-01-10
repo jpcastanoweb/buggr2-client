@@ -76,7 +76,7 @@ export default function AddCustomerModal(props) {
                   </h3>
                   <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                     <label
-                      for="name"
+                      htmlFor="name"
                       className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                     >
                       First Name *
@@ -87,7 +87,7 @@ export default function AddCustomerModal(props) {
                           type="text"
                           name="firstName"
                           id="firstName"
-                          autocomplete="firstName"
+                          autoComplete="firstName"
                           required
                           className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                           onChange={(e) => {
@@ -99,7 +99,7 @@ export default function AddCustomerModal(props) {
                   </div>
                   <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                     <label
-                      for="name"
+                      htmlFor="name"
                       className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                     >
                       Last Name
@@ -110,7 +110,7 @@ export default function AddCustomerModal(props) {
                           type="text"
                           name="lastName"
                           id="lastName"
-                          autocomplete="lastName"
+                          autoComplete="lastName"
                           required
                           className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                           onChange={(e) => {
@@ -122,7 +122,7 @@ export default function AddCustomerModal(props) {
                   </div>
                   <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                     <label
-                      for="name"
+                      htmlFor="name"
                       className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                     >
                       Email Address *
@@ -133,7 +133,7 @@ export default function AddCustomerModal(props) {
                           type="email"
                           name="email"
                           id="email"
-                          autocomplete="email"
+                          autoComplete="email"
                           required
                           className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                           onChange={(e) => {
@@ -145,7 +145,7 @@ export default function AddCustomerModal(props) {
                   </div>
                   <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-4">
                     <label
-                      for="name"
+                      htmlFor="name"
                       className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                     >
                       Phone Number
@@ -156,7 +156,7 @@ export default function AddCustomerModal(props) {
                           type="text"
                           name="phoneNumber"
                           id="phoneNumber"
-                          autocomplete="phoneNumber"
+                          autoComplete="phoneNumber"
                           required
                           className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                           onChange={(e) => {

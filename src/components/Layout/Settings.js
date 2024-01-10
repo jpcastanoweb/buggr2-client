@@ -99,7 +99,7 @@ export default function Settings() {
             <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
               <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                 <label
-                  for="first-name"
+                  htmlFor="first-name"
                   className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                 >
                   Email
@@ -109,7 +109,7 @@ export default function Settings() {
                     type="text"
                     name="email"
                     id="email"
-                    autocomplete="email"
+                    autoComplete="email"
                     value={data.email}
                     className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
                     onChange={(e) => {
@@ -153,7 +153,7 @@ export default function Settings() {
             <div className="space-y-6 sm:space-y-5">
               <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                 <label
-                  for="firstName"
+                  htmlFor="firstName"
                   className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                 >
                   First Name
@@ -163,7 +163,7 @@ export default function Settings() {
                     type="text"
                     name="firstName"
                     id="firstName"
-                    autocomplete="firstName"
+                    autoComplete="firstName"
                     value={data.firstName}
                     onChange={(e) => {
                       handleChange(e);
@@ -188,7 +188,7 @@ export default function Settings() {
 
               <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                 <label
-                  for="lastName"
+                  htmlFor="lastName"
                   className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                 >
                   Last name
@@ -198,7 +198,7 @@ export default function Settings() {
                     type="text"
                     name="lastName"
                     id="lastName"
-                    autocomplete="lastName"
+                    autoComplete="lastName"
                     value={data.lastName}
                     onChange={(e) => {
                       handleChange(e);

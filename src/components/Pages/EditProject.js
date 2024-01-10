@@ -94,7 +94,7 @@ export default function EditProject() {
               <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                   <label
-                    for="name"
+                    htmlFor="name"
                     className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                   >
                     Title
@@ -105,7 +105,7 @@ export default function EditProject() {
                         type="text"
                         name="title"
                         id="title"
-                        autocomplete="title"
+                        autoComplete="title"
                         value={data.title}
                         className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                         onChange={(e) => {
@@ -128,7 +128,7 @@ export default function EditProject() {
                 </div>
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                   <label
-                    for="name"
+                    htmlFor="name"
                     className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                   >
                     Start Date
@@ -139,7 +139,7 @@ export default function EditProject() {
                         type="date"
                         name="startDate"
                         id="startDate"
-                        autocomplete="startDate"
+                        autoComplete="startDate"
                         value={toDateString(data.startDate)}
                         className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                         onChange={(e) => {
@@ -151,7 +151,7 @@ export default function EditProject() {
                 </div>
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                   <label
-                    for="name"
+                    htmlFor="name"
                     className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                   >
                     Goal Date
@@ -162,7 +162,7 @@ export default function EditProject() {
                         type="date"
                         name="dueDate"
                         id="dueDate"
-                        autocomplete="dueDate"
+                        autoComplete="dueDate"
                         value={toDateString(data.dueDate)}
                         className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                         onChange={(e) => {
@@ -174,7 +174,7 @@ export default function EditProject() {
                 </div>
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                   <label
-                    for="name"
+                    htmlFor="name"
                     className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                   >
                     Dollar Value
@@ -185,7 +185,7 @@ export default function EditProject() {
                         type="number"
                         name="dollarValue"
                         id="dollarValue"
-                        autocomplete="dollarValue"
+                        autoComplete="dollarValue"
                         value={data.dollarValue}
                         className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                         onChange={(e) => {
@@ -197,7 +197,7 @@ export default function EditProject() {
                 </div>
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                   <label
-                    for="name"
+                    htmlFor="name"
                     className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                   >
                     Current Stage
@@ -208,7 +208,7 @@ export default function EditProject() {
                         type="number"
                         name="currentStage"
                         id="currentStage"
-                        autocomplete="currentStage"
+                        autoComplete="currentStage"
                         defaultValue={data.currentStage}
                         className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                         onChange={(e) => {
@@ -228,7 +228,7 @@ export default function EditProject() {
                 </div>
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                   <label
-                    for="mainContact"
+                    htmlFor="mainContact"
                     className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                   >
                     Main Contact
@@ -239,7 +239,7 @@ export default function EditProject() {
                         type="text"
                         name="mainContact"
                         id="mainContact"
-                        autocomplete="mainContact"
+                        autoComplete="mainContact"
                         value={data.mainContact}
                         className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                         onChange={(e) => {

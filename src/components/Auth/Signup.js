@@ -199,7 +199,7 @@ export default function Signup() {
 
                 <div>
                   <label
-                    // for="email"
+                    // htmlFor="email"
                     className="block text-sm font-medium text-gray-700"
                   >
                     Email
@@ -231,7 +231,7 @@ export default function Signup() {
 
                 <div className="space-y-1">
                   <label
-                    // for="password"
+                    // htmlFor="password"
                     className="block text-sm font-medium text-gray-700"
                   >
                     Password
