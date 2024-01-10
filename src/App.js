@@ -9,7 +9,6 @@ import {
 
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
-import MainApp from "./components/Layout/MainApp";
 import UserState from "./context/User/UserState";
 import PrivateRoute from "./components/PrivateRoute";
 import AuthRoute from "./components/AuthRoute";
@@ -35,7 +34,6 @@ import AddProject from "./components/Pages/AddProject";
 import SingleProject from "./components/Pages/SingleProject";
 import EditProject from "./components/Pages/EditProject";
 import Settings from "./components/Layout/Settings";
-import { Children } from "react";
 
 function App() {
   return (
