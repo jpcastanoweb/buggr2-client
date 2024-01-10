@@ -4,13 +4,11 @@ import OrgContext from "../../context/Organization/OrgContext";
 import { toDollarString } from "../../_helperFunctions";
 
 export default function Customers() {
-  console.log("hello");
   const orgCtx = useContext(OrgContext);
   const { customers, loadCustomers } = orgCtx;
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log("entered customers useEffect");
     const load = async () => {
       await loadCustomers();
       setLoading(false);
