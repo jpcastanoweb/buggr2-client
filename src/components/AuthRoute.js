@@ -20,7 +20,9 @@ export default function AuthRoute({ children }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authStatus]);
 
-  return loading ? null : authStatus ? (
+  return loading ? (
+    "Loading"
+  ) : authStatus ? (
     <Navigate to="/app/customers" />
   ) : (
     children

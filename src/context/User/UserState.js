@@ -55,7 +55,9 @@ const UserState = (props) => {
         type: "GET_USER_INFO",
         payload: res.data.userFound,
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log("Error", error);
+    }
   };
 
   const loginUser = async (dataForm) => {
